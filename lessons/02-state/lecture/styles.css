@@ -1,0 +1,9 @@
+body {
+  padding: 10px;
+}
+
+.Minutes {
+  margin-top: 100px;
+  flex: 1;
+  justify-content: center;
+}

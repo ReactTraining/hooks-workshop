@@ -1,0 +1,893 @@
+:root {
+  --gray: hsl(197, 10%, 45%);
+  --middle-gray: hsl(240, 6%, 92%);
+  --light-gray: hsl(240, 6%, 97%);
+  --accent: hsl(197, 100%, 44%);
+  --accent-hover: hsl(197, 100%, 40%);
+  --accent-active: hsl(197, 100%, 35%);
+  --focus-shadow: 0px 0px 2px var(--accent);
+  --focus-border: solid 1px var(--accent);
+  --focus-border-inactive: solid 1px transparent;
+  --max-width: 1000px;
+  --transparent-white: hsla(0, 100%, 100%, 1);
+  --red: rgb(249, 73, 73);
+  --green: hsl(170, 90%, 44%);
+}
+
+body {
+  color: var(--gray);
+}
+
+[data-reach-dialog-overlay] {
+  background: none;
+}
+
+[data-reach-dialog-content] {
+  box-shadow: 1px 1px 30px hsla(0, 0%, 0%, 0.15);
+  border: solid 2px hsla(240, 6%, 70%);
+  border-radius: 0.8rem;
+  width: 800px;
+  padding: 2.5rem;
+}
+
+/* button { */
+/*   border: none; */
+/*   margin: 0; */
+/*   padding: 0; */
+/*   background: none; */
+/*   color: inherit; */
+/*   font: inherit; */
+/*   cursor: pointer; */
+/*   -webkit-appearance: none; */
+/*   -moz-appearance: none; */
+/* } */
+
+.icon_button {
+  border: none;
+  margin: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  font-size: 125%;
+  display: flex;
+  align-items: center;
+  color: var(--gray);
+  border-radius: 50%;
+  border: var(--focus-border-inactive);
+  padding: 0.5rem;
+  border-radius: 9999px;
+}
+
+.icon_button:hover {
+  background: var(--light-gray);
+}
+
+.icon_button:focus {
+  outline: none;
+  border: var(--focus-border);
+  box-shadow: var(--focus-shadow);
+}
+
+.icon_button:active {
+  color: var(--accent);
+  background: var(--middle-gray);
+}
+
+.icon_button > * + * {
+  margin-left: 0.25rem;
+}
+
+.Layout {
+  min-height: 100vh;
+  background-color: #edf4f7;
+  background-image: url("./assets/blue-fade.svg"), url("./assets/blue-fade.svg"),
+    url("./assets/blue-fade.svg");
+  background-position: 10vw 0, 25vw -10vw, 50vw -10vw;
+  background-size: 110vw, 110vw, 140vw;
+  background-repeat: no-repeat;
+}
+
+.LoggedOut {
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
+}
+
+.LoggedOut input[type="text"],
+.LoggedOut input[type="email"],
+.LoggedOut input[type="password"] {
+  display: block;
+  font-size: 125%;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  width: 100%;
+}
+
+.LoggedOut [data-reach-tabs] {
+  margin: 0 2rem;
+  align-self: center;
+  width: 300px;
+  background: #fff;
+  border-radius: 0.8rem;
+  box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.LoggedOut [data-reach-tab-list] {
+  background: #f6f6f7;
+}
+
+.LoggedOut [data-reach-tab] {
+  padding: 1rem 1.5rem;
+  border: none;
+  flex: 1;
+  text-align: center;
+}
+
+.LoggedOut [data-reach-tab][aria-selected="true"],
+.LoggedOut [data-reach-tab].active {
+  color: var(--accent);
+  background: white;
+}
+
+.LoggedOut [data-reach-tab].disabled {
+  opacity: 0.25;
+}
+
+.LoggedOut [data-reach-tab-panels] {
+  padding: 1.5rem;
+}
+
+.TabsButton {
+  margin-top: 1rem;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.LoggedOut {
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
+}
+
+.about {
+  margin: 0 2rem;
+  width: 200px;
+}
+
+.button {
+  background: rgb(249, 73, 73);
+  color: white;
+  font: inherit;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 0.8rem;
+  display: block;
+  width: 100%;
+  box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.15);
+  margin: 1rem 0;
+}
+
+.button:active {
+  box-shadow: none;
+  position: relative;
+  top: 1px;
+  right: 1px;
+}
+
+.passwordCheckbox {
+  margin: 0 0 1rem 0;
+}
+
+.GlobalNav {
+  display: flex;
+}
+
+.GlobalNav a {
+  margin: 0 0.125rem;
+  color: var(--gray);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 9999px;
+  border: var(--focus-border-inactive);
+}
+
+.GlobalNav a:first-child {
+  margin-left: 0;
+}
+
+.GlobalNav a:hover {
+  background: var(--light-gray);
+}
+
+.GlobalNav a:active {
+  background: var(--middle-gray);
+}
+
+.GlobalNav a:focus {
+  outline: none;
+  border: var(--focus-border);
+  box-shadow: var(--focus-shadow);
+}
+
+.GlobalNav a svg {
+  margin-right: 0.25rem;
+  font-size: 125%;
+}
+
+.GlobalNav a[aria-current] {
+  color: var(--accent);
+}
+
+.TopBar {
+  background: var(--transparent-white);
+  border-bottom: solid 1px var(--middle-gray);
+  padding: 0.25rem 0.75rem;
+}
+
+.TopBar_inner {
+  max-width: var(--max-width);
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Search {
+  background: var(--light-gray);
+  padding: 0.25rem 0.5rem;
+  display: flex;
+  align-items: center;
+  color: var(--gray);
+  border: var(--focus-border-inactive);
+  min-width: 300px;
+}
+
+.Search:focus-within {
+  background: white;
+  color: var(--accent);
+  border: var(--focus-border);
+  box-shadow: var(--focus-shadow);
+}
+
+.Search_input {
+  font: inherit;
+  border: none;
+  background: inherit;
+  outline: none;
+}
+
+.Search_icon {
+  font-size: 90%;
+  margin-right: 0.5rem;
+}
+
+.Account {
+  display: flex;
+  align-items: center;
+}
+
+.Account > * {
+  margin: 0 0.25rem;
+}
+
+.Account_logout {
+  margin-left: 1rem;
+}
+
+.icon_button:focus:not(:focus-visible),
+.GlobalNav a:focus:not(:focus-visible),
+.Account_logout:focus:not(:focus-visible),
+.Calendar_add_post_button:focus:not(:focus-visible) {
+  box-shadow: none !important;
+  border: var(--focus-border-inactive) !important;
+}
+
+.Account_user_name {
+  font-weight: bold;
+}
+
+.Avatar {
+  position: relative;
+  overflow: hidden;
+}
+
+.Avatar_image {
+  position: absolute;
+  background-position: center center;
+  background-size: cover;
+  border-radius: 50%;
+  background-color: var(--light-gray);
+}
+
+.Avatar circle {
+  transition: stroke-dashoffset 0.35s;
+}
+
+.Avatar.empty {
+  background: var(--middle-gray);
+  border-radius: 50%;
+}
+
+.Main {
+  max-width: var(--max-width);
+  margin: 1rem auto 0 auto;
+}
+
+.UserCalendar {
+  padding: 0.75rem;
+}
+
+.Meta {
+  padding: 2rem 0;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Meta_avatar {
+  box-shadow: 1px 2px 10px hsla(0, 0%, 0%, 0.25);
+  border-radius: 50%;
+  margin: 0 3rem;
+}
+
+.Meta_point {
+  display: flex;
+  justify-content: space-between;
+  font-size: 150%;
+}
+
+.Meta_heading {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-right: 1rem;
+}
+
+.Meta_value {
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+  /* font-family: Audiowide, sans-serif; */
+}
+
+.Meta_total {
+  color: var(--accent);
+}
+
+.Meta_deficit {
+  color: var(--red);
+}
+
+.Meta_surplus {
+  color: var(--green);
+}
+
+.NewPost {
+  display: flex;
+  align-items: top;
+}
+
+.NewPost_form {
+  position: relative;
+  margin: 0;
+  flex: 1;
+}
+
+.NewPost_form > *:first-child {
+  margin-top: 0;
+}
+
+.NewPost_input {
+  display: block;
+  width: 100%;
+  background: var(--light-gray);
+  border: none;
+  resize: none;
+  font: inherit;
+  font-size: 125%;
+  padding: 0.75rem;
+  padding-top: 1.5rem;
+  height: 8.5rem;
+  border-radius: 0.25rem;
+  border-bottom: solid 2px transparent;
+  border-top: solid 2px transparent;
+}
+
+.NewPost_input:focus {
+  outline: none;
+  border-bottom-color: var(--accent);
+}
+
+.NewPost_char_count {
+  color: var(--gray);
+  text-align: right;
+  font-size: 85%;
+}
+
+.NewPost .Avatar {
+  margin-right: 1rem;
+}
+
+.NewPost_buttons {
+  display: flex;
+  align-items: center;
+}
+
+.NewPost_error .NewPost_input {
+  background-color: var(--red);
+}
+
+.NewPost_error .NewPost_char_count {
+  color: var(--red);
+}
+
+.Minutes {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.Minutes > * {
+  margin: 0 0.25rem;
+}
+
+.Minutes > *:first-child {
+  margin-left: 0;
+}
+
+.Minutes_label {
+  font-size: 150%;
+  font-weight: bold;
+  color: var(--gray);
+}
+
+.Minutes_input {
+  border: none;
+  outline: none;
+  background: var(--light-gray);
+  color: var(--gray);
+  font: inherit;
+  font-size: 200%;
+  text-align: center;
+  width: 6rem;
+  padding: 0.5rem;
+  border-bottom: solid 2px transparent;
+  border-top: solid 2px transparent;
+  border-radius: 0.25rem;
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+}
+
+.Minutes_input:focus {
+  border-bottom-color: var(--accent);
+}
+
+.Minutes:focus-within .Minutes_button,
+.Minutes:focus-within .Minutes_input,
+.Minutes:focus-within .Minutes_label {
+  color: var(--accent);
+}
+
+.icon_button.cta {
+  background-color: var(--accent);
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+.icon_button.cta:hover {
+  background-color: var(--accent-hover);
+}
+
+.icon_button.cta:active {
+  background-color: var(--accent-active);
+  color: white;
+}
+
+.icon_button.cta:focus {
+  border-color: white;
+  box-shadow: 0px 0px 4px 1px var(--accent);
+}
+
+.NewPost_date {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--gray);
+  flex: 1;
+  text-align: center;
+}
+
+.Calendar {
+}
+
+.Calendar_add_post_button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.Weekdays {
+  display: flex;
+  flex: 1;
+  margin: 2px;
+}
+
+.Weekdays > * {
+  text-transform: uppercase;
+  flex: 1;
+  text-align: center;
+  font-weight: bold;
+  color: var(--gray);
+  font-size: 85%;
+}
+
+.Calendar_week {
+  display: flex;
+}
+
+.Day {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 5rem;
+  background: white;
+  margin: 2px;
+}
+
+.Day_no_minutes {
+  background: rgb(231, 238, 241);
+}
+
+.Day_date {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  color: var(--gray);
+  font-size: 85%;
+  pointer-events: none;
+}
+
+.Day_number {
+  flex: 1;
+  text-align: right;
+  margin: 0.25rem;
+}
+
+.Day_month {
+  text-transform: uppercase;
+  font-weight: bold;
+  margin: 0.25rem;
+  color: var(--red);
+}
+
+.Day_minutes {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Calendar_minutes_text {
+  font-size: 200%;
+  padding: 0.25rem 0.5rem;
+  border-radius: 99999px;
+  /* font-family: Audiowide, sans-serif; */
+  font-variant-numeric: tabular-nums;
+}
+
+.Calendar_add_post_button {
+  color: var(--gray);
+  flex: 1;
+  height: 100%;
+}
+
+.Calendar_add_post_button:hover {
+  background: white;
+  cursor: pointer;
+}
+
+.Calendar_add_post_button:focus {
+  outline: none;
+}
+
+.Calendar_add_post_button:hover {
+  background: white;
+}
+
+.Calendar_add_post_button:focus {
+  outline: none;
+  border: var(--focus-border);
+  box-shadow: var(--focus-shadow);
+}
+
+.Calendar_add_post_button:active {
+  color: var(--accent);
+}
+
+.Day_is_future {
+  /* opacity: 0.33; */
+}
+
+.Dialog_close {
+  position: absolute;
+  top: 0.125rem;
+  right: 0.125rem;
+}
+
+.Day_link {
+  color: var(--gray);
+  text-decoration: none;
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Day_link:hover {
+  color: var(--accent);
+}
+
+.PostsRoute {
+  padding: 2rem;
+}
+
+.Posts {
+  display: flex;
+  background: white;
+  padding: 2rem;
+  box-shadow: 1px 1px 5px hsla(0, 0%, 0%, 0.25);
+  border-radius: 0.8rem;
+}
+
+[data-reach-dialog-content] .Posts {
+  padding: 0;
+  box-shadow: none;
+}
+
+.Posts .Avatar {
+  margin-right: 2rem;
+  width: 200px;
+}
+
+.Posts_content {
+  flex: 1;
+}
+
+.Posts_empty {
+  font-size: 200%;
+  font-style: italic;
+}
+
+h1,
+h2 {
+  margin: 0;
+  font: inherit;
+}
+
+.Posts_user_name {
+  font-size: 150%;
+  margin-top: 0.5rem;
+}
+
+.Posts_user_name a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.Posts_user_name a:hover {
+  text-decoration: underline;
+}
+
+.Posts_date {
+  font-size: 200%;
+  font-weight: bold;
+}
+
+.Posts_posts {
+  margin: 2rem 0 0.25rem 0;
+}
+
+.Post {
+  padding: 1rem 0;
+}
+
+.Post_message {
+  font-size: 150%;
+}
+
+.Post_title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Post_minutes {
+  font-size: 300%;
+  font-weight: bold;
+  color: var(--accent-active);
+}
+
+.Post_delete_button {
+}
+
+.Post,
+.Posts_add,
+.Posts_adding {
+  border-top: solid 1px var(--middle-gray);
+}
+
+.Posts_adding {
+  padding-top: 1rem;
+}
+
+.Posts_add_button {
+  margin-top: 0.5rem;
+  margin-left: -0.5rem;
+}
+
+.Feed {
+  margin-top: 3rem;
+  background: white;
+  box-shadow: 1px 1px 5px hsla(0, 0%, 0%, 0.25);
+  border-top-right-radius: 0.8rem;
+  border-top-left-radius: 0.8rem;
+  overflow: hidden;
+}
+
+.FeedPost {
+  display: flex;
+  padding: 2rem;
+  border-top: 1px solid var(--middle-gray);
+  cursor: pointer;
+  transition: background-color 200ms ease;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.FeedPostShimmer {
+  padding: 2rem;
+  border-top: 1px solid var(--middle-gray);
+  height: 16rem;
+  background: #f6f7f8;
+  background-image: linear-gradient(
+    to right,
+    #f6f7f8 0%,
+    #edeef1 20%,
+    #f6f7f8 40%,
+    #f6f7f8 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 120% 100%;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: shimmer;
+  animation-timing-function: linear;
+}
+
+.FeedPost:hover {
+  background-color: var(--light-gray);
+}
+
+.Feed > *:first-child {
+  margin-top: 0;
+  border-top: none;
+}
+
+.FeedPost .Avatar {
+  margin-right: 2rem;
+}
+
+.FeedPost_about {
+  flex: 1;
+}
+
+.FeedPost_minutes {
+  font-size: 250%;
+  font-weight: bold;
+  color: var(--accent-active);
+}
+
+.FeedPost_message {
+  font-size: 125%;
+  margin: 1rem 0;
+}
+
+.FeedPost a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.FeedPost a:hover {
+  text-decoration: underline;
+}
+
+.FeedPost_date {
+  color: inherit;
+  font-size: 150%;
+  font-weight: bold;
+}
+
+.FeedPost_user_name {
+  font-size: 125%;
+}
+
+.FeedPost_created_at {
+  font-size: 80%;
+  font-style: italic;
+}
+
+.Feed_button_wrapper {
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.Feed_new_posts_button {
+  font-size: 150%;
+  display: inline-block;
+  color: var(--accent);
+}
+
+.Calendar_earlier:hover,
+.Calendar_later:hover {
+  background: white;
+}
+
+.Calendar_nav {
+  display: flex;
+  margin: 1rem;
+  font-size: 85%;
+}
+
+.Calendar_animation_overflow {
+  overflow: hidden;
+  position: relative;
+  height: calc(25rem + 12px);
+}
+
+.Calendar_animation_wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.RecentPostsDropdownButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 100%;
+}
+
+[data-reach-menu-list] {
+  box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.15);
+  border: solid 1px hsla(240, 6%, 70%);
+}
+
+[data-reach-menu-item][data-selected] {
+  background: var(--accent);
+}
