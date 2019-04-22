@@ -11,12 +11,7 @@ function TextInput({ id, label, type = "text" }) {
       <VisuallyHidden>
         <label htmlFor={id}>{label}</label>
       </VisuallyHidden>
-      <input
-        id={id}
-        placeholder={label}
-        type={type}
-        required
-      />
+      <input id={id} placeholder={label} type={type} required />
     </Fragment>
   )
 }
@@ -59,7 +54,7 @@ export default function SignupForm() {
         <TextInput id="displayName" label="Display Name" />
         <TextInput id="photoURL" label="Avatar URL" />
         <TextInput id="email" label="Email" />
-        <TextInput id="password" label="Password" />
+        <TextInput id="password" type="password" label="Password" />
         <p>
           <span aria-hidden="true">Start:</span>{" "}
           <DateFields value={startDate} onChange={setStartDate}>

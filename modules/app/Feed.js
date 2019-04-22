@@ -55,7 +55,7 @@ export default function Feed() {
         dispatch({ type: "LOAD_POSTS", posts })
       }
     })
-    return () => current = false
+    return () => (current = false)
   }, [createdBefore, limit])
 
   useEffect(() => {

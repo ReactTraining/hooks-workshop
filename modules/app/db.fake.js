@@ -1,9 +1,10 @@
 // faking the firebase API to get as much as we need
 import localforage from "localforage"
 import { format } from "date-fns"
-// localforage.clear()
+window.lf = localforage
+window.clearFakeData = () => localforage.clear()
 
-// fakeStreamedData()
+fakeStreamedData()
 
 export const mode = "fake"
 
@@ -15,6 +16,7 @@ const LF_KEY = "data"
 const OPERATORS = {
   "==": (field, value) => field === value,
   "<": (field, value) => field < value,
+  ">": (field, value) => field > value,
   "<=": (field, value) => field <= value,
   ">=": (field, value) => field >= value
 }
@@ -93,7 +95,7 @@ export function collection(path) {
     }
 
     if (_limit) {
-      ids = ids.slice(ids.length - _limit, ids.length)
+      ids = ids.slice(0, _limit)
     }
 
     const records = ids.reduce((obj, id) => {
@@ -267,19 +269,22 @@ export function auth() {
     const auth = { uid: "attendee" }
     await populateLocalForage(auth)
     await localforage.setItem("auth", auth)
+    await localforage.setItem("server:auth", auth)
     onAuthChangeHandler(auth)
     const user = { ...auth }
     user.updateProfile = async updates => {
       const auth = await localforage.getItem("auth")
       const newAuth = { ...auth, ...updates }
       await localforage.setItem("auth", newAuth)
+      await localforage.setItem("server:auth", auth)
       return newAuth
     }
     return { user: user }
   }
 
   async function signInWithEmailAndPassword() {
-    const auth = await localforage.getItem("auth")
+    const auth = await localforage.getItem("server:auth")
+    await localforage.setItem("auth", auth)
     onAuthChangeHandler(auth)
   }
 
@@ -307,21 +312,21 @@ async function populateLocalForage(user) {
     [user.uid]: {
       uid: user.uid,
       displayName: user.displayName,
-      photoURL: "https://placekitten.com/200/200",
+      photoURL: "/flex.jpg",
       goal: 8000,
       started: "2019-01-01"
     },
     ryan: {
       uid: "ryan",
       displayName: "Ryan Florence",
-      photoURL: "/flex.jpg",
+      photoURL: "/ryan.jpg",
       goal: 8000,
       started: "2019-01-01"
     },
     michael: {
       uid: "michael",
       displayName: "Michael Jackson",
-      photoURL: "https://placecage.com/200/200",
+      photoURL: "/michael.jpg",
       goal: 8000,
       started: "2019-01-01"
     }
@@ -353,17 +358,19 @@ async function populateLocalForage(user) {
   await localforage.setItem(LF_KEY, { posts, users })
 }
 
+let count = 0
 function fakeStreamedData() {
   const userIds = ["ryan", "michael"]
   Array.from({ length: 1000 }).forEach((_, index) => {
     setTimeout(async () => {
       const lfData = await localforage.getItem(LF_KEY)
+      if (!lfData) return
       const record = {
         createdAt: Date.now(),
         uid: userIds[Math.floor(Math.random() * userIds.length)],
         date: format(Date.now(), "YYYY-MM-DD"),
         minutes: Math.floor(Math.random() * 25) + 20,
-        message: `FAKE DATA! YEAH!`
+        message: `FAKE DATA! YEAH! ` + ++count
       }
       lfData.posts[genId()] = record
       localforage.setItem(LF_KEY, lfData)
