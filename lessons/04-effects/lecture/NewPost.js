@@ -13,27 +13,14 @@ const MAX_MESSAGE_LENGTH = 200
 // Consider the message length counter. Every time we type, we set state, and
 // then react updates the DOM for us.
 
-function useTitle(title) {
-  useEffect(() => {
-    // Synchronize something that is NOT an element...
-    // like, the document title!
-    document.title = title
-  }, [title])
-}
-
 export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
   const [{ auth }] = useAppState()
   const [message, setMessage] = useState('Ran around the lake.')
   const messageTooLong = message.length > MAX_MESSAGE_LENGTH
 
-  // Get a "ref"erence to a DOM node...
-  const messageLengthRef = useRef()
-
   function handleMessageChange(event) {
     setMessage(event.target.value)
   }
-
-  useTitle('New Post' + (message ? `: ${message}` : ''))
 
   return (
     <div className={'NewPost' + (messageTooLong ? ` ${errorClass}` : '')}>
