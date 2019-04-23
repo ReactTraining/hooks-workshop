@@ -87,7 +87,9 @@ export function subscribeToPosts(uid, callback) {
     .collection("posts")
     .orderBy("createdAt")
     .where("uid", "==", uid)
-  return collection.onSnapshot(snapshot => callback(unweirdify(snapshot)))
+  return collection.onSnapshot(snapshot =>
+    callback(getDocsFromSnapshot(snapshot))
+  )
 }
 
 export function fetchPosts(uid) {
@@ -96,7 +98,7 @@ export function fetchPosts(uid) {
     .orderBy("createdAt")
     .where("uid", "==", uid)
     .get()
-    .then(unweirdify)
+    .then(getDocsFromSnapshot)
 }
 
 export async function createPost(post) {
@@ -117,7 +119,7 @@ export function getPosts(uid) {
     .orderBy("createdAt")
     .where("uid", "==", uid)
     .get()
-    .then(unweirdify)
+    .then(getDocsFromSnapshot)
 }
 
 export function loadFeedPosts(createdAtMax, limit) {
@@ -127,7 +129,7 @@ export function loadFeedPosts(createdAtMax, limit) {
     .where("createdAt", "<", createdAtMax)
     .limit(limit)
     .get()
-    .then(unweirdify)
+    .then(getDocsFromSnapshot)
 }
 
 export function subscribeToFeedPosts(createdAtMax, limit, callback) {
@@ -136,7 +138,7 @@ export function subscribeToFeedPosts(createdAtMax, limit, callback) {
     .orderBy("createdAt", "desc")
     .where("createdAt", "<", createdAtMax)
     .limit(limit)
-    .onSnapshot(snapshot => callback(unweirdify(snapshot)))
+    .onSnapshot(snapshot => callback(getDocsFromSnapshot(snapshot)))
 }
 
 export function subscribeToNewFeedPosts(createdAtMin, callback) {
@@ -145,7 +147,7 @@ export function subscribeToNewFeedPosts(createdAtMin, callback) {
     .orderBy("createdAt", "desc")
     .where("createdAt", ">=", createdAtMin)
     .onSnapshot(snapshot => {
-      callback(unweirdify(snapshot))
+      callback(getDocsFromSnapshot(snapshot))
     })
 }
 
@@ -220,17 +222,17 @@ export function calculateWeeks(posts, startDate, numWeeks) {
   return weeks
 }
 
-const unweirdify = snapshot => {
+function getDataFromDoc(doc) {
+  return { ...doc.data(), id: doc.id }
+}
+
+function getDocsFromSnapshot(snapshot) {
   const docs = []
   snapshot.forEach(doc => {
-    docs.push({
-      ...doc.data(),
-      id: doc.id
-    })
+    docs.push(getDataFromDoc(doc))
   })
   return docs
 }
-
 
 const easeOut = progress => Math.pow(progress - 1, 5) + 1
 
@@ -255,4 +257,3 @@ export function tween(duration, callback) {
 
   return () => cancelAnimationFrame(frame)
 }
-

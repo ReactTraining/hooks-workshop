@@ -1,36 +1,43 @@
-import React, { useState, useEffect, useRef } from "react"
-import { useAppState } from "app/app-state"
-import Avatar from "app/Avatar"
-import Minutes from "app/Minutes"
-import { FaDumbbell } from "react-icons/fa"
-import RecentPostsDropdown from "app/RecentPostsDropdown"
-import { formatDate, DATE_FORMAT } from "app/utils"
+import React, { useState, useEffect, useRef } from 'react'
+import { FaDumbbell } from 'react-icons/fa'
+
+import { useAppState } from 'app/app-state'
+import { formatDate, DATE_FORMAT } from 'app/utils'
+import Avatar from 'app/Avatar'
+import Minutes from 'app/Minutes'
+import RecentPostsDropdown from 'app/RecentPostsDropdown'
 
 const MAX_MESSAGE_LENGTH = 200
 
 export default function NewPost({ takeFocus, date, showAvatar }) {
-  const storageKey = makeNewPostKey(date)
   const [{ auth }] = useAppState()
-  const [message, setMessage] = useState(getLocalStorageValue(storageKey) || "")
+  const [message, setMessage] = useState('')
   const messageTooLong = message.length > MAX_MESSAGE_LENGTH
   const messageRef = useRef()
 
-  const handleMessageChange = event => {
+  function handleMessageChange(event) {
     setMessage(event.target.value)
   }
 
+  const storageKey = makeNewPostKey(date)
+
+  // Initialize the message for this date from the value in storage.
+  useLayoutEffect(() => {
+    setMessage(getLocalStorageValue(storageKey) || '')
+  }, [storageKey])
+
+  // Save the message for this date as its value changes.
   useEffect(() => {
     setLocalStorage(storageKey, message)
-  }, [message, storageKey])
+  }, [storageKey, message])
 
+  // Automatically focus the <textarea> if it should take focus.
   useEffect(() => {
-    if (takeFocus) {
-      messageRef.current.focus()
-    }
+    if (takeFocus) messageRef.current.focus()
   }, [takeFocus, message])
 
   return (
-    <div className={"NewPost" + (messageTooLong ? " NewPost_error" : "")}>
+    <div className={'NewPost' + (messageTooLong ? ' NewPost_error' : '')}>
       {showAvatar && <Avatar uid={auth.uid} size={70} />}
       <form className="NewPost_form">
         <textarea

@@ -1,6 +1,6 @@
 # Effects
 
-## Save state to local storag
+## Save state to local storage
 
 Save the message value into localStorage so that if the user accidentally closes the dialog or navigates away from the page, we can bring it back!
 

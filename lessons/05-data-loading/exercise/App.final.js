@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react"
+
+import { onAuthStateChanged } from "app/utils"
 import LoggedIn from "app/LoggedIn"
 import LoggedOut from "app/LoggedOut"
-import { onAuthStateChanged } from "app/utils"
 
 function useAuth() {
   const [authAttempted, setAuthAttempted] = useState(false)

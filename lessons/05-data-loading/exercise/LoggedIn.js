@@ -1,15 +1,15 @@
 import React, { useEffect, Fragment } from "react"
-import { Router, Route, DefaultRoute } from "app/packages/react-router-next"
+
+import { AppStateProvider, useAppState } from "app/app-state"
+import appReducer, { initialState } from "app/appReducer"
 import { fetchDoc, isValidDate } from "app/utils"
-import { useAppState } from "app/app-state"
+import { Router, Route, DefaultRoute } from "app/packages/react-router-next"
 import UserDatePosts from "app/UserDatePosts"
 import Feed from "app/Feed"
 import Dashboard from "app/Dashboard"
 import TopBar from "app/TopBar"
 import User from "app/User"
 import NotFound from "app/NotFound"
-import {AppStateProvider} from 'app/app-state'
-import appReducer, { initialState } from "app/appReducer"
 
 function LoggedIn() {
   const [{ auth, user }, dispatch] = useAppState()
@@ -55,7 +55,7 @@ function LoggedIn() {
   ) : null
 }
 
-const hasValidDateParam = ({ params }) => {
+function hasValidDateParam({ params }) {
   const [year, month, day] = params.date.split("-")
   const isValid = isValidDate(
     parseInt(year, 10),
@@ -65,8 +65,13 @@ const hasValidDateParam = ({ params }) => {
   return isValid
 }
 
-export default ({ auth }) => (
-  <AppStateProvider reducer={appReducer} initialState={{...initialState, auth }}>
-    <LoggedIn />
-  </AppStateProvider>
-)
+export default function({ auth }) {
+  return (
+    <AppStateProvider
+      reducer={appReducer}
+      initialState={{ ...initialState, auth }}
+    >
+      <LoggedIn />
+    </AppStateProvider>
+  )
+}

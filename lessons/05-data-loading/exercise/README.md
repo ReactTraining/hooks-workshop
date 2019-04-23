@@ -2,7 +2,7 @@
 
 We're going to be working in `App.js` to set up the login flow. The UI will render three states: loading, logged in, logged out.
 
-This app does client-side authentication with an auth listener called `onAuthStateChanged((auth) => {})`. Whenever the user logs in, or out, this listener will callback with the auth state, including when its first created.
+This app does client-side authentication with an auth listener called `onAuthStateChanged(auth => {})`. Whenever the user logs in, or out, this listener will callback with the auth state, including when its first created.
 
 ```jsx
 onAuthStateChanged(auth => {
@@ -29,7 +29,7 @@ The reason we want both states is so that we can render a "loading" indicator (o
 
 ## Instructions
 
-- add an effect that calls onAuthStateChanged
+- add an effect that calls `onAuthStateChanged`
 - make sure it doesn't add a new handler every render
 - make sure to clean up the subscription
 

@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from "react"
-import { calculateTotalMinutes, calculateExpectedMinutes } from "app/utils"
-import ProgressCircle from "app/ProgressCircle"
-import { fetchUser, subscribeToPosts } from "app/utils"
+import React, { useState, useEffect } from 'react'
+
+import {
+  calculateTotalMinutes,
+  calculateExpectedMinutes,
+  fetchUser,
+  subscribeToPosts
+} from 'app/utils'
+import ProgressCircle from 'app/ProgressCircle'
 
 /******************************************************************************/
 // Alright, we know everything we need to know about React to start building
@@ -14,14 +19,38 @@ import { fetchUser, subscribeToPosts } from "app/utils"
 // For this Avatar to work, we need to load the user and all of their posts
 // so we can calculate the rings on their avatar, right now, it's just empty.
 
+function useR(uid) {
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    let isCurrent = true
+
+    fetchUser(uid).then(user => {
+      if (isCurrent) setUser(user)
+    })
+
+    return () => {
+      isCurrent = false
+    }
+  }, [uid])
+
+  return user
+}
+
+function usePosts(uid) {
+  const [posts, setPosts] = useState(null)
+  useEffect(() => subscribeToPosts(uid, setPosts), [uid])
+  return posts
+}
+
 export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
-  const user = null
-  const posts = null
+  const user = useR(uid)
+  const posts = usePosts(uid)
 
   if (!user) {
     return (
       <div
-        className={"Avatar empty " + className}
+        className={'Avatar empty ' + className}
         style={{ width: size, height: size }}
         {...rest}
       />
@@ -51,7 +80,7 @@ export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
 
   return (
     <div
-      className={"Avatar " + className}
+      className={'Avatar ' + className}
       style={{ width: size, height: size }}
       {...rest}
     >
@@ -142,6 +171,23 @@ export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
 //       {circles}
 //     </div>
 //   )
+// }
+
+// class UserPosts extends React.Component {
+//   state = { posts: [] }
+//   componentDidMount() {
+//     // fetch
+//   }
+//   componentDidUpdate(prevProps) {
+//     // compare uid
+//     // if different, first, unsubscribe, then, start a new fetch
+//   }
+//   componentWillUnmount() {
+//     // cleanup
+//   }
+//   render() {
+//     return this.props.children(this.state.posts)
+//   }
 // }
 
 /******************************************************************************/
@@ -239,14 +285,14 @@ export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
 //   const posts = null
 
 //   useEffect(() => {
-//     let current = true
+//     let isMounted = true
+//
 //     fetchUser(uid).then(user => {
-//       if (current) {
-//         setUser(user)
-//       }
+//       if (isMounted) setUser(user)
 //     })
+//
 //     return () => {
-//       current = false
+//       isMounted = false
 //     }
 //   }, [uid])
 
@@ -384,7 +430,7 @@ export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
 // In the past to abstract something like this data fetching was the topic of
 // and entire day of our advanced react workshop. Render props, higher order
 // components, redux and redux middleware, all sorts of stuff to try to compose
-// behavior. Now, it's a cut past away.
+// behavior. Now, it's a cut & paste away.
 //
 // Watch how easily we can abstract these two behaviors:
 

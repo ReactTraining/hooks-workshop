@@ -1,6 +1,7 @@
 /******************************************************************************/
 // open NewPost.js
 import React, { useState, useEffect } from "react"
+
 import NewPost from "app/NewPost"
 
 // import App from "../../../modules/app/App"

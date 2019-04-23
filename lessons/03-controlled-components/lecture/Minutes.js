@@ -12,11 +12,11 @@ import { FaMinus, FaPlus } from "react-icons/fa"
 // In practical terms, an uncontrolled component is one whose value is changed
 // exclusively by the *user interacting with it*.
 //
-// You can still set the initial state of an uncontrolled component with 
+// You can still set the initial state of an uncontrolled component with
 // defaultValue (and defaultChecked).
 //
 // A controlled component is one that does not own its state, but rather its
-// state is controlled by the component that rendered it. 
+// state is controlled by the component that rendered it.
 //
 // In practical terms it means the state is controlled exclusively by the
 // *programmer*.
@@ -25,7 +25,7 @@ import { FaMinus, FaPlus } from "react-icons/fa"
 // value of an input by some other means than the user interacting with it.
 //
 // If you need the value of a component in your state, but you don't ever set
-// the value of the component with anything other thant he user interacting
+// the value of the component with anything other than the user interacting
 // with it, you can use either controlled or uncontrolled, it's the same. We
 // prefer uncontrolled in these situations just to communicate intent.
 
@@ -37,23 +37,13 @@ export default function Minutes({ date }) {
   return (
     <div className="Minutes">
       <div>
-        <button
-          type="button"
-          className="icon_button Minutes_button"
-        >
+        <button type="button" className="icon_button Minutes_button">
           <FaMinus />
         </button>
       </div>
-      <input
-        className="Minutes_input"
-        defaultValue={0}
-        id="minutes"
-      />
+      <input className="Minutes_input" defaultValue={0} id="minutes" />
       <div>
-        <button
-          type="button"
-          className="icon_button Minutes_button"
-        >
+        <button type="button" className="icon_button Minutes_button">
           <FaPlus />
         </button>
       </div>
@@ -63,7 +53,6 @@ export default function Minutes({ date }) {
     </div>
   )
 }
-
 
 /******************************************************************************/
 // We want these two buttons to change the value of the input, but it doesn't
@@ -111,8 +100,6 @@ export default function Minutes({ date }) {
 //     </div>
 //   )
 // }
-
-
 
 /******************************************************************************/
 // But when we use defaultValue then the user can't type into the input
@@ -297,7 +284,6 @@ export default function Minutes({ date }) {
 //     }
 //   }
 
-
 //   return (
 //     <div className="Minutes">
 //       <div>
@@ -332,4 +318,3 @@ export default function Minutes({ date }) {
 //     </div>
 //   )
 // }
-

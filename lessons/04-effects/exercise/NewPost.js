@@ -1,24 +1,25 @@
-import React, { useState, useEffect, useRef } from "react"
-import { useAppState } from "app/app-state"
-import Avatar from "app/Avatar"
-import Minutes from "app/Minutes"
-import { FaDumbbell } from "react-icons/fa"
-import RecentPostsDropdown from "app/RecentPostsDropdown"
-import { formatDate, DATE_FORMAT } from "app/utils"
+import React, { useState, useEffect, useRef } from 'react'
+import { FaDumbbell } from 'react-icons/fa'
+
+import { useAppState } from 'app/app-state'
+import { formatDate, DATE_FORMAT } from 'app/utils'
+import Avatar from 'app/Avatar'
+import Minutes from 'app/Minutes'
+import RecentPostsDropdown from 'app/RecentPostsDropdown'
 
 const MAX_MESSAGE_LENGTH = 200
 
 export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
   const [{ auth }] = useAppState()
-  const [message, setMessage] = useState("Ran around the lake.")
+  const [message, setMessage] = useState('Ran around the lake.')
   const messageTooLong = message.length > MAX_MESSAGE_LENGTH
 
-  const handleMessageChange = event => {
+  function handleMessageChange(event) {
     setMessage(event.target.value)
   }
 
   return (
-    <div className={"NewPost" + (messageTooLong ? " NewPost_error" : "")}>
+    <div className={'NewPost' + (messageTooLong ? ' NewPost_error' : '')}>
       {showAvatar && <Avatar uid={auth.uid} size={70} />}
       <form className="NewPost_form">
         <textarea
@@ -49,10 +50,10 @@ function makeNewPostKey(date) {
 }
 
 function getLocalStorageValue(key) {
-  const val = localStorage.getItem(key)
-  if (!val) return null
+  const value = localStorage.getItem(key)
+  if (!value) return null
   try {
-    return JSON.parse(val)
+    return JSON.parse(value)
   } catch (e) {
     return null
   }
