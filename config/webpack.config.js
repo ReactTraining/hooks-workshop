@@ -611,7 +611,7 @@ function getLessonAliases() {
   const aliases = {}
   fs.readdirSync(lessonPath).forEach(file => {
     const name = path.basename(file, ".js")
-    aliases[path.join("app", name)] = path.join(lessonPath, file)
+    aliases[`app/${name}`] = path.join(lessonPath, file)
   })
 
   return aliases
