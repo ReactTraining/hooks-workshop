@@ -17,7 +17,9 @@ We can either make a bunch of weird props:
 
 Or we can create a composable solution with compound components.
 
-Your task is to use context or cloneElement to give rendering control back to the consumer. So instead of this:
+Open up `SignupForm.js` and find where we're rendering `<DateFields/>`.
+
+Your task is to use context to give rendering control back to the consumer. So instead of this:
 
 ```jsx
 <DateFields
@@ -38,4 +40,12 @@ We want this:
 </DateFields>
 ```
 
-To help you decide between cloneElement or context, think, does the parent need to know anything from the children? Does it need a prop from a child in order to render itself? If the answer is yes, use cloneElement, if no, use context.
+1. Change `SignupForm.js` to render the the new `DateFields` API with compound components as shown above.
+
+2. Edit `DateFields.js` to stop rendering the individual components in `DateFields`, but instead just rendering `props.children`.
+
+3. Provide context in `DateFields` for the other components to use.
+
+4. Use context in `MonthField`, `DayField`, and `YearField`.
+
+5. Go back to `SignupForm.js` and you can tweak the order of the fields, put other values around them, do whatever you want!
