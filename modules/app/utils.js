@@ -41,7 +41,7 @@ export function logout() {
 }
 
 export function onAuthStateChanged(callback) {
-  auth().onAuthStateChanged(callback)
+  return auth().onAuthStateChanged(callback)
 }
 
 // logout()
