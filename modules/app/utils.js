@@ -40,11 +40,11 @@ export function logout() {
   return auth().signOut()
 }
 
-export function onAuthStateChanged(callback) {
+export const onAuthStateChanged = limitCalls(function onAuthStateChanged(
+  callback
+) {
   auth().onAuthStateChanged(callback)
-}
-
-// logout()
+})
 
 export async function signup({
   email,
@@ -71,18 +71,21 @@ export async function signup({
   }
 }
 
-export async function fetchUser(uid) {
+export const fetchUser = limitCalls(async function fetchUser(uid) {
   return fetchDoc(`users/${uid}`)
-}
+})
 
-export function fetchDoc(path) {
+export const fetchDoc = limitCalls(function fetchDoc(path) {
   return db
     .doc(path)
     .get()
     .then(doc => doc.data())
-}
+})
 
-export function subscribeToPosts(uid, callback) {
+export const subscribeToPosts = limitCalls(function subscribeToPosts(
+  uid,
+  callback
+) {
   let collection = db
     .collection("posts")
     .orderBy("createdAt")
@@ -90,16 +93,16 @@ export function subscribeToPosts(uid, callback) {
   return collection.onSnapshot(snapshot =>
     callback(getDocsFromSnapshot(snapshot))
   )
-}
+})
 
-export function fetchPosts(uid) {
+export const fetchPosts = limitCalls(function fetchPosts(uid) {
   return db
     .collection("posts")
     .orderBy("createdAt")
     .where("uid", "==", uid)
     .get()
     .then(getDocsFromSnapshot)
-}
+})
 
 export async function createPost(post) {
   return db
@@ -113,16 +116,19 @@ export function deletePost(id) {
   return db.doc(`posts/${id}`).delete()
 }
 
-export function getPosts(uid) {
+export const getPosts = limitCalls(function getPosts(uid) {
   return db
     .collection("posts")
     .orderBy("createdAt")
     .where("uid", "==", uid)
     .get()
     .then(getDocsFromSnapshot)
-}
+})
 
-export function loadFeedPosts(createdAtMax, limit) {
+export const loadFeedPosts = limitCalls(function loadFeedPosts(
+  createdAtMax,
+  limit
+) {
   return db
     .collection("posts")
     .orderBy("createdAt", "desc")
@@ -130,26 +136,32 @@ export function loadFeedPosts(createdAtMax, limit) {
     .limit(limit)
     .get()
     .then(getDocsFromSnapshot)
-}
+})
 
-export function subscribeToFeedPosts(createdAtMax, limit, callback) {
+export const subscribeToFeedPosts = limitCalls(function subscribeToFeedPosts(
+  createdAtMax,
+  limit,
+  callback
+) {
   return db
     .collection("posts")
     .orderBy("createdAt", "desc")
     .where("createdAt", "<", createdAtMax)
     .limit(limit)
     .onSnapshot(snapshot => callback(getDocsFromSnapshot(snapshot)))
-}
+})
 
-export function subscribeToNewFeedPosts(createdAtMin, callback) {
-  return db
-    .collection("posts")
-    .orderBy("createdAt", "desc")
-    .where("createdAt", ">=", createdAtMin)
-    .onSnapshot(snapshot => {
-      callback(getDocsFromSnapshot(snapshot))
-    })
-}
+export const subscribeToNewFeedPosts = limitCalls(
+  function subscribeToNewFeedPosts(createdAtMin, callback) {
+    return db
+      .collection("posts")
+      .orderBy("createdAt", "desc")
+      .where("createdAt", ">=", createdAtMin)
+      .onSnapshot(snapshot => {
+        callback(getDocsFromSnapshot(snapshot))
+      })
+  }
+)
 
 export { formatDate }
 
@@ -256,4 +268,21 @@ export function tween(duration, callback) {
   frame = requestAnimationFrame(tick)
 
   return () => cancelAnimationFrame(frame)
+}
+
+function limitCalls(fn) {
+  let calls = 0
+  return (...args) => {
+    calls++
+    if (calls > 5) {
+      throw new Error(
+        `EASY THERE: You've called "${
+          fn.name
+        }" too many times in too quickly, did you forget the second argument to useEffect? Also, this is a message from Ryan and Michael, not React.`
+      )
+    } else {
+      setTimeout(() => (calls = 0), 5000)
+    }
+    return fn(...args)
+  }
 }
