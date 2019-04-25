@@ -8,7 +8,7 @@ Open up `LoginForm.js`.
 
 Add some state to track if the checkbox is checked or not.
 
-Add a defaultValue to the checkbox.
+Use your state for the `defaultChecked` prop on the checkbox.
 
 Add an onChange handler to the checkbox.
 
@@ -39,17 +39,19 @@ passwordNode.value
 Login with `login(email, pass)`, it returns a promise so you can await it or use `then`.
 
 ```jsx
-login(email, pass).then(() => {
-  // all done
-}).catch(() => {
-  // error
-})
+login(email, pass)
+  .then(() => {
+    // all done
+  })
+  .catch(() => {
+    // error
+  })
 
 // or
 
 try {
   await login(email, pass)
-} catch(error) {
+} catch (error) {
   // error
 }
 ```
