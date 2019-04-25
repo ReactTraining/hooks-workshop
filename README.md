@@ -13,7 +13,7 @@ $ npm install
 $ npm start
 ```
 
-You'll be prompted with the exercise you'd like to run, hit "0" to view the full app we'll be working in, then, open a web browser to [http://localhost:300](http://localhost:3000).
+You'll be prompted with the exercise you'd like to run, hit "0" to view the full app we'll be working in, then, open a web browser to [http://localhost:3000](http://localhost:3000).
 
 ```
 $ npm start
