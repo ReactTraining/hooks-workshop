@@ -1,12 +1,13 @@
 // Don't edit this file, go to RecentPostsDropdown.js
 import React, { useState, useRef } from "react"
+import { format as formatDate } from "date-fns"
+import { FaDumbbell } from "react-icons/fa"
+
 import { useAppState } from "app/app-state"
+import { createPost, DATE_FORMAT } from "app/utils"
 import Avatar from "app/Avatar"
 import Minutes from "app/Minutes"
-import { FaDumbbell } from "react-icons/fa"
 import RecentPostsDropdown from "app/RecentPostsDropdown"
-import { createPost, DATE_FORMAT } from "app/utils"
-import { format as formatDate } from "date-fns"
 
 const MAX_MESSAGE_LENGTH = 200
 

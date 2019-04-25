@@ -1,6 +1,7 @@
 import React from "react"
 import { Menu, MenuButton, MenuList, MenuItem } from "@reach/menu-button"
 import { FaChevronDown } from "react-icons/fa"
+
 import usePosts from "app/usePosts"
 
 export default function RecentPostsDropdown({ uid, onSelect }) {

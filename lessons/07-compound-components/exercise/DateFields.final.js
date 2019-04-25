@@ -1,7 +1,8 @@
 import React, { createContext, useContext } from "react"
+
 import { daysInMonth } from "app/utils"
 
-const Context = createContext()
+const DateFieldsContext = createContext()
 
 export default function DateFields({
   children,
@@ -13,11 +14,11 @@ export default function DateFields({
 }) {
   const date = controlledValue || defaultValue
   const context = { date, onChange }
-  return <Context.Provider value={context} children={children} />
+  return <DateFieldsContext.Provider value={context} children={children} />
 }
 
 export function DayField(props) {
-  const { date, onChange } = useContext(Context)
+  const { date, onChange } = useContext(DateFieldsContext)
   const month = date.getMonth()
   const year = date.getFullYear()
   const days = Array.from({ length: daysInMonth(month, year) })
@@ -41,7 +42,7 @@ export function DayField(props) {
 }
 
 export function MonthField(props) {
-  const { date, onChange } = useContext(Context)
+  const { date, onChange } = useContext(DateFieldsContext)
   const month = date.getMonth()
   const handleChange = event => {
     const newDate = new Date(date.getTime())
@@ -68,7 +69,7 @@ export function MonthField(props) {
 }
 
 export function YearField({ start, end, ...rest }) {
-  const { date, onChange } = useContext(Context)
+  const { date, onChange } = useContext(DateFieldsContext)
   const difference = end - start + 1
   const years = Array.from({ length: difference }).map(
     (_, index) => index + start
