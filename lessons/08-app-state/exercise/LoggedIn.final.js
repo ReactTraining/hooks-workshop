@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from "react"
 import { Router, Route, DefaultRoute } from "app/packages/react-router-next"
-import { fetchDoc, isValidDate } from "app/utils"
+import { fetchUser, isValidDate } from "app/utils"
 import { useAppState } from "app/app-state"
 import UserDatePosts from "app/UserDatePosts"
 import Feed from "app/Feed"
@@ -15,7 +15,7 @@ export default function LoggedIn() {
 
   useEffect(() => {
     if (!user) {
-      fetchDoc(`users/${auth.uid}`).then(user => {
+      fetchUser(auth.uid).then(user => {
         // okay to dispatch even if unmounted, might
         // as well get it into the cache
         dispatch({ type: "LOAD_USER", user })
