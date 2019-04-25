@@ -3,7 +3,7 @@ import { daysInMonth } from "app/utils"
 
 const Context = createContext()
 
-export function DateFields({
+export default function DateFields({
   children,
   defaultValue,
   start,

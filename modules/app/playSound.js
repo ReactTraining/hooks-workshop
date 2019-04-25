@@ -64,5 +64,8 @@ function playNotes() {
   }
 }
 
+// get rid of lint warning
+export { playNotes }
+
 // export default playNotes
 export default () => {}

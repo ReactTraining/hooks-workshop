@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React, { Fragment, useContext, createContext } from "react"
 import { daysInMonth } from "app/utils"
 
 export default function DateFields({
@@ -19,7 +19,7 @@ export default function DateFields({
   )
 }
 
-function DayField(props) {
+export function DayField(props) {
   const { date, onChange } = props
   const month = date.getMonth()
   const year = date.getFullYear()
@@ -43,7 +43,7 @@ function DayField(props) {
   )
 }
 
-function MonthField(props) {
+export function MonthField(props) {
   const { date, onChange } = props
   const month = date.getMonth()
   const handleChange = event => {
@@ -70,7 +70,7 @@ function MonthField(props) {
   )
 }
 
-function YearField(props) {
+export function YearField(props) {
   const { date, onChange, start, end } = props
   const difference = end - start + 1
   const years = Array.from({ length: difference }).map(

@@ -12,6 +12,7 @@ export default function LoginForm() {
   const [error, setError] = useState(null)
   const handleSubmit = event => {
     event.preventDefault()
+    setLoading(true)
     const [emailNode, passwordNode] = event.target.elements
     login(emailNode.value, passwordNode.value).catch(error => {
       console.log(error.message)
@@ -69,4 +70,3 @@ export default function LoginForm() {
     </form>
   )
 }
-

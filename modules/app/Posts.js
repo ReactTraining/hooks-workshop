@@ -7,7 +7,7 @@ import Avatar from "app/Avatar"
 import NewPost from "app/NewPost"
 import { FaPlusCircle, FaTrashAlt } from "react-icons/fa"
 import AnimatedText from "app/AnimatedText"
-import { deletePost, getPosts } from "app/utils"
+import { deletePost } from "app/utils"
 import usePosts from "app/usePosts"
 
 export default function Posts({ params }) {

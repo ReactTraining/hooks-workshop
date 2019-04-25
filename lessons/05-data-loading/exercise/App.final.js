@@ -9,7 +9,7 @@ function useAuth() {
   const [auth, setAuth] = useState(null)
 
   useEffect(() => {
-    onAuthStateChanged(auth => {
+    return onAuthStateChanged(auth => {
       setAuthAttempted(true)
       setAuth(auth)
     })

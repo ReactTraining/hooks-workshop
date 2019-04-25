@@ -19,33 +19,9 @@ import ProgressCircle from 'app/ProgressCircle'
 // For this Avatar to work, we need to load the user and all of their posts
 // so we can calculate the rings on their avatar, right now, it's just empty.
 
-function useR(uid) {
-  const [user, setUser] = useState(null)
-
-  useEffect(() => {
-    let isCurrent = true
-
-    fetchUser(uid).then(user => {
-      if (isCurrent) setUser(user)
-    })
-
-    return () => {
-      isCurrent = false
-    }
-  }, [uid])
-
-  return user
-}
-
-function usePosts(uid) {
-  const [posts, setPosts] = useState(null)
-  useEffect(() => subscribeToPosts(uid, setPosts), [uid])
-  return posts
-}
-
 export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
-  const user = useR(uid)
-  const posts = usePosts(uid)
+  const user = null
+  const posts = null
 
   if (!user) {
     return (
@@ -171,23 +147,6 @@ export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
 //       {circles}
 //     </div>
 //   )
-// }
-
-// class UserPosts extends React.Component {
-//   state = { posts: [] }
-//   componentDidMount() {
-//     // fetch
-//   }
-//   componentDidUpdate(prevProps) {
-//     // compare uid
-//     // if different, first, unsubscribe, then, start a new fetch
-//   }
-//   componentWillUnmount() {
-//     // cleanup
-//   }
-//   render() {
-//     return this.props.children(this.state.posts)
-//   }
 // }
 
 /******************************************************************************/
@@ -508,4 +467,27 @@ export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
 //       {circles}
 //     </div>
 //   )
+// }
+
+/******************************************************************************/
+// useEffect is able to encapsulate BOTH setup and teardown. Also, it is able to
+// limit running side effects based on need, so they don't run unnecessarily.
+//
+// Remember what this used to look like with classes??
+
+// class UserPosts extends React.Component {
+//   state = { posts: [] }
+//   componentDidMount() {
+//     // fetch
+//   }
+//   componentDidUpdate(prevProps) {
+//     // compare uid
+//     // if different, unsubscribe, then start a new fetch
+//   }
+//   componentWillUnmount() {
+//     // cleanup
+//   }
+//   render() {
+//     return this.props.children(this.state.posts)
+//   }
 // }

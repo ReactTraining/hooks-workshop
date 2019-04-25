@@ -16,9 +16,13 @@ function LoggedIn() {
 
   useEffect(() => {
     if (!user) {
+      let isCurrent = true
       fetchDoc(`users/${auth.uid}`).then(user => {
-        dispatch({ type: "LOAD_USER", user })
+        if (isCurrent) {
+          dispatch({ type: "LOAD_USER", user })
+        }
       })
+      return () => (isCurrent = false)
     }
   }, [user, auth.uid, dispatch])
 
