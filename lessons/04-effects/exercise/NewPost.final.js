@@ -22,7 +22,7 @@ export default function NewPost({ takeFocus, date, showAvatar }) {
   const storageKey = makeNewPostKey(date)
 
   // Initialize the message for this date from the value in storage.
-  useLayoutEffect(() => {
+  useEffect(() => {
     setMessage(getLocalStorageValue(storageKey) || '')
   }, [storageKey])
 
