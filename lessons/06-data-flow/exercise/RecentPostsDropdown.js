@@ -1,7 +1,9 @@
-import React from 'react'
-import { Menu, MenuButton, MenuList, MenuItem } from '@reach/menu-button'
-import { FaChevronDown } from 'react-icons/fa'
-import usePosts from 'app/usePosts'
+import React from "react"
+import { Menu, MenuButton, MenuList, MenuItem } from "@reach/menu-button"
+import { FaChevronDown } from "react-icons/fa"
+
+import usePosts from "app/usePosts"
+
 // import RecentPostsDropdown from "./RecentPostsDropdown.final"
 // export default RecentPostsDropdown
 
@@ -22,10 +24,10 @@ export default function RecentPostsDropdown({ uid, onSelect }) {
       </MenuButton>
       <MenuList>
         {posts
-          .filter(post => post.message.trim() !== '')
+          .filter(post => post.message.trim() !== "")
           .reverse()
           .map((post, index) => (
-            <MenuItem key={index} onSelect={() => onSelect(post.message)}>{post.message}</MenuItem>
+            <MenuItem key={index}>{post.message}</MenuItem>
           ))}
       </MenuList>
     </Menu>
