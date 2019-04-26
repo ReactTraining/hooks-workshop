@@ -1,10 +1,10 @@
-import React, { useState, useContext, createContext, Children } from 'react'
+import React, { useState, useContext, createContext, Children } from "react"
 
-import LoginForm from 'app/LoginForm'
-import SignupForm from 'app/SignupForm'
-import About from 'app/About'
+import LoginForm from "app/LoginForm"
+import SignupForm from "app/SignupForm"
+import About from "app/About"
 
-// function Tabs({ data, tabsPosition = 'top', disabled = [] }) {
+// function Tabs({ data, tabsPosition = "top", disabled = [] }) {
 //   const [activeIndex, setActiveIndex] = useState(0)
 
 //   const tabList = (
@@ -16,7 +16,7 @@ import About from 'app/About'
 //           <div
 //             data-reach-tab
 //             key={index}
-//             className={isDisabled ? 'disabled' : isActive ? 'active' : ''}
+//             className={isDisabled ? "disabled" : isActive ? "active" : ""}
 //             onClick={isDisabled ? undefined : () => setActiveIndex(index)}
 //           >
 //             {tab.label}
@@ -30,14 +30,14 @@ import About from 'app/About'
 
 //   return (
 //     <div data-reach-tabs>
-//       {tabsPosition === 'bottom' ? [tabPanels, tabList] : [tabList, tabPanels]}
+//       {tabsPosition === "bottom" ? [tabPanels, tabList] : [tabList, tabPanels]}
 //     </div>
 //   )
 // }
 
 const TabsContext = createContext()
 
-function Tabs({ children }) {
+function Tabs2({ children }) {
   const [activeIndex, setActiveIndex] = useState(0)
   return (
     <TabsContext.Provider value={{ activeIndex, setActiveIndex }}>
@@ -71,7 +71,7 @@ function Tab({ children, disabled = false }) {
   return (
     <div
       data-reach-tab
-      className={disabled ? 'disabled' : isActive ? 'active' : ''}
+      className={disabled ? "disabled" : isActive ? "active" : ""}
       onClick={disabled ? undefined : onSelect}
     >
       {children}
@@ -87,45 +87,72 @@ function TabPanels({ children }) {
 }
 
 function TabPanel({ children }) {
-  return <div>{children}</div>
+  return children
+}
+
+function Tabs({ data, tabsPosition = "top", disabled = [] }) {
+  const tabs = (
+    <TabList>
+      {data.map((item, index) => (
+        <Tab key={index} disabled={disabled.includes(index)}>
+          {item.label}
+        </Tab>
+      ))}
+    </TabList>
+  )
+
+  const panels = (
+    <TabPanels>
+      {data.map((item, index) => (
+        <TabPanel key={index}>{item.content}</TabPanel>
+      ))}
+    </TabPanels>
+  )
+
+  return (
+    <Tabs2>{tabsPosition === "bottom" ? [panels, tabs] : [tabs, panels]}</Tabs2>
+  )
 }
 
 export default function LoggedOut() {
-  return (
-    <div className="LoggedOut">
-      <About />
-      <Tabs>
-        <TabList>
-          <Tab>Login</Tab>
-          <Tab disabled>Signup</Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel>
-            <LoginForm />
-          </TabPanel>
-          <TabPanel>
-            <SignupForm />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
-    </div>
-  )
-
-  // const tabData = [
-  //   {
-  //     label: 'Login',
-  //     content: <LoginForm />
-  //   },
-  //   {
-  //     label: 'Signup',
-  //     content: <SignupForm />
-  //   }
-  // ]
-
   // return (
   //   <div className="LoggedOut">
   //     <About />
-  //     <Tabs data={tabData} tabsPosition="bottom" disabled={[1]} />
+
+  //     <Tabs2>
+  //       <TabPanels>
+  //         <TabPanel>
+  //           <LoginForm />
+  //         </TabPanel>
+  //         <TabPanel>
+  //           <SignupForm />
+  //         </TabPanel>
+  //       </TabPanels>
+  //       <div style={{ textTransform: "uppercase" }}>
+  //         <TabList>
+  //           <Tab>Login</Tab>
+  //           <Tab disabled>Signup</Tab>
+  //         </TabList>
+  //       </div>
+  //     </Tabs2>
   //   </div>
   // )
+
+  const tabData = [
+    {
+      label: "Login",
+      content: <LoginForm />
+    },
+    {
+      label: "Signup",
+      content: <SignupForm />
+    }
+  ]
+
+  return (
+    <div className="LoggedOut">
+      <About />
+      <Tabs data={tabData} tabsPosition="bottom" />
+    </div>
+  )
 }

@@ -1,28 +1,18 @@
-import React, { useState, useRef } from 'react'
-import { FaDumbbell } from 'react-icons/fa'
-import { format as formatDate } from 'date-fns'
+import React, { useState, useRef } from "react"
+import { FaDumbbell } from "react-icons/fa"
+import { format as formatDate } from "date-fns"
 
-import { useAppState } from 'app/app-state'
-import { createPost, DATE_FORMAT } from 'app/utils'
-import Avatar from 'app/Avatar'
-import Minutes from 'app/Minutes'
-import RecentPostsDropdown from 'app/RecentPostsDropdown'
+import { useAppState } from "app/app-state"
+import { createPost, DATE_FORMAT } from "app/utils"
+import Avatar from "app/Avatar"
+import Minutes from "app/Minutes"
+import RecentPostsDropdown from "app/RecentPostsDropdown"
 
 const MAX_MESSAGE_LENGTH = 200
 
-/******************************************************************************/
-// When things happen inside a component, we often need to let the owner know.
-// Let's create posts here, and then let the owner (Dashboard) know about it.
-//
-// Our DOM components already know how to do this, you know them as events.
-// When the form is submitted, we want to create the new post. It's common to
-// pair "on" with "handle": onSubmit, handleSubmit, but that's really just a
-// convention; it doesn't "mean" anything. Let's check out all the places
-// we're passing data down, and getting data back up through events:
-
-export default function NewPost({ takeFocus, date, showAvatar }) {
+export default function NewPost({ takeFocus, date, showAvatar, onSuccess }) {
   const [{ auth }] = useAppState()
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState("")
   const [saving, setSaving] = useState(false)
   const formRef = useRef()
   const minutesRef = useRef()
@@ -47,12 +37,13 @@ export default function NewPost({ takeFocus, date, showAvatar }) {
       uid: auth.uid
     }).then(post => {
       setSaving(false)
-      setMessage('')
+      setMessage("")
+      onSuccess(post)
     })
   }
 
   return (
-    <div className={'NewPost' + (tooMuchText ? ' NewPost_error' : '')}>
+    <div className={"NewPost" + (tooMuchText ? " NewPost_error" : "")}>
       {showAvatar && <Avatar uid={auth.uid} size={70} />}
       <form ref={formRef} className="NewPost_form" onSubmit={handleSubmit}>
         <textarea

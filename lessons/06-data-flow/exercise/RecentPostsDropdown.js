@@ -27,7 +27,9 @@ export default function RecentPostsDropdown({ uid, onSelect }) {
           .filter(post => post.message.trim() !== "")
           .reverse()
           .map((post, index) => (
-            <MenuItem key={index}>{post.message}</MenuItem>
+            <MenuItem key={index} onSelect={() => onSelect(post.message)}>
+              {post.message}
+            </MenuItem>
           ))}
       </MenuList>
     </Menu>
