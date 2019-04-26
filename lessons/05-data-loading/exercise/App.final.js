@@ -20,7 +20,11 @@ function useAuth() {
 
 export default function App() {
   const { auth, authAttempted } = useAuth()
-  if (!authAttempted) return null
+
+  if (!authAttempted) {
+    return <p>Authenticating...</p>
+  }
+
   return (
     <div className="Layout">
       {auth ? <LoggedIn auth={auth} /> : <LoggedOut />}
