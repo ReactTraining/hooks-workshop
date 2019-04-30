@@ -44,7 +44,8 @@ export const onAuthStateChanged = limitCalls(function onAuthStateChanged(
   callback
 ) {
   auth().onAuthStateChanged(callback)
-})
+},
+3)
 
 export async function signup({
   email,
@@ -270,11 +271,11 @@ export function tween(duration, callback) {
   return () => cancelAnimationFrame(frame)
 }
 
-function limitCalls(fn) {
+function limitCalls(fn, limit = 20) {
   let calls = 0
   return (...args) => {
     calls++
-    if (calls > 20) {
+    if (calls > limit) {
       throw new Error(
         `EASY THERE: You've called "${
           fn.name
