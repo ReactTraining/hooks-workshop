@@ -43,7 +43,7 @@ export function logout() {
 export const onAuthStateChanged = limitCalls(function onAuthStateChanged(
   callback
 ) {
-  return auth().onAuthStateChanged(callback)
+  auth().onAuthStateChanged(callback)
 })
 
 export async function signup({
