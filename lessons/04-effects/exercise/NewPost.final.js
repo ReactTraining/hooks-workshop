@@ -1,35 +1,30 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { FaDumbbell } from 'react-icons/fa'
+import React, { useState, useEffect, useRef } from "react"
+import { FaDumbbell } from "react-icons/fa"
 
-import { useAppState } from 'app/app-state'
-import { formatDate, DATE_FORMAT } from 'app/utils'
-import Avatar from 'app/Avatar'
-import Minutes from 'app/Minutes'
-import RecentPostsDropdown from 'app/RecentPostsDropdown'
+import { useAppState } from "app/app-state"
+import { formatDate, DATE_FORMAT } from "app/utils"
+import Avatar from "app/Avatar"
+import Minutes from "app/Minutes"
+import RecentPostsDropdown from "app/RecentPostsDropdown"
 
 const MAX_MESSAGE_LENGTH = 200
 
 export default function NewPost({ takeFocus, date, showAvatar }) {
   const [{ auth }] = useAppState()
-  const [message, setMessage] = useState('')
+  const storageKey = makeNewPostKey(date)
+  const [message, setMessage] = useState(getLocalStorageValue(storageKey) || "")
   const messageTooLong = message.length > MAX_MESSAGE_LENGTH
-  const messageRef = useRef()
 
   function handleMessageChange(event) {
     setMessage(event.target.value)
   }
 
-  const storageKey = makeNewPostKey(date)
-
-  // Initialize the message for this date from the value in storage.
-  useLayoutEffect(() => {
-    setMessage(getLocalStorageValue(storageKey) || '')
-  }, [storageKey])
-
   // Save the message for this date as its value changes.
   useEffect(() => {
     setLocalStorage(storageKey, message)
   }, [storageKey, message])
+
+  const messageRef = useRef()
 
   // Automatically focus the <textarea> if it should take focus.
   useEffect(() => {
@@ -37,7 +32,7 @@ export default function NewPost({ takeFocus, date, showAvatar }) {
   }, [takeFocus, message])
 
   return (
-    <div className={'NewPost' + (messageTooLong ? ' NewPost_error' : '')}>
+    <div className={"NewPost" + (messageTooLong ? " NewPost_error" : "")}>
       {showAvatar && <Avatar uid={auth.uid} size={70} />}
       <form className="NewPost_form">
         <textarea
