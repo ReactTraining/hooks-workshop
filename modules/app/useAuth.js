@@ -6,20 +6,18 @@ export default function useAuth() {
   const [{ authAttempted, auth }, dispatch] = useAppState()
 
   useEffect(() => {
-    if (!authAttempted) {
-      return onAuthStateChanged(auth => {
-        if (auth) {
-          const { displayName, photoURL, uid } = auth
-          dispatch({
-            type: "AUTH_CHANGE",
-            auth: { displayName, photoURL, uid }
-          })
-        } else {
-          dispatch({ type: "AUTH_CHANGE", auth: null })
-        }
-      })
-    }
-  }, [authAttempted, dispatch])
+    return onAuthStateChanged(auth => {
+      if (auth) {
+        const { displayName, photoURL, uid } = auth
+        dispatch({
+          type: "AUTH_CHANGE",
+          auth: { displayName, photoURL, uid }
+        })
+      } else {
+        dispatch({ type: "AUTH_CHANGE", auth: null })
+      }
+    })
+  }, [dispatch])
 
   return { authAttempted, auth }
 }

@@ -8,11 +8,9 @@ import Dashboard from "app/Dashboard"
 import TopBar from "app/TopBar"
 import User from "app/User"
 import NotFound from "app/NotFound"
-import useAuth from "app/useAuth"
 
 export default function LoggedIn() {
-  const { auth } = useAuth()
-  const [{ user }, dispatch] = useAppState()
+  const [{ auth, user }, dispatch] = useAppState()
 
   useEffect(() => {
     if (!user) {

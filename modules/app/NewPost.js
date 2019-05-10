@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react"
-import useAuth from "app/useAuth"
+import { useAppState } from "app/app-state"
 import { createPost, DATE_FORMAT } from "app/utils"
 import { format as formatDate } from "date-fns"
 import Avatar from "app/Avatar"
@@ -10,7 +10,7 @@ import RecentPostsDropdown from "app/RecentPostsDropdown"
 const MAX_MESSAGE_LENGTH = 200
 
 export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
-  const { auth } = useAuth()
+  const [{ auth }] = useAppState()
 
   const [message, setMessage] = useState(
     getLocalStorageValue(makeNewPostKey(date)) || ""

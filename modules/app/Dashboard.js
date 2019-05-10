@@ -11,7 +11,6 @@ import {
   isFuture
 } from "date-fns"
 
-import useAuth from "app/useAuth"
 import AnimatedDialog from "app/AnimatedDialog"
 import Posts from "app/Posts"
 import usePosts from "app/usePosts"
@@ -44,7 +43,7 @@ export default function Dashboard() {
 }
 
 function Calendar({ user, posts, modalIsOpen }) {
-  const { auth } = useAuth()
+  const [{ auth }] = useAppState()
 
   const [newPostDate, setNewPostDate] = useState(null)
   const [dayWithNewPost, setDayWithNewPost] = useState(null)
