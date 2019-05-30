@@ -18,7 +18,7 @@ import ReactDOM from "react-dom"
 // ReactDOM.render(reactElement, domElement)
 
 /**********************************************************/
-// This html looking syntax in JavaSCript is called JSX, and it’s special to
+// This html looking syntax in JavaScript is called JSX, and it’s special to
 // React, but it's not that special. We’ve got a build setup that uses a tool called
 // "babel" that converts it to 1-to-1 function calls.
 //
