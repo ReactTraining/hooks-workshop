@@ -409,7 +409,7 @@ body {
 .NewPost_char_count {
   color: var(--gray);
   text-align: right;
-  font-size: 85%;
+  font-size: 1.2em;
 }
 
 .NewPost .Avatar {
