@@ -591,7 +591,7 @@ module.exports = function(webpackEnv) {
 }
 
 function getLessonAliases() {
-  const type = process.argv[2] || "lecture"
+  const type = process.argv[2] || "exercise"
   if (!["exercise", "lecture"].includes(type)) {
     console.error(
       "Invalid argument for `npm start`. Did you mean `npm start lecture`?"
