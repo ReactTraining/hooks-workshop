@@ -591,7 +591,13 @@ module.exports = function(webpackEnv) {
 }
 
 function getLessonAliases() {
-  const type = process.argv[2] || "exercise"
+  const type = process.argv[2] || "lecture"
+  if (!["exercise", "lecture"].includes(type)) {
+    console.error(
+      "Invalid argument for `npm start`. Did you mean `npm start lecture`?"
+    )
+    process.exit(1)
+  }
 
   const lessonsPath = path.resolve(__dirname, "..", "lessons")
   const lessons = fs.readdirSync(lessonsPath).filter(item => {
