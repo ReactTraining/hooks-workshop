@@ -1,8 +1,15 @@
 import React, { Fragment } from "react"
 import VisuallyHidden from "@reach/visually-hidden"
-import TabsButton from "app/TabsButton"
 import { FaDumbbell } from "react-icons/fa"
 import { DateFields, MonthField, DayField, YearField } from "app/DateFields"
+
+function TabsButton({ children }) {
+  return (
+    <button className="TabsButton icon_button cta" type="submit">
+      {children}
+    </button>
+  )
+}
 
 function TextInput({ id, label, type = "text" }) {
   return (
