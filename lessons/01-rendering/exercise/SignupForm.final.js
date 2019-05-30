@@ -1,20 +1,3 @@
-/******************************************************
-
-Code with me:
-
-Fields that we need:
-
-- displayName
-- photoURL
-- email
-- password
-- startYear
-
-One your own:
-
-- abstract the fields into a `TextInput` component.
-
-*/
 import React, { Fragment } from "react"
 import VisuallyHidden from "@reach/visually-hidden"
 import TabsButton from "app/TabsButton"
@@ -27,12 +10,7 @@ function TextInput({ id, label, type = "text" }) {
       <VisuallyHidden>
         <label htmlFor={id}>{label}</label>
       </VisuallyHidden>
-      <input
-        id={id}
-        placeholder={label}
-        type={type}
-        required
-      />
+      <input id={id} placeholder={label} type={type} required />
     </Fragment>
   )
 }
