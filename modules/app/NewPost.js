@@ -17,7 +17,6 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
   )
   const [saving, setSaving] = useState(false)
   const formRef = useRef()
-  const minutesRef = useRef()
   const messageRef = useRef()
 
   useEffect(() => {
@@ -41,7 +40,10 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
     // eslint-disable-next-line
     createPost({
       message: messageRef.current.value,
-      minutes: parseInt(minutesRef.current.value, 10),
+      // We specifically want to avoid refs for Minutes because it would
+      // require ref forwarding and not all Minutes components (lectures)
+      // will use ref forwarding (because they don't need it)
+      minutes: parseInt(event.target.elements[3].value, 10),
       date: formatDate(date, DATE_FORMAT),
       uid: auth.uid
     }).then(post => {
@@ -53,12 +55,12 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
 
   const handleSubmit = event => {
     event.preventDefault()
-    submit()
+    submit(event)
   }
 
   const handleMessageKeyDown = event => {
     if (event.metaKey && event.key === "Enter") {
-      submit()
+      submit(event)
     }
   }
 
@@ -86,7 +88,7 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
         </div>
         <RecentPostsDropdown uid={auth.uid} onSelect={handleRecentSelect} />
         <div className="NewPost_buttons">
-          <Minutes date={date} ref={minutesRef} />
+          <Minutes date={date} />
           <div>
             <button disabled={saving} type="submit" className="icon_button cta">
               <FaDumbbell /> <span>Post</span>

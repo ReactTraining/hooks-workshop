@@ -1,8 +1,8 @@
-import React, { useState, forwardRef } from 'react'
-import { format as formatDate } from 'date-fns'
-import { FaMinus, FaPlus } from 'react-icons/fa'
+import React, { useState } from "react"
+import { format as formatDate } from "date-fns"
+import { FaMinus, FaPlus } from "react-icons/fa"
 
-export default forwardRef(function Minutes({ date }, ref) {
+export default function Minutes({ date }) {
   const [minutes, setMinutes] = useState(30)
 
   const subtract = () => {
@@ -17,7 +17,7 @@ export default forwardRef(function Minutes({ date }, ref) {
 
   const handleInputChange = event => {
     const value = event.target.value
-    const specialCaseEmpty = value.trim() === ''
+    const specialCaseEmpty = value.trim() === ""
     if (specialCaseEmpty) {
       // allow them to delete all characters
       setMinutes(value)
@@ -31,17 +31,17 @@ export default forwardRef(function Minutes({ date }, ref) {
   }
 
   const handleInputBlur = event => {
-    if (event.target.value.trim() === '') {
+    if (event.target.value.trim() === "") {
       setMinutes(0)
     }
   }
 
   const handleInputKeyDown = event => {
     // preventDefault to keep cursor from going back/forth
-    if (event.key === 'ArrowUp') {
+    if (event.key === "ArrowUp") {
       event.preventDefault()
       add()
-    } else if (event.key === 'ArrowDown') {
+    } else if (event.key === "ArrowDown") {
       event.preventDefault()
       subtract()
     }
@@ -65,7 +65,6 @@ export default forwardRef(function Minutes({ date }, ref) {
         onChange={handleInputChange}
         onBlur={handleInputBlur}
         onKeyDown={handleInputKeyDown}
-        ref={ref}
       />
       <div>
         <button
@@ -77,8 +76,8 @@ export default forwardRef(function Minutes({ date }, ref) {
         </button>
       </div>
       <label className="Minutes_label" htmlFor="minutes">
-        Mins on {formatDate(date, 'MMM Do')}
+        Mins on {formatDate(date, "MMM Do")}
       </label>
     </div>
   )
-})
+}
