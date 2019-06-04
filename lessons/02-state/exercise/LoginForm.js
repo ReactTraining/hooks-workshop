@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { Fragment, useState } from "react"
 import VisuallyHidden from "@reach/visually-hidden"
 import { FaSignInAlt } from "react-icons/fa"
 import TabsButton from "app/TabsButton"
@@ -8,8 +8,29 @@ import { login } from "app/utils"
 // export default LoginFormFinal
 
 export default function LoginForm() {
+  const [checkbox, setCheckbox] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  const handleCheckboxChange = () => {
+    setCheckbox(!checkbox)
+  }
+
+  const handleSubmit = event => {
+    event.preventDefault()
+    const [emailNode, passwordNode] = event.target.elements
+    setLoading(true)
+    login(emailNode.value, passwordNode.value)
+      .then(function() {
+        setLoading(false)
+        console.log("we are finished with the async code")
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <VisuallyHidden>
         <label htmlFor="login:email">Email:</label>
       </VisuallyHidden>
@@ -25,7 +46,7 @@ export default function LoginForm() {
       </VisuallyHidden>
       <input
         id="login:password"
-        type="password"
+        type={checkbox ? "text" : "password"}
         className="inputField"
         placeholder="Password"
       />
@@ -35,15 +56,22 @@ export default function LoginForm() {
           <input
             className="passwordCheckbox"
             type="checkbox"
-            defaultChecked={false}
+            defaultChecked={checkbox}
+            onChange={handleCheckboxChange}
           />{" "}
           show password
         </label>
       </div>
 
       <TabsButton>
-        <FaSignInAlt />
-        <span>Login</span>
+        {loading ? (
+          <span>...</span>
+        ) : (
+          <Fragment>
+            <FaSignInAlt />
+            <span>Login</span>
+          </Fragment>
+        )}
       </TabsButton>
     </form>
   )
