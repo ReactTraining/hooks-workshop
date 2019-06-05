@@ -7,7 +7,7 @@ import { useAppState } from "app/app-state"
 //    We've got it in App.js and NewPost.js.
 //
 //    - We'll set up two onAuthStateChanged listeners. This might cause
-//      flickering, and is just unneccesary.
+//      flickering, and is just unnecessary.
 //    - Every component down the tree has to account for a potential `null`
 //      value, which complicates all the code, we should be able to just plan
 //      on having it. We should see an error in the app when we run it already.
