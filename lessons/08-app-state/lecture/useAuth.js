@@ -70,7 +70,6 @@ export default function useAuth() {
 //       return onAuthStateChanged(auth => {
 //         dispatch({
 //           type: "AUTH_CHANGE",
-//           authAttemped: true,
 //           auth: auth
 //         })
 //       })
