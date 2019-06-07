@@ -8,8 +8,26 @@ import { login } from "app/utils"
 // export default LoginFormFinal
 
 export default function LoginForm() {
+  const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+
+  function handleShowPassword() {
+    setShowPassword(!showPassword)
+  }
+
+  function handleFormSubmit(event) {
+    event.preventDefault()
+    const [emailNode, passwordNode] = event.target.elements
+    setLoading(true)
+    login(emailNode.value, passwordNode.value).catch(err => {
+      setLoading(false)
+      setError("Login failed")
+    })
+  }
+
   return (
-    <form>
+    <form onSubmit={handleFormSubmit}>
       <VisuallyHidden>
         <label htmlFor="login:email">Email:</label>
       </VisuallyHidden>
@@ -25,7 +43,7 @@ export default function LoginForm() {
       </VisuallyHidden>
       <input
         id="login:password"
-        type="password"
+        type={showPassword ? "text" : "password"}
         className="inputField"
         placeholder="Password"
       />
@@ -35,7 +53,8 @@ export default function LoginForm() {
           <input
             className="passwordCheckbox"
             type="checkbox"
-            defaultChecked={false}
+            defaultChecked={showPassword}
+            onChange={handleShowPassword}
           />{" "}
           show password
         </label>
