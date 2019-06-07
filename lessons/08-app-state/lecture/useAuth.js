@@ -61,7 +61,7 @@ export default function useAuth() {
 // 3. [open SignupForm.js]
 
 /******************************************************************************/
-// 5. Let's forgoe our own little cache here, and use our app state reducer.
+// 5. Let's forgo our own little cache here, and use our app state reducer.
 // export default function useAuth() {
 //   const [{ authAttempted, auth }, dispatch] = useAppState()
 
