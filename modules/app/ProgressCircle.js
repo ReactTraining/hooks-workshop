@@ -28,7 +28,7 @@ export default function ProgressCircle({
       strokeWidth={stroke}
       strokeDasharray={circumference + " " + circumference}
       style={{
-        strokeDashoffset,
+        strokeDashoffset: strokeDashoffset || 0,
         transform: "rotate(-90deg)",
         transformOrigin: "50% 50%"
       }}
