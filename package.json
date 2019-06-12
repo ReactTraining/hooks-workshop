@@ -79,7 +79,7 @@
     }
   },
   "prettier": {
-    "printWidth": 80,
+    "printWidth": 60,
     "semi": false
   },
   "browserslist": [
