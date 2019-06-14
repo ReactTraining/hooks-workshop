@@ -7,23 +7,42 @@ import RecentPostsDropdown from "app/RecentPostsDropdown"
 
 const errorClass = "NewPost_error"
 
-const MAX_MESSAGE_LENGTH = 200
+const MAX_MESSAGE_LENGTH = 3
 
 export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
   const [{ auth }] = useAppState()
+  const [message, setMessage] = useState("")
+  const [error, setError] = useState(false)
+
+  function onMessageChange(message) {
+    setMessage(message)
+    if (message.length > MAX_MESSAGE_LENGTH) {
+      setError(true)
+    } else {
+      setError(false)
+    }
+  }
 
   return (
-    <div className="NewPost">
+    <div className={"NewPost " + (error ? errorClass : "")}>
       {showAvatar && <Avatar uid={auth.uid} size={70} />}
       <form className="NewPost_form">
         <textarea
           className="NewPost_input"
-          placeholder="Tell us about your workout!"
+          value={message}
+          onChange={e => {
+            onMessageChange(e.target.value)
+          }}
         />
         <div className="NewPost_char_count">
-          0/{MAX_MESSAGE_LENGTH}
+          {message.length}/{MAX_MESSAGE_LENGTH}
         </div>
-        <RecentPostsDropdown uid={auth.uid} onSelect={(message) => {}}/>
+        <RecentPostsDropdown
+          uid={auth.uid}
+          onSelect={message => {
+            onMessageChange(message)
+          }}
+        />
         <div className="NewPost_buttons">
           <Minutes date={date} />
           <div>
