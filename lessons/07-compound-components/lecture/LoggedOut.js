@@ -4,47 +4,86 @@ import LoginForm from "app/LoginForm"
 import SignupForm from "app/SignupForm"
 import About from "app/About"
 
-function Tabs({ data }) {
-  const [activeIndex, setActiveIndex] = useState(0)
+const TabContext = React.createContext()
+
+function Tabs({ children, disabled = [] }) {
+  const [activeIndex, setActiveIndex] = useState(1)
 
   return (
-    <div data-reach-tabs>
-      <div data-reach-tab-list>
-        {data.map((tab, index) => {
-          const isActive = index === activeIndex
-          return (
-            <div
-              data-reach-tab
-              key={index}
-              className={isActive ? "active" : ""}
-              onClick={() => setActiveIndex(index)}
-            >
-              {tab.label}
-            </div>
-          )
-        })}
-      </div>
-      <div data-reach-tab-panels>{data[activeIndex].content}</div>
+    <TabContext.Provider
+      value={{
+        activeIndex,
+        setActiveIndex
+      }}
+    >
+      <div data-reach-tabs>{children}</div>
+    </TabContext.Provider>
+  )
+}
+
+function TabList({ children }) {
+  const { activeIndex, setActiveIndex } = useContext(TabContext)
+
+  children = React.Children.map(children, (child, index) => {
+    return React.cloneElement(child, {
+      isActive: index === activeIndex,
+      onClick: () => setActiveIndex(index)
+    })
+  })
+
+  return <div data-reach-tab-list>{children}</div>
+}
+
+function Tab({ children, isActive, onClick, disabled }) {
+  return (
+    <div
+      data-reach-tab
+      className={disabled ? "disabled" : isActive ? "active" : ""}
+      onClick={disabled ? () => null : onClick}
+    >
+      {children}
     </div>
   )
 }
 
+function TabPanels({ children }) {
+  const { activeIndex } = useContext(TabContext)
+  return <div data-reach-tab-panels>{children[activeIndex]}</div>
+}
+
+function TabPanel({ children }) {
+  return children
+}
+
 export default function LoggedOut() {
-  const tabData = [
-    {
-      label: "Login",
-      content: <LoginForm />
-    },
-    {
-      label: "Signup",
-      content: <SignupForm />
-    }
-  ]
+  // const tabData = [
+  //   {
+  //     label: "Login",
+  //     content:
+  //   },
+  //   {
+  //     label: "Signup",
+  //     content:
+  //   }
+  // ]
 
   return (
     <div className="LoggedOut">
       <About />
-      <Tabs data={tabData} />
+      <Tabs>
+        <TabPanels>
+          <TabPanel>
+            <LoginForm />
+          </TabPanel>
+          <TabPanel>
+            <SignupForm />
+          </TabPanel>
+        </TabPanels>
+        <TabList>
+          <Tab disabled>Login</Tab>
+          <Tab>Signup</Tab>
+        </TabList>
+      </Tabs>
     </div>
   )
 }

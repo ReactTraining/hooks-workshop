@@ -1,12 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react"
 
-import { onAuthStateChanged } from 'app/utils'
-import LoggedIn from 'app/LoggedIn'
-import LoggedOut from 'app/LoggedOut'
+import { onAuthStateChanged } from "app/utils"
+import LoggedIn from "app/LoggedIn"
+import LoggedOut from "app/LoggedOut"
 
 export default function App() {
-  const auth = null
-  const authAttempted = false
+  const [auth, setAuth] = useState(null)
+  const [authAttempted, setAuthAttempted] = useState(false)
+
+  useEffect(() => {
+    return onAuthStateChanged(auth => {
+      setAuthAttempted(true)
+      setAuth(auth)
+    })
+  }, [])
 
   if (!authAttempted) {
     return <p>Authenticating...</p>

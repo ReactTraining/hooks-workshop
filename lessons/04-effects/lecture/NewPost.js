@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { FaDumbbell } from "react-icons/fa"
 
 import { useAppState } from "app/app-state"
@@ -15,12 +15,15 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
   const messageTooLong = message.length > MAX_MESSAGE_LENGTH
 
   function handleMessageChange(event) {
-    setMessage(event.target.value)
+    const message = event.target.value
+    setMessage(message)
   }
 
-  document.title = message
-  // useEffect(() => {
-  // }, [message])
+  const shortMessage = message.substr(0, 24)
+  useEffect(() => {
+    console.log("when does this effect run")
+    document.title = shortMessage
+  }, [shortMessage])
 
   return (
     <div className={"NewPost" + (messageTooLong ? ` ${errorClass}` : "")}>
