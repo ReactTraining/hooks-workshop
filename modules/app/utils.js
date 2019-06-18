@@ -184,7 +184,9 @@ export function isValidDate(year, month, day) {
 }
 
 export function calculateTotalMinutes(posts) {
-  return posts.reduce((total, post) => post.minutes + total, 0)
+  return posts
+    .filter(post => !Number.isNaN(post.minutes))
+    .reduce((total, post) => post.minutes + total, 0)
 }
 
 export function calculateMakeup(total, expected, goal) {
