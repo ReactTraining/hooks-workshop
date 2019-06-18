@@ -36,14 +36,17 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
   const tooMuchText = message.length > MAX_MESSAGE_LENGTH
 
   const submit = event => {
+    // We specifically want to avoid refs for Minutes because it would
+    // require ref forwarding and not all Minutes components (lectures)
+    // will use ref forwarding (because they don't need it)
+    const minutesValue = parseInt(event.target.elements[3].value, 10)
+    const minutes = !Number.isNaN(minutesValue) ? minutesValue : 0
+
     setSaving(true)
     // eslint-disable-next-line
     createPost({
       message: messageRef.current.value,
-      // We specifically want to avoid refs for Minutes because it would
-      // require ref forwarding and not all Minutes components (lectures)
-      // will use ref forwarding (because they don't need it)
-      minutes: parseInt(event.target.elements[3].value, 10),
+      minutes,
       date: formatDate(date, DATE_FORMAT),
       uid: auth.uid
     }).then(post => {
