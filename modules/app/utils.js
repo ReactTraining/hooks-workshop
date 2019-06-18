@@ -89,7 +89,7 @@ export const subscribeToPosts = limitCalls(function subscribeToPosts(
     .orderBy("createdAt")
     .where("uid", "==", uid)
   return collection.onSnapshot(snapshot =>
-    callback(getDocsFromSnapshot(snapshot))
+    callback(patchPostsData(getDocsFromSnapshot(snapshot)))
   )
 })
 
@@ -100,6 +100,7 @@ export const fetchPosts = limitCalls(function fetchPosts(uid) {
     .where("uid", "==", uid)
     .get()
     .then(getDocsFromSnapshot)
+    .then(patchPostsData)
 })
 
 export async function createPost(post) {
@@ -121,6 +122,7 @@ export const getPosts = limitCalls(function getPosts(uid) {
     .where("uid", "==", uid)
     .get()
     .then(getDocsFromSnapshot)
+    .then(patchPostsData)
 })
 
 export const loadFeedPosts = limitCalls(function loadFeedPosts(
@@ -134,6 +136,7 @@ export const loadFeedPosts = limitCalls(function loadFeedPosts(
     .limit(limit)
     .get()
     .then(getDocsFromSnapshot)
+    .then(patchPostsData)
 })
 
 export const subscribeToFeedPosts = limitCalls(function subscribeToFeedPosts(
@@ -146,7 +149,9 @@ export const subscribeToFeedPosts = limitCalls(function subscribeToFeedPosts(
     .orderBy("createdAt", "desc")
     .where("createdAt", "<", createdAtMax)
     .limit(limit)
-    .onSnapshot(snapshot => callback(getDocsFromSnapshot(snapshot)))
+    .onSnapshot(snapshot =>
+      callback(patchPostsData(getDocsFromSnapshot(snapshot)))
+    )
 })
 
 export const subscribeToNewFeedPosts = limitCalls(
@@ -156,7 +161,7 @@ export const subscribeToNewFeedPosts = limitCalls(
       .orderBy("createdAt", "desc")
       .where("createdAt", ">=", createdAtMin)
       .onSnapshot(snapshot => {
-        callback(getDocsFromSnapshot(snapshot))
+        callback(patchPostsData(getDocsFromSnapshot(snapshot)))
       })
   }
 )
@@ -184,9 +189,7 @@ export function isValidDate(year, month, day) {
 }
 
 export function calculateTotalMinutes(posts) {
-  return posts
-    .filter(post => !Number.isNaN(post.minutes))
-    .reduce((total, post) => post.minutes + total, 0)
+  return posts.reduce((total, post) => post.minutes + total, 0)
 }
 
 export function calculateMakeup(total, expected, goal) {
@@ -244,6 +247,12 @@ function getDocsFromSnapshot(snapshot) {
     docs.push(getDataFromDoc(doc))
   })
   return docs
+}
+
+function patchPostsData(posts) {
+  return posts.map(post =>
+    Number.isNaN(post.minutes) ? { ...post, minutes: 0 } : post
+  )
 }
 
 const easeOut = progress => Math.pow(progress - 1, 5) + 1
