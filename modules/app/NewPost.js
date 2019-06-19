@@ -35,7 +35,7 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
 
   const tooMuchText = message.length > MAX_MESSAGE_LENGTH
 
-  const submit = event => {
+  const submit = form => {
     setSaving(true)
     // eslint-disable-next-line
     createPost({
@@ -43,7 +43,7 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
       // We specifically want to avoid refs for Minutes because it would
       // require ref forwarding and not all Minutes components (lectures)
       // will use ref forwarding (because they don't need it)
-      minutes: Math.max(parseInt(event.target.elements[3].value, 10) || 1, 1),
+      minutes: Math.max(parseInt(form.elements[3].value, 10) || 1, 1),
       date: formatDate(date, DATE_FORMAT),
       uid: auth.uid
     }).then(post => {
@@ -55,12 +55,12 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
 
   const handleSubmit = event => {
     event.preventDefault()
-    submit(event)
+    submit(event.target)
   }
 
   const handleMessageKeyDown = event => {
     if (event.metaKey && event.key === "Enter") {
-      submit(event)
+      submit(event.target.form)
     }
   }
 
