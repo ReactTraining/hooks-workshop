@@ -4,7 +4,7 @@ This repo contains the course material for [React Training](https://reacttrainin
 
 ## Install
 
-First, install [git](http://git-scm.com/downloads) and the latest stable version of [node](https://nodejs.org/). Then:
+First, install [git](http://git-scm.com/downloads) and the LTS version of [node](https://nodejs.org/). Then:
 
 ```sh
 $ git clone https://github.com/ReactTraining/hooks-workshop.git
