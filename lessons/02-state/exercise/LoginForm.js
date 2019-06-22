@@ -8,8 +8,25 @@ import { login } from "app/utils"
 // export default LoginFormFinal
 
 export default function LoginForm() {
+  const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(null)
+
+  function handleSubmit(e) {
+    e.preventDefault()
+    const [emailNode, passwordNode] = e.target.elements
+
+    setLoading(true)
+    login(emailNode.value, passwordNode.value).catch(err => {
+      setLoading(false)
+      setErrorMessage("There was an error")
+    })
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
+      {errorMessage && <span className="notice">{errorMessage}</span>}
+
       <VisuallyHidden>
         <label htmlFor="login:email">Email:</label>
       </VisuallyHidden>
@@ -25,7 +42,7 @@ export default function LoginForm() {
       </VisuallyHidden>
       <input
         id="login:password"
-        type="password"
+        type={showPassword ? "text" : "password"}
         className="inputField"
         placeholder="Password"
       />
@@ -35,7 +52,10 @@ export default function LoginForm() {
           <input
             className="passwordCheckbox"
             type="checkbox"
-            defaultChecked={false}
+            defaultChecked={showPassword}
+            onChange={() => {
+              setShowPassword(!showPassword)
+            }}
           />{" "}
           show password
         </label>
@@ -43,7 +63,7 @@ export default function LoginForm() {
 
       <TabsButton>
         <FaSignInAlt />
-        <span>Login</span>
+        <span>{loading ? "Loading...." : "Login"}</span>
       </TabsButton>
     </form>
   )

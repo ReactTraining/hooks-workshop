@@ -1,29 +1,56 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { FaDumbbell } from 'react-icons/fa'
+import React, { useState, useRef, useEffect } from "react"
+import { FaDumbbell } from "react-icons/fa"
 
-import { useAppState } from 'app/app-state'
-import Avatar from 'app/Avatar'
-import Minutes from 'app/Minutes'
-import RecentPostsDropdown from 'app/RecentPostsDropdown'
+import { useAppState } from "app/app-state"
+import Avatar from "app/Avatar"
+import Minutes from "app/Minutes"
+import RecentPostsDropdown from "app/RecentPostsDropdown"
 
-const errorClass = 'NewPost_error'
+const errorClass = "NewPost_error"
 const MAX_MESSAGE_LENGTH = 200
 
 /******************************************************************************/
 // Consider the message length counter. Every time we type, we set state, and
 // then react updates the DOM for us.
 
+// class UserProfile extends React.Component {
+//   state = {
+//     user: null
+//   }
+
+//   componentDidMount() {
+//   }
+
+//   render() {
+//     getUser(this.props.uid).then(user => {
+//       this.setState({ user })
+//     })
+//     return <div>...</div>
+//   }
+// }
+
 export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
   const [{ auth }] = useAppState()
-  const [message, setMessage] = useState('Ran around the lake.')
+  const [message, setMessage] = useState("Ran around the lake.")
   const messageTooLong = message.length > MAX_MESSAGE_LENGTH
 
   function handleMessageChange(event) {
-    setMessage(event.target.value)
+    const message = event.target.value
+    setMessage(message)
   }
 
+  const shortMessage = message.substr(0, 25)
+  useEffect(() => {
+    console.log("when does this get called")
+    document.title = shortMessage
+  }, [shortMessage])
+
+  // useEffect(fn) // runs when any state changes
+  // useEffect(fn, []) // runs when no state changes
+  // useEffect(fn, [that, state]) // runs when that state
+
   return (
-    <div className={'NewPost' + (messageTooLong ? ` ${errorClass}` : '')}>
+    <div className={"NewPost" + (messageTooLong ? ` ${errorClass}` : "")}>
       {showAvatar && <Avatar uid={auth.uid} size={70} />}
       <form className="NewPost_form">
         <textarea
@@ -39,6 +66,8 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
           uid={auth.uid}
           onSelect={message => {
             setMessage(message)
+            const node = document.getElementById("message-length")
+            node.innerHTML = message.length
           }}
         />
         <div className="NewPost_buttons">

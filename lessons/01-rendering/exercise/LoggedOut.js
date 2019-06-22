@@ -3,7 +3,7 @@
 - The components from `@reach/tabs` all work together. Create
   some tabs for "Signup" and "Login"
 - 1. Start by adding `<Tabs>`
-- 2. Then add two children: `<TabList>` and `<TabPanel>`
+- 2. Then add two children: `<TabList>` and `<TabPanels>`
 - 3. Then add tabs and panels in those components
 - 4. Last, add the `<LoginForm>` and `<SignupForm>` to the
   respective panels.
@@ -23,5 +23,23 @@ import About from "app/About"
 // export default LoggedOut
 
 export default function LoggedOut() {
-  return <div className="LoggedOut">{/* Your work here */}</div>
+  return (
+    <div className="LoggedOut">
+      <About />
+      <Tabs>
+        <TabList>
+          <Tab>Login</Tab>
+          <Tab>Signup</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <LoginForm />
+          </TabPanel>
+          <TabPanel>
+            <SignupForm />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
+    </div>
+  )
 }
