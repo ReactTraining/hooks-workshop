@@ -1,4 +1,18 @@
-1. Create four text fields for:
+# Rendering
+
+## "About" and "Tabs"
+
+1. In `LoggedOut.js`, render `<About />` inside the `<div className="LoggedOut"></div>`
+2. Then as a sibling to the About element, render `<Tabs></Tabs>`
+3. Tabs will have an opening and closing tag because we'll also need to render `<TabList>` and `<TabPanel>`
+4. Then add tabs and panels in those components
+5. Last, add the `<LoginForm>` and `<SignupForm>` to the respective panels.
+
+You should be able to switch between tabs now, but the signup form doesn't show anything because we haven't worked on it yet
+
+## Signup Form
+
+1. In `SignupForm.js`, create four text fields for:
 
 - Display Name
 - Photo URL
