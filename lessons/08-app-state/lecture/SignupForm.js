@@ -14,13 +14,29 @@ import TextInput from "app/TextInput"
 // in to React, but in more composable way. Let's take a look.
 
 export default function SignupForm() {
-  const [error, setError] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [startDate, setStartDate] = useState(new Date("March 1, 2019"))
+  const [state, dispatch] = useReducer(
+    (state, action) => {
+      switch (action.type) {
+        case "SIGNUP": {
+          return { ...state, loading: true }
+        }
+        case "SIGNUP_FAILED": {
+          return { ...state, loading: false, error: action.error }
+        }
+      }
+    },
+    {
+      error: null,
+      loading: false,
+      startDate: new Date("March 1, 2019")
+    }
+  )
+
+  const { error, loading, startDate } = state
 
   const handleSignup = async event => {
     event.preventDefault()
-    setLoading(true)
+    dispatch({ type: "SIGNUP" })
     const [displayName, photoURL, email, password] = event.target.elements
     try {
       await signup({
@@ -31,8 +47,7 @@ export default function SignupForm() {
         startDate
       })
     } catch (error) {
-      setLoading(false)
-      setError(error)
+      dispatch({ type: "SIGNUP_FAILED", error })
     }
   }
 
@@ -54,11 +69,6 @@ export default function SignupForm() {
         <TextInput id="password" label="Password" type="password" />
         <p>
           <span aria-hidden="true">Start:</span>{" "}
-          <DateFields value={startDate} onChange={setStartDate}>
-            <MonthField aria-label="Start Month" /> /{" "}
-            <DayField aria-label="Start Day" /> /{" "}
-            <YearField start={2018} end={2019} aria-label="Start year" />
-          </DateFields>
         </p>
         <TabsButton>
           <FaDumbbell />

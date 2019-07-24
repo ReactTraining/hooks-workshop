@@ -9,7 +9,13 @@ import RecentPostsDropdown from "app/RecentPostsDropdown"
 const errorClass = "NewPost_error"
 const MAX_MESSAGE_LENGTH = 200
 
-export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
+export default function NewPost({
+  uid,
+  takeFocus,
+  date,
+  onSuccess,
+  showAvatar
+}) {
   const [{ auth }] = useAppState()
   const [message, setMessage] = useState("Ran around the lake.")
   const messageTooLong = message.length > MAX_MESSAGE_LENGTH
