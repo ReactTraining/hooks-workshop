@@ -1,50 +1,84 @@
-import React, { useState, useContext, createContext, Children } from "react"
+import React, { useState, useContext } from "react"
 
 import LoginForm from "app/LoginForm"
 import SignupForm from "app/SignupForm"
 import About from "app/About"
 
-function Tabs({ data }) {
-  const [activeIndex, setActiveIndex] = useState(0)
+const TabContext = React.createContext()
+
+function Tabs({ children, defaultTab }) {
+  const [activeTab, setActiveTab] = useState(defaultTab)
 
   return (
-    <div data-reach-tabs>
-      <div data-reach-tab-list>
-        {data.map((tab, index) => {
-          const isActive = index === activeIndex
-          return (
-            <div
-              data-reach-tab
-              key={index}
-              className={isActive ? "active" : ""}
-              onClick={() => setActiveIndex(index)}
-            >
-              {tab.label}
-            </div>
-          )
-        })}
-      </div>
-      <div data-reach-tab-panels>{data[activeIndex].content}</div>
+    <TabContext.Provider
+      value={{
+        activeTab,
+        setActiveTab
+      }}
+    >
+      <div data-reach-tabs>{children}</div>
+    </TabContext.Provider>
+  )
+}
+
+function TabList({ children }) {
+  return <div data-reach-tab-list>{children}</div>
+}
+
+function Tab({ children, tab, onClick, disabled }) {
+  const { activeTab, setActiveTab } = useContext(TabContext)
+
+  const isActive = tab === activeTab
+  return (
+    <div
+      data-reach-tab
+      className={disabled ? "disabled" : isActive ? "active" : ""}
+      onClick={disabled ? () => null : () => setActiveTab(tab)}
+    >
+      {children}
     </div>
   )
 }
 
-export default function LoggedOut() {
-  const tabData = [
-    {
-      label: "Login",
-      content: <LoginForm />
-    },
-    {
-      label: "Signup",
-      content: <SignupForm />
-    }
-  ]
+function TabPanels({ children }) {
+  const { activeTab } = useContext(TabContext)
 
+  children = React.Children.map(children, child => {
+    if (child.props.tab === activeTab) {
+      return child
+    } else {
+      return null
+    }
+  })
+
+  return <div data-reach-tab-panels>{children}</div>
+}
+
+function TabPanel({ children }) {
+  return children
+}
+
+export default function LoggedOut() {
   return (
     <div className="LoggedOut">
       <About />
-      <Tabs data={tabData} />
+
+      <Tabs defaultTab="login">
+        <TabPanels>
+          <TabPanel tab="login">
+            <LoginForm />
+          </TabPanel>
+          <TabPanel tab="signup">
+            <SignupForm />
+          </TabPanel>
+        </TabPanels>
+        <TabList>
+          <Tab tab="login">Login</Tab>
+          <Tab tab="signup" isActive>
+            Signup
+          </Tab>
+        </TabList>
+      </Tabs>
     </div>
   )
 }
