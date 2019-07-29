@@ -1,11 +1,11 @@
-import React, { useEffect } from "react"
+import React from "react"
 import useTween from "app/useTween"
-import playSound from "app/playSound"
+// import playSound from "app/playSound"
 
 export default function AnimatedText({ children, onRest, ...props }) {
   const tweenedValue = useTween(children * 50, onRest)
   const integer = Math.round(tweenedValue * children)
-  useEffect(playSound, [integer])
+  // useEffect(playSound, [integer])
   return <span {...props}>{integer}</span>
 }
 
