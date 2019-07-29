@@ -46,6 +46,7 @@ export default function LoginForm() {
           id="login:email"
           className="inputField"
           placeholder="you@example.com"
+          required
           type="text"
         />
 
@@ -57,6 +58,7 @@ export default function LoginForm() {
           id="login:password"
           type={showPassword ? "text" : "password"}
           className="inputField"
+          required
           placeholder="Password"
         />
         <div>
