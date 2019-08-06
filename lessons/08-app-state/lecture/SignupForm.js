@@ -1,27 +1,36 @@
-import React, { useState, useReducer } from "react"
+import React, { useReducer } from "react"
 import { signup } from "app/utils"
 import TabsButton from "app/TabsButton"
 import { FaDumbbell } from "react-icons/fa"
 import { DateFields, MonthField, DayField, YearField } from "app/DateFields"
 import TextInput from "app/TextInput"
 
-/******************************************************************************/
-// 1. [open useAuth.js]
-
-/******************************************************************************/
-// 3. If you've used Redux before, you might be thinking that this kind of
-// state belongs there. Heck yes, except now the principles of redux are built
-// in to React, but in more composable way. Let's take a look.
-
 export default function SignupForm() {
-  const [error, setError] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [startDate, setStartDate] = useState(new Date("March 1, 2019"))
+  const [state, dispatch] = useReducer(
+    (state, action) => {
+      switch (action.type) {
+        case "SIGNUP":
+          return { ...state, loading: true }
+        case "ERROR":
+          return { ...state, loading: false, error: action.error }
+        case "DATE_CHANGE":
+          return { ...state, startDate: action.date }
+      }
+    },
+    {
+      error: null,
+      loading: false,
+      startDate: new Date("March 1, 2019")
+    }
+  )
+
+  const { error, loading, startDate } = state
 
   const handleSignup = async event => {
     event.preventDefault()
-    setLoading(true)
+    dispatch({ type: "SIGNUP" })
     const [displayName, photoURL, email, password] = event.target.elements
+
     try {
       await signup({
         displayName: displayName.value,
@@ -31,8 +40,7 @@ export default function SignupForm() {
         startDate
       })
     } catch (error) {
-      setLoading(false)
-      setError(error)
+      dispatch({ type: "ERROR", error })
     }
   }
 
@@ -54,7 +62,12 @@ export default function SignupForm() {
         <TextInput id="password" label="Password" type="password" />
         <p>
           <span aria-hidden="true">Start:</span>{" "}
-          <DateFields value={startDate} onChange={setStartDate}>
+          <DateFields
+            value={startDate}
+            onChange={date => {
+              dispatch({ type: "DATE_CHANGE", date })
+            }}
+          >
             <MonthField aria-label="Start Month" /> /{" "}
             <DayField aria-label="Start Day" /> /{" "}
             <YearField start={2018} end={2019} aria-label="Start year" />
