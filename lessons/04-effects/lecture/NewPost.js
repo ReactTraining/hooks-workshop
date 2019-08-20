@@ -1,21 +1,21 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { FaDumbbell } from 'react-icons/fa'
+import React, { useState, useRef, useEffect } from "react"
+import { FaDumbbell } from "react-icons/fa"
 
-import { useAppState } from 'app/app-state'
-import Avatar from 'app/Avatar'
-import Minutes from 'app/Minutes'
-import RecentPostsDropdown from 'app/RecentPostsDropdown'
+import { useAppState } from "app/app-state"
+import Avatar from "app/Avatar"
+import Minutes from "app/Minutes"
+import RecentPostsDropdown from "app/RecentPostsDropdown"
 
-const errorClass = 'NewPost_error'
+const errorClass = "NewPost_error"
 const MAX_MESSAGE_LENGTH = 200
 
 /******************************************************************************/
 // Consider the message length counter. Every time we type, we set state, and
-// then react updates the DOM for us.
+// then React updates the DOM for us.
 
 export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
   const [{ auth }] = useAppState()
-  const [message, setMessage] = useState('Ran around the lake.')
+  const [message, setMessage] = useState("Ran around the lake.")
   const messageTooLong = message.length > MAX_MESSAGE_LENGTH
 
   function handleMessageChange(event) {
@@ -23,7 +23,7 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
   }
 
   return (
-    <div className={'NewPost' + (messageTooLong ? ` ${errorClass}` : '')}>
+    <div className={"NewPost" + (messageTooLong ? ` ${errorClass}` : "")}>
       {showAvatar && <Avatar uid={auth.uid} size={70} />}
       <form className="NewPost_form">
         <textarea
