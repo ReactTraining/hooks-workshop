@@ -130,7 +130,7 @@ useEffect(() => {
 
 ## Lesson 7: Compound Components
 
-- In good API design, you want to design something that's easy to use and abstracts the difficult parts of programming away all while still giving the API user control. This is difficult
+- In good API design, you want to design something that's easy to use, abstracts the difficult parts of programming away, and still gives the API user flexibility and control. This is difficult.
 - The original API of `<Tabs data={data} />` is certainly easy to use, but gives us almost no control over things like "can we put the tabs on bottom and the panels on top". It also makes change requests to the API difficult since the abstraction is all self contained within `<Tabs />`
 - As an alternative, what if we create several components for `<Tabs />`, `<TabList />`, `<Tab />`, etc. Then the way we arrange the JSX becomes apart of the API itself. We can still choose to pass in props for certain things like `disabled` or `className`, but the API being JSX based makes doing things like "tabs below panels" really easy.
 - Unlike before where the entire API was one component, now we have several components that aren't really meant to be on their own but rather they're used together. Even though they're separate, they collectively make one thing - tabs. So we are calling this the "Compound Components" pattern because several components work together to make one thing.
@@ -146,10 +146,15 @@ useEffect(() => {
 
 ## Lesson 12: Optimization
 
-- In a React app where there is a hierarchy of components, if any component re-renders, it will cause all of it's sub tree components to re-render. This is typically not a performance problem because of the Virtual DOM and the diffing algorithm. However, if you've profiled your app and learned that excessive re-rendering could be optimized by skipping sub-tree renders when the incoming props haven't changed, then you can add additional optimizations.
+- In a React app where there is a hierarchy of components, if any component re-renders it will cause all of its sub tree components to re-render. This is typically not a performance problem because of the Virtual DOM and the diffing algorithm. However, if you've profiled your app and learned that excessive re-rendering could be optimized by skipping sub-tree renders when the incoming props haven't changed, then you can add additional optimizations:
 - In order to prevent a component from re-rendering when its parent re-renders because we can see the props haven't changed, we can do one of two options with class-based components:
   - Make it a "Pure" component: `class MyComponent extends React.PureComponent`
   - Or we can itemize which props changing or not changing should cause the re-render by adding a `componentShouldUpdate` lifecycle method.
-- For hooks (on function based components), we can achieve the same thing as a Pure component by doing: `React.memo(() => {})` where the function passed in _is_ the component.
+- For hooks (on function based components), we can achieve the same thing as a Pure Component by doing: `React.memo(() => {})` where the function passed in _is_ the component.
 - While `React.memo()` is for optimizing the component from having too many re-renders, `useMemo` is a hook for memorizing the return of a long-running function call, so don't confuse these two. If we have a function call that's slow and it's being ran with each re-render (and if it's a pure function), then it might make sense to memoize it using `useMemo()`
-- Whereas `useMemo()` memoizes a value from a function call, `useCallback` memoizes a function itself. This is useful when we don't want a function to be re-created on each re-render which would create a new identity in memory.
+- While `useMemo()` memoizes a value from a function call, `useCallback` memoizes a function itself. This is useful when we don't want a function to be re-created on each re-render which would create a new identity in memory.
+
+- Docs on `React.pureComponent`: https://reactjs.org/docs/react-api.html#reactpurecomponent
+- Docs on `React.memo`: https://reactjs.org/docs/react-api.html#reactmemo
+- Docs on `useMemo`: https://reactjs.org/docs/hooks-reference.html#usememo
+- Docs on `useCallback`: https://reactjs.org/docs/hooks-reference.html#usecallback
