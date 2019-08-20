@@ -40,6 +40,10 @@ Which exercise?
 Choose one from list [1...9, a, b, c, 0]:
 ```
 
+## We took notes for you!
+
+During the lectures, feel free to take notes. We also have some [pre-made notes](/student-lesson-notes.md) for you in this repo that you can edit as you see fit.
+
 ## Updating
 
 If you've already cloned the repo but you need to get updated code, then follow these steps:
