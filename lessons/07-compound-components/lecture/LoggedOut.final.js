@@ -1,8 +1,8 @@
-import React, { useState, createContext, useContext, Children } from 'react'
+import React, { useState, createContext, useContext, Children } from "react"
 
-import LoginForm from 'app/LoginForm'
-import SignupForm from 'app/SignupForm'
-import About from 'app/About'
+import LoginForm from "app/LoginForm"
+import SignupForm from "app/SignupForm"
+import About from "app/About"
 
 const TabsContext = createContext()
 
@@ -15,10 +15,8 @@ function Tabs({ children }) {
   )
 }
 
-const TabContext = createContext()
-
 function TabList({ children }) {
-  const wrappedChildren = Children.map(children, (child, index) => (
+  const wrappedChildren = React.Children.map(children, (child, index) => (
     <TabContext.Provider value={index}>{child}</TabContext.Provider>
   ))
   return <div data-reach-tab-list>{wrappedChildren}</div>
@@ -31,7 +29,7 @@ function Tab({ children, isDisabled, ...rest }) {
   return (
     <div
       data-reach-tab
-      className={isDisabled ? 'disabled' : isActive ? 'active' : ''}
+      className={isDisabled ? "disabled" : isActive ? "active" : ""}
       onClick={isDisabled ? undefined : () => setActiveIndex(index)}
       {...rest}
     >
@@ -69,11 +67,11 @@ function DataTabs({ data }) {
 export default function LoggedOut() {
   const tabData = [
     {
-      label: 'Login',
+      label: "Login",
       content: <LoginForm />
     },
     {
-      label: 'Signup',
+      label: "Signup",
       content: <SignupForm />
     }
   ]
