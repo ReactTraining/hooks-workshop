@@ -128,10 +128,6 @@
       "web.jsx",
       "jsx",
       "node"
-    ],
-    "watchPlugins": [
-      "/Users/ryanflorence/Work/reacttraining/hooks-workshop/8k/node_modules/jest-watch-typeahead/filename.js",
-      "/Users/ryanflorence/Work/reacttraining/hooks-workshop/8k/node_modules/jest-watch-typeahead/testname.js"
     ]
   },
   "babel": {
