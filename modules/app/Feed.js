@@ -1,6 +1,6 @@
 import React, { useRef, useReducer, useEffect } from "react"
-import FeedPost from "app/FeedPost"
-import { loadFeedPosts, subscribeToNewFeedPosts } from "app/utils"
+import FeedPost from "./FeedPost"
+import { loadFeedPosts, subscribeToNewFeedPosts } from "./utils"
 
 const PER_PAGE = 3
 

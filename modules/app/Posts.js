@@ -1,14 +1,14 @@
 import React, { useRef, useState, useEffect } from "react"
-import { Link } from "app/packages/react-router-next"
+import { Link } from "./packages/react-router-next"
 import { format as formatDate } from "date-fns"
-import { useAppState } from "app/app-state"
-import useDocWithCache from "app/useDocWithCache"
-import Avatar from "app/Avatar"
-import NewPost from "app/NewPost"
+import { useAppState } from "./app-state"
+import useDocWithCache from "./useDocWithCache"
+import Avatar from "./Avatar"
+import NewPost from "./NewPost"
 import { FaPlusCircle, FaTrashAlt } from "react-icons/fa"
-import AnimatedText from "app/AnimatedText"
-import { deletePost } from "app/utils"
-import usePosts from "app/usePosts"
+import AnimatedText from "./AnimatedText"
+import { deletePost } from "./utils"
+import usePosts from "./usePosts"
 
 export default function Posts({ params }) {
   // passed params as props because animations can't "retain" context

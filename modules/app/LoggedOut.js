@@ -1,8 +1,8 @@
 import React from "react"
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@reach/tabs"
-import LoginForm from "app/LoginForm"
-import SignupForm from "app/SignupForm"
-import About from "app/About"
+import LoginForm from "./LoginForm"
+import SignupForm from "./SignupForm"
+import About from "./About"
 
 export default function LoggedOut() {
   return (

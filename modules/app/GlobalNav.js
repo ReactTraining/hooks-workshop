@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "app/packages/react-router-next"
+import { Link } from "./packages/react-router-next"
 import { FaCalendarAlt, FaTrophy } from "react-icons/fa"
 
 export default function GlobalNav() {
@@ -14,4 +14,3 @@ export default function GlobalNav() {
     </nav>
   )
 }
-

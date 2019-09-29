@@ -1,7 +1,7 @@
 import React from "react"
-import useDocWithCache from "app/useDocWithCache"
-import { Link, useLocation } from "app/packages/react-router-next"
-import Avatar from "app/Avatar"
+import useDocWithCache from "./useDocWithCache"
+import { Link, useLocation } from "./packages/react-router-next"
+import Avatar from "./Avatar"
 import { format as formatDate, distanceInWordsToNow } from "date-fns"
 
 const stopPropagation = event => event.stopPropagation()

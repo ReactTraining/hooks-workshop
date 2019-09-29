@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useCallback } from "react"
-import { Link, useLocation, useParams } from "app/packages/react-router-next"
+import { Link, useLocation, useParams } from "./packages/react-router-next"
 import { useTransition, animated } from "react-spring"
 import { FaChevronDown, FaChevronUp, FaPlus } from "react-icons/fa"
 import {
@@ -11,14 +11,14 @@ import {
   isFuture
 } from "date-fns"
 
-import AnimatedDialog from "app/AnimatedDialog"
-import Posts from "app/Posts"
-import usePosts from "app/usePosts"
-import Meta from "app/Meta"
-import { DATE_FORMAT, calculateWeeks, calculateTotalMinutes } from "app/utils"
-import { useAppState } from "app/app-state"
-import NewPost from "app/NewPost"
-import AnimatedText from "app/AnimatedText"
+import AnimatedDialog from "./AnimatedDialog"
+import Posts from "./Posts"
+import usePosts from "./usePosts"
+import Meta from "./Meta"
+import { DATE_FORMAT, calculateWeeks, calculateTotalMinutes } from "./utils"
+import { useAppState } from "./app-state"
+import NewPost from "./NewPost"
+import AnimatedText from "./AnimatedText"
 
 export default function Dashboard() {
   const [{ user }] = useAppState()

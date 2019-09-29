@@ -1,13 +1,13 @@
 import React, { useEffect, Fragment } from "react"
-import { Router, Route, DefaultRoute } from "app/packages/react-router-next"
-import { fetchDoc, isValidDate } from "app/utils"
-import { useAppState } from "app/app-state"
-import UserDatePosts from "app/UserDatePosts"
-import Feed from "app/Feed"
-import Dashboard from "app/Dashboard"
-import TopBar from "app/TopBar"
-import User from "app/User"
-import NotFound from "app/NotFound"
+import { Router, Route, DefaultRoute } from "./packages/react-router-next"
+import { fetchDoc, isValidDate } from "./utils"
+import { useAppState } from "./app-state"
+import UserDatePosts from "./UserDatePosts"
+import Feed from "./Feed"
+import Dashboard from "./Dashboard"
+import TopBar from "./TopBar"
+import User from "./User"
+import NotFound from "./NotFound"
 
 export default function LoggedIn() {
   const [{ auth, user }, dispatch] = useAppState()

@@ -1,11 +1,11 @@
 import React, { Fragment } from "react"
-import usePosts from "app/usePosts"
+import usePosts from "./usePosts"
 import {
   calculateTotalMinutes,
   calculateExpectedMinutes,
   calculateMakeup
-} from "app/utils"
-import Avatar from "app/Avatar"
+} from "./utils"
+import Avatar from "./Avatar"
 
 export default function Meta({ user }) {
   const posts = usePosts(user.uid)

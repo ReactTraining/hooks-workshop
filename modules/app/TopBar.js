@@ -1,10 +1,10 @@
 import React from "react"
-import { logout } from "app/utils"
-import { useAppState } from "app/app-state"
-import Avatar from "app/Avatar"
+import { logout } from "./utils"
+import { useAppState } from "./app-state"
+import Avatar from "./Avatar"
 import { FaPowerOff } from "react-icons/fa"
 import { FaSearch } from "react-icons/fa"
-import GlobalNav from "app/GlobalNav"
+import GlobalNav from "./GlobalNav"
 
 export default function TopBar({ children }) {
   return (

@@ -1,10 +1,10 @@
 import React from "react"
-import { sortByCreatedAtDescending } from "app/utils"
-import FeedPost from "app/FeedPost"
-import Meta from "app/Meta"
-import usePosts from "app/usePosts"
-import { useParams } from "app/packages/react-router-next"
-import useDocWithCache from "app/useDocWithCache"
+import { sortByCreatedAtDescending } from "./utils"
+import FeedPost from "./FeedPost"
+import Meta from "./Meta"
+import usePosts from "./usePosts"
+import { useParams } from "./packages/react-router-next"
+import useDocWithCache from "./useDocWithCache"
 
 export default function User() {
   const { uid } = useParams()

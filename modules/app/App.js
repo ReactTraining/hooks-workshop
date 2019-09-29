@@ -1,9 +1,9 @@
 import React from "react"
-import LoggedIn from "app/LoggedIn"
-import LoggedOut from "app/LoggedOut"
-import { AppStateProvider } from "app/app-state"
-import appReducer, { initialState } from "app/appReducer"
-import useAuth from "app/useAuth"
+import LoggedIn from "./LoggedIn"
+import LoggedOut from "./LoggedOut"
+import { AppStateProvider } from "./app-state"
+import appReducer, { initialState } from "./appReducer"
+import useAuth from "./useAuth"
 
 function App() {
   const { authAttempted, auth } = useAuth()

@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react"
-import { login } from "app/utils"
+import { login } from "./utils"
 import VisuallyHidden from "@reach/visually-hidden"
 import { FaSignInAlt } from "react-icons/fa"
-import TabsButton from "app/TabsButton"
+import TabsButton from "./TabsButton"
 
 export default function LoginForm() {
   const [error, setError] = useState(null)

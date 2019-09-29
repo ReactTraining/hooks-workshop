@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from "react"
 import VisuallyHidden from "@reach/visually-hidden"
-import { signup } from "app/utils"
-import TabsButton from "app/TabsButton"
+import { signup } from "./utils"
+import TabsButton from "./TabsButton"
 import { FaDumbbell } from "react-icons/fa"
-import { DateFields, MonthField, DayField, YearField } from "app/DateFields"
+import { DateFields, MonthField, DayField, YearField } from "./DateFields"
 
 function TextInput({ id, label, type = "text" }) {
   return (

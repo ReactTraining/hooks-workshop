@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { fetchDoc } from "app/utils"
+import { fetchDoc } from "./utils"
 
 const cache = {}
 const pendingCache = {}

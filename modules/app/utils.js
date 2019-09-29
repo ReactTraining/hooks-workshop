@@ -1,4 +1,4 @@
-import { db, auth, mode } from "app/db.real.js"
+import { db, auth, mode } from "./db.real.js"
 
 import {
   differenceInDays,

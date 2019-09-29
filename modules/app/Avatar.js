@@ -1,8 +1,8 @@
 import React from "react"
-import useDocWithCache from "app/useDocWithCache"
-import usePosts from "app/usePosts"
-import { calculateTotalMinutes, calculateExpectedMinutes } from "app/utils"
-import ProgressCircle from "app/ProgressCircle"
+import useDocWithCache from "./useDocWithCache"
+import usePosts from "./usePosts"
+import { calculateTotalMinutes, calculateExpectedMinutes } from "./utils"
+import ProgressCircle from "./ProgressCircle"
 
 export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
   const user = useDocWithCache(`users/${uid}`)

@@ -1,6 +1,6 @@
 import React from "react"
-import useTween from "app/useTween"
-// import playSound from "app/playSound"
+import useTween from "./useTween"
+// import playSound from "./playSound"
 
 export default function AnimatedText({ children, onRest, ...props }) {
   const tweenedValue = useTween(children * 50, onRest)
