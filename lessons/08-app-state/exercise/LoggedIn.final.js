@@ -21,7 +21,7 @@ export default function LoggedIn() {
         dispatch({ type: "LOAD_USER", user })
       })
     }
-  }, [user, auth.uid, dispatch])
+  }, [user, auth.uid])
 
   return user ? (
     <Fragment>

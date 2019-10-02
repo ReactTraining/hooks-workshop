@@ -9,8 +9,32 @@ import TopBar from "app/TopBar"
 import User from "app/User"
 import NotFound from "app/NotFound"
 
+// const [state, dispatch] = useAppState()
+// const { user, auth} = state;
+
 export default function LoggedIn() {
-  const user = null
+  const [state, dispatch] = useAppState()
+  console.log(state)
+  const { user, auth } = state
+
+  console.log(auth)
+
+  useEffect(() => {
+    let canceled = false
+
+    if (!user) {
+      fetchUser(auth.uid).then(data => {
+        if (canceled) {
+          return
+        }
+
+        dispatch({
+          type: "GOT_THE_USER",
+          user: data
+        })
+      })
+    }
+  }, [user, auth.uid])
 
   return user ? (
     <Fragment>
@@ -42,7 +66,7 @@ export default function LoggedIn() {
         </Router>
       </div>
     </Fragment>
-  ) : <div>No user! Go fix it :D</div>
+  ) : null
 }
 
 const hasValidDateParam = ({ params }) => {

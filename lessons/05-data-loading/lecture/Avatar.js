@@ -19,63 +19,79 @@ import ProgressCircle from "app/ProgressCircle"
 // For this Avatar to work, we need to load the user and all of their posts
 // so we can calculate the rings on their avatar. Right now, it's just empty.
 
-export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
-  const user = null
-  const posts = null
+// export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
+//   const [user, setUser] = useState(null)
+//   const [count, setCount] = useState(0)
+//   const posts = null
 
-  if (!user) {
-    return (
-      <div
-        className={"Avatar empty " + className}
-        style={{ width: size, height: size }}
-        {...rest}
-      />
-    )
-  }
+//   useEffect(() => {
+//     console.log("executing")
+//     let canceled = false
+//     fetchUser(uid).then(user => {
+//       if (!canceled) {
+//         setUser(user)
+//       }
+//     })
 
-  const { photoURL, displayName, goal } = user
-  const stroke = size / 10
+//     return () => {
+//       canceled = true
+//     }
+//   }, [uid, count])
 
-  const circles = (() => {
-    if (!posts) return null
-    const minutes = posts && calculateTotalMinutes(posts)
-    const expectedMinutes = posts && calculateExpectedMinutes(user)
-    const progress = (minutes / goal) * 100
-    const expectedProgress = (expectedMinutes / goal) * 100
+//   if (!user) {
+//     return (
+//       <div
+//         className={"Avatar empty " + className}
+//         style={{ width: size, height: size }}
+//         {...rest}
+//       />
+//     )
+//   }
 
-    return (
-      <ProgressCircle
-        radius={size / 2}
-        stroke={stroke}
-        progress={progress}
-        expectedProgress={expectedProgress}
-        bg={bg}
-      />
-    )
-  })()
+//   const { photoURL, displayName, goal } = user
+//   const stroke = size / 10
 
-  return (
-    <div
-      className={"Avatar " + className}
-      style={{ width: size, height: size }}
-      {...rest}
-    >
-      <div
-        role="img"
-        aria-label={`Avatar for ${displayName}`}
-        className="Avatar_image"
-        style={{
-          backgroundImage: `url(${photoURL})`,
-          width: size - stroke * 2 + 1,
-          height: size - stroke * 2 + 1,
-          top: stroke,
-          left: stroke
-        }}
-      />
-      {circles}
-    </div>
-  )
-}
+//   const circles = (() => {
+//     if (!posts) return null
+//     const minutes = posts && calculateTotalMinutes(posts)
+//     const expectedMinutes = posts && calculateExpectedMinutes(user)
+//     const progress = (minutes / goal) * 100
+//     const expectedProgress = (expectedMinutes / goal) * 100
+
+//     return (
+//       <ProgressCircle
+//         radius={size / 2}
+//         stroke={stroke}
+//         progress={progress}
+//         expectedProgress={expectedProgress}
+//         bg={bg}
+//       />
+//     )
+//   })()
+
+//   return (
+//     <div
+//       className={"Avatar " + className}
+//       style={{ width: size, height: size }}
+//       {...rest}
+//     >
+//       <button onClick={() => setCount(count + 1)}>Change count</button>
+//       <div
+//         role="img"
+//         aria-label={`Avatar for ${displayName}`}
+//         className="Avatar_image"
+//         style={{
+//           backgroundImage: `url(${photoURL})`,
+//           width: size - stroke * 2 + 1,
+//           height: size - stroke * 2 + 1,
+//           top: stroke,
+//           left: stroke
+//         }}
+//       />
+//       {circles}
+//     </div>
+//   )
+// }
 
 /******************************************************************************/
 // Everything in React is the same: if the user clicks, setState, if a network
@@ -315,75 +331,83 @@ export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
 // callback with the exact state we want, when that's the case, it's a pretty
 // satisfying one-liner in React to subscribe to data.
 
-// export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
-//   const [user, setUser] = useState(null)
-//   const [posts, setPosts] = useState(null)
+function useUser(uid) {
+  const [user, setUser] = useState()
 
-//   useEffect(() => {
-//     let current = true
-//     fetchUser(uid).then(user => {
-//       if (current) {
-//         setUser(user)
-//       }
-//     })
-//     return () => current = false
-//   }, [uid])
+  useEffect(() => {
+    let current = true
 
-//   useEffect(() => subscribeToPosts(uid, setPosts), [uid])
+    fetchUser(uid).then(user => {
+      if (current) {
+        setUser(user)
+      }
+    })
 
-//   if (!user) {
-//     return (
-//       <div
-//         className={"Avatar empty " + className}
-//         style={{ width: size, height: size }}
-//         {...rest}
-//       />
-//     )
-//   }
+    return () => (current = false)
+  }, [uid])
 
-//   const { photoURL, displayName, goal } = user
-//   const stroke = size / 10
+  return user
+}
 
-//   const circles = (() => {
-//     if (!posts) return null
-//     const minutes = posts && calculateTotalMinutes(posts)
-//     const expectedMinutes = posts && calculateExpectedMinutes(user)
-//     const progress = (minutes / goal) * 100
-//     const expectedProgress = (expectedMinutes / goal) * 100
+export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
+  const [posts, setPosts] = useState(null)
+  const user = useUser(uid)
 
-//     return (
-//       <ProgressCircle
-//         radius={size / 2}
-//         stroke={stroke}
-//         progress={progress}
-//         expectedProgress={expectedProgress}
-//         bg={bg}
-//       />
-//     )
-//   })()
+  useEffect(() => subscribeToPosts(uid, setPosts), [uid])
 
-//   return (
-//     <div
-//       className={"Avatar " + className}
-//       style={{ width: size, height: size }}
-//       {...rest}
-//     >
-//       <div
-//         role="img"
-//         aria-label={`Avatar for ${displayName}`}
-//         className="Avatar_image"
-//         style={{
-//           backgroundImage: `url(${photoURL})`,
-//           width: size - stroke * 2 + 1,
-//           height: size - stroke * 2 + 1,
-//           top: stroke,
-//           left: stroke
-//         }}
-//       />
-//       {circles}
-//     </div>
-//   )
-// }
+  if (!user) {
+    return (
+      <div
+        className={"Avatar empty " + className}
+        style={{ width: size, height: size }}
+        {...rest}
+      />
+    )
+  }
+
+  const { photoURL, displayName, goal } = user
+  const stroke = size / 10
+
+  const circles = (() => {
+    if (!posts) return null
+    const minutes = posts && calculateTotalMinutes(posts)
+    const expectedMinutes = posts && calculateExpectedMinutes(user)
+    const progress = (minutes / goal) * 100
+    const expectedProgress = (expectedMinutes / goal) * 100
+
+    return (
+      <ProgressCircle
+        radius={size / 2}
+        stroke={stroke}
+        progress={progress}
+        expectedProgress={expectedProgress}
+        bg={bg}
+      />
+    )
+  })()
+
+  return (
+    <div
+      className={"Avatar " + className}
+      style={{ width: size, height: size }}
+      {...rest}
+    >
+      <div
+        role="img"
+        aria-label={`Avatar for ${displayName}`}
+        className="Avatar_image"
+        style={{
+          backgroundImage: `url(${photoURL})`,
+          width: size - stroke * 2 + 1,
+          height: size - stroke * 2 + 1,
+          top: stroke,
+          left: stroke
+        }}
+      />
+      {circles}
+    </div>
+  )
+}
 
 /******************************************************************************/
 // In the past to abstract something like this data fetching was the topic of

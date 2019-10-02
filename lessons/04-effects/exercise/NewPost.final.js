@@ -29,7 +29,7 @@ export default function NewPost({ takeFocus, date, showAvatar }) {
   // Automatically focus the <textarea> if it should take focus.
   useEffect(() => {
     if (takeFocus) messageRef.current.focus()
-  }, [takeFocus, message])
+  }, [takeFocus])
 
   return (
     <div className={"NewPost" + (messageTooLong ? " NewPost_error" : "")}>

@@ -1,12 +1,12 @@
-import React, { useState, useRef } from 'react'
-import { FaDumbbell } from 'react-icons/fa'
-import { format as formatDate } from 'date-fns'
+import React, { useState, useRef } from "react"
+import { FaDumbbell } from "react-icons/fa"
+import { format as formatDate } from "date-fns"
 
-import { useAppState } from 'app/app-state'
-import { createPost, DATE_FORMAT } from 'app/utils'
-import Avatar from 'app/Avatar'
-import Minutes from 'app/Minutes'
-import RecentPostsDropdown from 'app/RecentPostsDropdown'
+import { useAppState } from "app/app-state"
+import { createPost, DATE_FORMAT } from "app/utils"
+import Avatar from "app/Avatar"
+import Minutes from "app/Minutes"
+import RecentPostsDropdown from "app/RecentPostsDropdown"
 
 const MAX_MESSAGE_LENGTH = 200
 
@@ -20,9 +20,9 @@ const MAX_MESSAGE_LENGTH = 200
 // convention; it doesn't "mean" anything. Let's check out all the places
 // we're passing data down, and getting data back up through events:
 
-export default function NewPost({ takeFocus, date, showAvatar }) {
+export default function NewPost({ takeFocus, date, showAvatar, onSuccess }) {
   const [{ auth }] = useAppState()
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState("")
   const [saving, setSaving] = useState(false)
   const formRef = useRef()
   const minutesRef = useRef()
@@ -47,12 +47,13 @@ export default function NewPost({ takeFocus, date, showAvatar }) {
       uid: auth.uid
     }).then(post => {
       setSaving(false)
-      setMessage('')
+      setMessage("")
+      onSuccess()
     })
   }
 
   return (
-    <div className={'NewPost' + (tooMuchText ? ' NewPost_error' : '')}>
+    <div className={"NewPost" + (tooMuchText ? " NewPost_error" : "")}>
       {showAvatar && <Avatar uid={auth.uid} size={70} />}
       <form ref={formRef} className="NewPost_form" onSubmit={handleSubmit}>
         <textarea

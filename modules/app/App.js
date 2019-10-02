@@ -12,7 +12,7 @@ function App() {
 }
 
 export default () => (
-  <AppStateProvider reducer={appReducer} initialState={initialState}>
+  <AppStateProvider>
     <App />
   </AppStateProvider>
 )

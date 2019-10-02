@@ -1,7 +1,7 @@
-import React, { Fragment, useState, useCallback } from 'react'
-import { Link, useLocation, useParams } from 'app/packages/react-router-next'
-import { useTransition, animated } from 'react-spring'
-import { FaChevronDown, FaChevronUp, FaPlus } from 'react-icons/fa'
+import React, { Fragment, useState, useCallback } from "react"
+import { Link, useLocation, useParams } from "app/packages/react-router-next"
+import { useTransition, animated } from "react-spring"
+import { FaChevronDown, FaChevronUp, FaPlus } from "react-icons/fa"
 import {
   format as formatDate,
   subDays,
@@ -9,17 +9,17 @@ import {
   isFirstDayOfMonth,
   isToday,
   isFuture
-} from 'date-fns'
+} from "date-fns"
 
-import useAuth from 'app/useAuth'
-import AnimatedDialog from 'app/AnimatedDialog'
-import Posts from 'app/Posts'
-import usePosts from 'app/usePosts'
-import Meta from 'app/Meta'
-import { DATE_FORMAT, calculateWeeks, calculateTotalMinutes } from 'app/utils'
-import { useAppState } from 'app/app-state'
-import NewPost from 'app/NewPost'
-import AnimatedText from 'app/AnimatedText'
+import useAuth from "app/useAuth"
+import AnimatedDialog from "app/AnimatedDialog"
+import Posts from "app/Posts"
+import usePosts from "app/usePosts"
+import Meta from "app/Meta"
+import { DATE_FORMAT, calculateWeeks, calculateTotalMinutes } from "app/utils"
+import { useAppState } from "app/app-state"
+import NewPost from "app/NewPost"
+import AnimatedText from "app/AnimatedText"
 
 export default function Dashboard() {
   const [{ user }] = useAppState()
@@ -67,7 +67,7 @@ function Calendar({ user, posts, modalIsOpen }) {
   const [prevStart, setPrevStart] = useState(startDate)
   const [transitionDirection, setTransitionDirection] = useState()
   if (prevStart !== startDate) {
-    setTransitionDirection(startDate < prevStart ? 'earlier' : 'later')
+    setTransitionDirection(startDate < prevStart ? "earlier" : "later")
     setPrevStart(startDate)
   }
 
@@ -84,11 +84,11 @@ function Calendar({ user, posts, modalIsOpen }) {
 
   const handleNav = (addOrSubDays, direction) => {
     const date = formatDate(addOrSubDays(startDate, 7 * numWeeks), DATE_FORMAT)
-    navigate('.', { state: { startDate: date, direction } })
+    navigate(".", { state: { startDate: date, direction } })
   }
 
-  const handleEarlierClick = () => handleNav(subDays, 'earlier')
-  const handleLaterClick = () => handleNav(addDays, 'later')
+  const handleEarlierClick = () => handleNav(subDays, "earlier")
+  const handleLaterClick = () => handleNav(addDays, "later")
 
   const closeDialog = () => setNewPostDate(null)
 
@@ -106,17 +106,22 @@ function Calendar({ user, posts, modalIsOpen }) {
   return (
     <Fragment>
       <AnimatedDialog isOpen={!!newPostDate} onDismiss={closeDialog}>
-        <NewPost date={newPostDate} />
+        <NewPost
+          date={newPostDate}
+          onSuccess={() => {
+            setNewPostDate(null)
+          }}
+        />
       </AnimatedDialog>
       <div className="Calendar">
         <Weekdays />
         <div className="Calendar_animation_overflow">
           {transitions.map(({ item, props: { y }, key }, index) => {
             if (!item) return null
-            let transform = 'translate3d(0px, 0%, 0px)'
-            if (transitionDirection === 'earlier') {
+            let transform = "translate3d(0px, 0%, 0px)"
+            if (transitionDirection === "earlier") {
               transform = y.interpolate(y => `translate3d(0px, ${y}%, 0px)`)
-            } else if (transitionDirection === 'later') {
+            } else if (transitionDirection === "later") {
               transform = y.interpolate(y => `translate3d(0px, ${-y}%, 0px)`)
             }
             return (
@@ -211,17 +216,17 @@ function Day({
   return (
     <div
       className={
-        'Day' +
-        (totalMinutes ? '' : ' Day_no_minutes') +
-        (dayIsToday ? ' Day_is_today' : '') +
-        (dayIsFuture ? ' Day_is_future' : '')
+        "Day" +
+        (totalMinutes ? "" : " Day_no_minutes") +
+        (dayIsToday ? " Day_is_today" : "") +
+        (dayIsFuture ? " Day_is_future" : "")
       }
     >
       <div className="Day_date">
         {showMonth && (
-          <div className="Day_month">{formatDate(day.date, 'MMM')}</div>
+          <div className="Day_month">{formatDate(day.date, "MMM")}</div>
         )}
-        <div className="Day_number">{formatDate(day.date, 'DD')}</div>
+        <div className="Day_number">{formatDate(day.date, "DD")}</div>
       </div>
       <div className="Day_minutes">
         {totalMinutes ? (

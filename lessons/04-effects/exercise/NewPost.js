@@ -1,25 +1,44 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { FaDumbbell } from 'react-icons/fa'
+import React, { useState, useEffect, useRef } from "react"
+import { FaDumbbell } from "react-icons/fa"
 
-import { useAppState } from 'app/app-state'
-import { formatDate, DATE_FORMAT } from 'app/utils'
-import Avatar from 'app/Avatar'
-import Minutes from 'app/Minutes'
-import RecentPostsDropdown from 'app/RecentPostsDropdown'
+import { useAppState } from "app/app-state"
+import { formatDate, DATE_FORMAT } from "app/utils"
+import Avatar from "app/Avatar"
+import Minutes from "app/Minutes"
+import RecentPostsDropdown from "app/RecentPostsDropdown"
 
 const MAX_MESSAGE_LENGTH = 200
 
 export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
   const [{ auth }] = useAppState()
-  const [message, setMessage] = useState('Ran around the lake.')
+  const storageKey = makeNewPostKey(date)
+  const [message, setMessage] = useState(getLocalStorageValue(storageKey) || "")
+  const messageRef = useRef(null)
   const messageTooLong = message.length > MAX_MESSAGE_LENGTH
 
   function handleMessageChange(event) {
     setMessage(event.target.value)
   }
 
+  useEffect(() => {
+    setLocalStorage(storageKey, message)
+  }, [message, storageKey])
+
+  useEffect(() => {
+    setTimeout(() => {
+      messageRef.current.focus()
+    }, 8000)
+  }, [])
+
+  // useEffect(() => {
+  //   if (takeFocus) {
+  //     messageRef.current.focus()
+  //   }
+  //   // set focus somehow???
+  // }, [takeFocus])
+
   return (
-    <div className={'NewPost' + (messageTooLong ? ' NewPost_error' : '')}>
+    <div className={"NewPost" + (messageTooLong ? " NewPost_error" : "")}>
       {showAvatar && <Avatar uid={auth.uid} size={70} />}
       <form className="NewPost_form">
         <textarea
@@ -27,6 +46,7 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
           placeholder="Tell us about your workout!"
           value={message}
           onChange={handleMessageChange}
+          ref={messageRef}
         />
         <div className="NewPost_char_count">
           {message.length}/{MAX_MESSAGE_LENGTH}

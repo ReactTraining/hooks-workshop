@@ -13,8 +13,16 @@ const MAX_MESSAGE_LENGTH = 200
 // Consider the message length counter. Every time we type, we set state, and
 // then React updates the DOM for us.
 
+function useDocTitle(title) {
+  useEffect(() => {
+    document.title = title
+  }, [title])
+}
+
 export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
   const [{ auth }] = useAppState()
+  const [focused, setFocused] = useState(false)
+  const messageLengthRef = useRef(null)
   const [message, setMessage] = useState("Ran around the lake.")
   const messageTooLong = message.length > MAX_MESSAGE_LENGTH
 
@@ -22,18 +30,30 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
     setMessage(event.target.value)
   }
 
+  useDocTitle(`New post: ${message.length} long`)
+
+  useEffect(() => {
+    const node = messageLengthRef.current
+
+    if (node) {
+      node.textContent = message.length
+    }
+  }, [message])
+
   return (
     <div className={"NewPost" + (messageTooLong ? ` ${errorClass}` : "")}>
       {showAvatar && <Avatar uid={auth.uid} size={70} />}
       <form className="NewPost_form">
         <textarea
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           className="NewPost_input"
           placeholder="Tell us about your workout!"
           value={message}
           onChange={handleMessageChange}
         />
         <div className="NewPost_char_count">
-          <span>{message.length}</span>/{MAX_MESSAGE_LENGTH}
+          <span ref={messageLengthRef} />/{MAX_MESSAGE_LENGTH}
         </div>
         <RecentPostsDropdown
           uid={auth.uid}

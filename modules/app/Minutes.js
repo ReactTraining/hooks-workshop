@@ -1,9 +1,13 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { format as formatDate } from "date-fns"
 import { FaMinus, FaPlus } from "react-icons/fa"
 
-export default function Minutes({ date }) {
+const Minutes = React.forwardRef(({ date, onChange }, ref) => {
   const [minutes, setMinutes] = useState(30)
+
+  useEffect(() => {
+    onChange && onChange(minutes)
+  }, [minutes])
 
   const subtract = () => {
     if (minutes > 0) {
@@ -65,6 +69,7 @@ export default function Minutes({ date }) {
         onChange={handleInputChange}
         onBlur={handleInputBlur}
         onKeyDown={handleInputKeyDown}
+        ref={ref}
       />
       <div>
         <button
@@ -80,4 +85,6 @@ export default function Minutes({ date }) {
       </label>
     </div>
   )
-}
+})
+
+export default Minutes

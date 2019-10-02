@@ -5,12 +5,29 @@ import { FaMinus, FaPlus } from "react-icons/fa"
 /**********************************************************/
 // We can render with values put into variables:
 
+// [
+//   { type: 'usestate', value: 6 },
+//   { type: 'usestate', value: 'David' }
+// ]
+
 export default function Minutes() {
-  const minutes = 5
+  const [minutes, setMinutes] = useState(5)
+  const [error, setError] = useState(null)
+
   return (
     <div className="Minutes">
       <div>
-        <button type="button" className="icon_button Minutes_button">
+        <button
+          type="button"
+          className="icon_button Minutes_button"
+          onClick={() => {
+            if (minutes > 0) {
+              setMinutes(minutes - 1)
+            } else {
+              setError("You cannot do a workout for negative minutes")
+            }
+          }}
+        >
           <FaMinus />
         </button>
       </div>
@@ -18,10 +35,23 @@ export default function Minutes() {
         {minutes} Minutes
       </div>
       <div>
-        <button type="button" className="icon_button Minutes_button">
+        <button
+          type="button"
+          className="icon_button Minutes_button"
+          onClick={() => {
+            if (minutes < 10) {
+              setMinutes(minutes + 1)
+            }
+
+            if (minutes >= 0) {
+              setError(null)
+            }
+          }}
+        >
           <FaPlus />
         </button>
       </div>
+      {error ? <div style={{ color: "red" }}>{error}</div> : null}
     </div>
   )
 }
@@ -236,4 +266,3 @@ export default function Minutes() {
 //     </div>
 //   )
 // }
-

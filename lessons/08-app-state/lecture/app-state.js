@@ -3,8 +3,8 @@ import React, { createContext, useReducer, useContext } from "react"
 const Context = createContext()
 
 export function AppStateProvider({ reducer, initialState = {}, children }) {
-  const value = useReducer(reducer, initialState)
-  return <Context.Provider value={value} children={children} />
+  const stateAndDispatch = useReducer(reducer, initialState)
+  return <Context.Provider value={stateAndDispatch} children={children} />
 }
 
 export function useAppState() {
