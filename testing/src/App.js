@@ -43,8 +43,8 @@ function feedbackReducer(state, action) {
   }
 }
 
-export function Feedback() {
-  const [state, dispatch] = useReducer(feedbackReducer, initialState)
+export function Feedback({ screen = initialState }) {
+  const [state, dispatch] = useReducer(feedbackReducer, screen)
 
   switch (state) {
     case "question":

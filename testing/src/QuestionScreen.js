@@ -5,10 +5,14 @@ export function QuestionScreen({ onClickGood, onClickBad, onClose }) {
   return (
     <Screen data-testid="question-screen">
       <header>How was your experience?</header>
-      <button onClick={onClickGood} data-variant="good">
+      <button
+        onClick={onClickGood}
+        data-variant="good"
+        data-testid="good-button"
+      >
         Good
       </button>
-      <button onClick={onClickBad} data-variant="bad">
+      <button onClick={onClickBad} data-variant="bad" data-testid="bad-button">
         Bad
       </button>
       <button title="close" data-testid="close-button" onClick={onClose} />
