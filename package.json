@@ -36,6 +36,7 @@
     "identity-obj-proxy": "3.0.0",
     "jest": "^24.7.1",
     "jest-pnp-resolver": "1.0.2",
+    "jest-puppeteer": "^4.3.0",
     "jest-resolve": "23.6.0",
     "jest-watch-typeahead": "^0.2.1",
     "localforage": "^1.7.3",
@@ -66,7 +67,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "e2e": "jest -c jest.config.js"
   },
   "eslintConfig": {
     "extends": "react-app",
