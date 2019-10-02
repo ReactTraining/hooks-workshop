@@ -5,13 +5,13 @@ import TabsButton from "./TabsButton"
 import { FaDumbbell } from "react-icons/fa"
 import { DateFields, MonthField, DayField, YearField } from "./DateFields"
 
-function TextInput({ id, label, type = "text" }) {
+function TextInput({ id, label, type = "text", ...rest }) {
   return (
     <Fragment>
       <VisuallyHidden>
         <label htmlFor={id}>{label}</label>
       </VisuallyHidden>
-      <input id={id} placeholder={label} type={type} required />
+      <input id={id} placeholder={label} type={type} required {...rest} />
     </Fragment>
   )
 }
@@ -51,10 +51,23 @@ export default function SignupForm() {
       )}
 
       <form onSubmit={handleSignup}>
-        <TextInput id="displayName" label="Display Name" />
-        <TextInput id="photoURL" label="Avatar URL" />
-        <TextInput id="email" label="Email" />
-        <TextInput id="password" type="password" label="Password" />
+        <TextInput
+          id="displayName"
+          label="Display Name"
+          data-testid="signup:displayName"
+        />
+        <TextInput
+          id="photoURL"
+          label="Avatar URL"
+          data-testid="signup:photoURL"
+        />
+        <TextInput id="email" label="Email" data-testid="signup:email" />
+        <TextInput
+          id="password"
+          type="password"
+          label="Password"
+          data-testid="signup:password"
+        />
         <p>
           <span aria-hidden="true">Start:</span>{" "}
           <DateFields value={startDate} onChange={setStartDate}>

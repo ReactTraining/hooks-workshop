@@ -11,7 +11,7 @@ export default function LoggedOut() {
       <Tabs>
         <TabList>
           <Tab>Login</Tab>
-          <Tab>Sign Up</Tab>
+          <Tab data-testid="signup-tab">Sign Up</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
