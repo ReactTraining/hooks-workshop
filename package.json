@@ -89,6 +89,7 @@
     "@testing-library/jest-dom": "^4.1.0",
     "@testing-library/react": "^9.2.0",
     "eslint-plugin-react-hooks": "^1.6.0",
+    "jest-fetch-mock": "^2.1.2",
     "prettier": "^1.16.4"
   },
   "jest": {
@@ -98,7 +99,8 @@
     ],
     "resolver": "jest-pnp-resolver",
     "setupFiles": [
-      "react-app-polyfill/jsdom"
+      "react-app-polyfill/jsdom",
+      "./setupJest.js"
     ],
     "testMatch": [
       "<rootDir>/modules/**/*.test.{js,jsx,ts,tsx}"
