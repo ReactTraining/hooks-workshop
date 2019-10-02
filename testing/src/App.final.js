@@ -1,7 +1,17 @@
 import React, { useReducer, useEffect } from "react"
 
 function useKeyDown(key, onKeyDown) {
-  // ...
+  useEffect(() => {
+    const handler = e => {
+      if (e.key === key) {
+        onKeyDown()
+      }
+    }
+
+    window.addEventListener("keydown", handler)
+
+    return () => window.removeEventListener("keydown", handler)
+  }, [onKeyDown])
 }
 
 function Screen({ children, onSubmit = undefined }) {
@@ -17,6 +27,8 @@ function Screen({ children, onSubmit = undefined }) {
 }
 
 function QuestionScreen({ onClickGood, onClickBad, onClose }) {
+  useKeyDown("Escape", onClose)
+
   return (
     <Screen>
       <header>How was your experience?</header>
@@ -32,6 +44,8 @@ function QuestionScreen({ onClickGood, onClickBad, onClose }) {
 }
 
 function FormScreen({ onSubmit, onClose }) {
+  useKeyDown("Escape", onClose)
+
   return (
     <Screen
       onSubmit={e => {
@@ -65,6 +79,8 @@ function FormScreen({ onSubmit, onClose }) {
 }
 
 function ThanksScreen({ onClose }) {
+  useKeyDown("Escape", onClose)
+
   return (
     <Screen>
       <header>Thanks for your feedback.</header>
@@ -74,7 +90,37 @@ function ThanksScreen({ onClose }) {
 }
 
 function feedbackReducer(state, event) {
-  // ...
+  switch (state) {
+    case "question":
+      switch (event.type) {
+        case "GOOD":
+          return "thanks"
+        case "BAD":
+          return "form"
+        case "CLOSE":
+          return "closed"
+        default:
+          return state
+      }
+    case "form":
+      switch (event.type) {
+        case "SUBMIT":
+          return "thanks"
+        case "CLOSE":
+          return "closed"
+        default:
+          return state
+      }
+    case "thanks":
+      switch (event.type) {
+        case "CLOSE":
+          return "closed"
+        default:
+          return state
+      }
+    default:
+      return state
+  }
 }
 
 export function Feedback() {

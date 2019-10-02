@@ -1,0 +1,107 @@
+.ui-app {
+  height: 100vh;
+  width: 100vw;
+  background: #1863bd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Proxima Nova, Helvetica, sans-serif;
+
+  &,
+  * {
+    position: relative;
+    box-sizing: border-box;
+  }
+}
+
+.ui-screen {
+  padding: 1rem;
+  padding-top: 2rem;
+  background: white;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  animation: slide-up 0.5s cubic-bezier(0.25, 0, 0.25, 1);
+
+  @keyframes slide-up {
+    from {
+      transform: translateY(50%);
+      opacity: 0;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+
+  > header {
+    margin-bottom: 1rem;
+  }
+
+  button {
+    background: #4088da;
+    appearance: none;
+    border: none;
+    text-transform: uppercase;
+    color: white;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 20rem;
+    align-self: flex-end;
+    cursor: pointer;
+    font-size: 0.75rem;
+
+    + button {
+      margin-left: 0.5rem;
+    }
+
+    &[data-variant="good"] {
+      background-color: #7cbd67;
+    }
+    &[data-variant="bad"] {
+      background-color: #ff4652;
+    }
+  }
+
+  textarea {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid #dedede;
+    font-size: 1rem;
+  }
+
+  button[title="close"] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    appearance: none;
+    height: 2rem;
+    width: 2rem;
+    line-height: 0;
+    border: none;
+    background: transparent;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:before {
+      content: "×";
+      font-size: 1.5rem;
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
+* {
+  box-sizing: border-box;
+  position: relative;
+}
+
+body,
+html {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
