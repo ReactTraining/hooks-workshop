@@ -4,28 +4,17 @@ import usePosts from "./usePosts"
 import { calculateTotalMinutes, calculateExpectedMinutes } from "./utils"
 import ProgressCircle from "./ProgressCircle"
 
-export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
-  const user = useDocWithCache(`users/${uid}`)
-  const posts = usePosts(uid)
-
-  if (!user || !posts) {
-    return (
-      <div
-        className={"Avatar empty " + className}
-        style={{ width: size, height: size }}
-        {...rest}
-      />
-    )
-  }
-
-  const { photoURL, displayName, goal } = user
-  const minutes = calculateTotalMinutes(posts)
-  const expectedMinutes = calculateExpectedMinutes(user)
-
+export function AvatarImage({
+  className,
+  size,
+  displayName,
+  photoURL,
+  progress,
+  expectedProgress,
+  bg,
+  ...rest
+}) {
   const stroke = size / 10
-
-  const progress = (minutes / goal) * 100
-  const expectedProgress = (expectedMinutes / goal) * 100
 
   return (
     <div
@@ -53,5 +42,39 @@ export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
         bg={bg}
       />
     </div>
+  )
+}
+
+export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
+  const user = useDocWithCache(`users/${uid}`)
+  const posts = usePosts(uid)
+
+  if (!user || !posts) {
+    return (
+      <div
+        className={"Avatar empty " + className}
+        style={{ width: size, height: size }}
+        {...rest}
+      />
+    )
+  }
+
+  const { photoURL, displayName, goal } = user
+  const minutes = calculateTotalMinutes(posts)
+  const expectedMinutes = calculateExpectedMinutes(user)
+
+  const progress = (minutes / goal) * 100
+  const expectedProgress = (expectedMinutes / goal) * 100
+
+  return (
+    <AvatarImage
+      className={className}
+      size={size}
+      displayName={displayName}
+      photoURL={photoURL}
+      progress={progress}
+      expectedProgress={expectedProgress}
+      bg={bg}
+    />
   )
 }
