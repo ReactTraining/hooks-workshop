@@ -54,6 +54,7 @@ export default function Minutes({ date }) {
           type="button"
           className="icon_button Minutes_button"
           onClick={subtract}
+          data-testid="subtract-minutes"
         >
           <FaMinus />
         </button>
@@ -65,12 +66,14 @@ export default function Minutes({ date }) {
         onChange={handleInputChange}
         onBlur={handleInputBlur}
         onKeyDown={handleInputKeyDown}
+        data-testid="minutes"
       />
       <div>
         <button
           type="button"
           className="icon_button Minutes_button"
           onClick={add}
+          data-testid="add-minutes"
         >
           <FaPlus />
         </button>
