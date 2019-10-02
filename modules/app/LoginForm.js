@@ -48,6 +48,7 @@ export default function LoginForm() {
           placeholder="you@example.com"
           required
           type="text"
+          data-testid="login:email"
         />
 
         <VisuallyHidden>
@@ -60,6 +61,7 @@ export default function LoginForm() {
           className="inputField"
           required
           placeholder="Password"
+          data-testid="login:password"
         />
         <div>
           <label>
