@@ -50,7 +50,12 @@ export function MonthField(props) {
   }
 
   return (
-    <select value={month} onChange={handleChange} {...props}>
+    <select
+      value={month}
+      onChange={handleChange}
+      {...props}
+      data-testid="select-month"
+    >
       <option value="0">01</option>
       <option value="1">02</option>
       <option value="2">03</option>

@@ -7,12 +7,26 @@ function useKeyDown(key, onKeyDown) {
   // ...
 }
 
-function feedbackReducer(state, event) {
-  // ...
+const initialState = "question"
+
+function feedbackReducer(state, action) {
+  switch (state) {
+    case "question":
+      switch (action.type) {
+        case "GOOD":
+          return "thanks"
+
+        default:
+          return state
+      }
+
+    default:
+      return state
+  }
 }
 
 export function Feedback() {
-  const [state, dispatch] = useReducer(feedbackReducer, "question")
+  const [state, dispatch] = useReducer(feedbackReducer, initialState)
 
   switch (state) {
     case "question":
