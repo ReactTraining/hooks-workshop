@@ -3,7 +3,7 @@ import { Screen } from "./Screen"
 
 export function QuestionScreen({ onClickGood, onClickBad, onClose }) {
   return (
-    <Screen>
+    <Screen data-testid="question-screen">
       <header>How was your experience?</header>
       <button onClick={onClickGood} data-variant="good">
         Good

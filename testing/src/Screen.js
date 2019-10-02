@@ -1,6 +1,6 @@
 import React from "react"
 
-export function Screen({ children, onSubmit = undefined }) {
+export function Screen({ children, onSubmit = undefined, ...other }) {
   if (onSubmit) {
     return (
       <form onSubmit={onSubmit} className="ui-screen">
@@ -8,5 +8,9 @@ export function Screen({ children, onSubmit = undefined }) {
       </form>
     )
   }
-  return <section className="ui-screen">{children}</section>
+  return (
+    <section className="ui-screen" {...other}>
+      {children}
+    </section>
+  )
 }

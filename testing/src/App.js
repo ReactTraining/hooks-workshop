@@ -9,17 +9,35 @@ function useKeyDown(key, onKeyDown) {
 
 const initialState = "question"
 
+// question + GOOD = thanks
+// question + BAD = form
+// form + SUBMIT = thanks
+// ??? + CLOSE = closed
+
 function feedbackReducer(state, action) {
+  if (action.type === "CLOSE") {
+    return "closed"
+  }
+
   switch (state) {
     case "question":
       switch (action.type) {
         case "GOOD":
           return "thanks"
 
+        case "BAD":
+          return "form"
+
         default:
           return state
       }
-
+    case "form":
+      switch (action.type) {
+        case "SUBMIT":
+          return "thanks"
+        default:
+          return state
+      }
     default:
       return state
   }
