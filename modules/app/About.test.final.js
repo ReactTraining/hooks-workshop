@@ -8,7 +8,7 @@ describe("About", () => {
   it("should render", () => {
     const { getByText } = render(<About />)
 
-    const supportMessage = getByText(/you can do it/i)
+    expect(getByText(/you can do it/i)).toBeTruthy()
   })
 
   it("should match inline snapshot", () => {
