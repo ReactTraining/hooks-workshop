@@ -86,6 +86,7 @@
     "last 1 Chrome versions"
   ],
   "devDependencies": {
+    "@testing-library/jest-dom": "^4.1.0",
     "@testing-library/react": "^9.2.0",
     "eslint-plugin-react-hooks": "^1.6.0",
     "prettier": "^1.16.4"
