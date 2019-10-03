@@ -40,6 +40,18 @@ Which exercise?
 Choose one from list [1...9, a, b, c, 0]:
 ```
 
+## Offline Mode
+
+If you're having Internet problems and that's preventing you from logging into the app (because it uses Google Firebase), you can switch to "offline mode" which will use a local "fake" version of firebase. Just go to `/modules/app/utils.js` and change this line:
+
+```
+// From this (line 1)
+import { db, auth, mode } from "app/db.real.js"
+
+// To this
+import { db, auth, mode } from "app/db.fake.js"
+```
+
 ## We took notes for you!
 
 During the lectures, feel free to take notes. We also have some [pre-made notes](/student-lesson-notes.md) for you in this repo that you can edit as you see fit.
