@@ -166,7 +166,7 @@ function Day({
 //
 // - We'll also use an "ease out" bezier curve for a nicer effect
 //
-// - Move the hook into it's own component so we don't do this animation all
+// - Move the hook into its own component so we don't do this animation all
 //   the time, even when we don't use it.
 //
 // (Don't forget to remove `value` from the deps array!)
