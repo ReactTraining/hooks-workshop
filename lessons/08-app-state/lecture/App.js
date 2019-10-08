@@ -7,6 +7,7 @@ import useAuth from "app/useAuth"
 
 function App() {
   const { authAttempted, auth } = useAuth()
+
   if (!authAttempted) return null
   return <div className="Layout">{auth ? <LoggedIn /> : <LoggedOut />}</div>
 }

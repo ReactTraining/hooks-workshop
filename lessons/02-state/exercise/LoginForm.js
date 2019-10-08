@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useRef, Fragment } from "react"
 import VisuallyHidden from "@reach/visually-hidden"
 import { FaSignInAlt } from "react-icons/fa"
 import TabsButton from "app/TabsButton"
@@ -8,8 +8,25 @@ import { login } from "app/utils"
 // export default LoginFormFinal
 
 export default function LoginForm() {
+  const [showPassword, setShowPassword] = useState(true)
+  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(false)
+
+  const emailRef = useRef()
+  const passwordRef = useRef()
+
+  function submitHandler(event) {
+    event.preventDefault()
+    setLoading(true)
+
+    login(emailRef.current.value, passwordRef.current.value).catch(error => {
+      setError(error.message)
+      setLoading(false)
+    })
+  }
+
   return (
-    <form>
+    <form onSubmit={submitHandler}>
       <VisuallyHidden>
         <label htmlFor="login:email">Email:</label>
       </VisuallyHidden>
@@ -17,6 +34,7 @@ export default function LoginForm() {
         type="text"
         id="login:email"
         className="inputField"
+        ref={emailRef}
         placeholder="you@example.com"
       />
 
@@ -25,25 +43,36 @@ export default function LoginForm() {
       </VisuallyHidden>
       <input
         id="login:password"
-        type="password"
+        type={showPassword ? "text" : "password"}
         className="inputField"
+        ref={passwordRef}
         placeholder="Password"
       />
-
       <div>
         <label>
           <input
             className="passwordCheckbox"
             type="checkbox"
-            defaultChecked={false}
+            defaultChecked={showPassword}
+            onChange={() => {
+              setShowPassword(!showPassword)
+            }}
           />{" "}
           show password
         </label>
       </div>
 
+      {error && <p>{error}</p>}
+
       <TabsButton>
-        <FaSignInAlt />
-        <span>Login</span>
+        {loading ? (
+          <span>Loading...</span>
+        ) : (
+          <Fragment>
+            <FaSignInAlt />
+            <span>Login</span>
+          </Fragment>
+        )}
       </TabsButton>
     </form>
   )
