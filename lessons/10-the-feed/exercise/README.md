@@ -12,7 +12,7 @@ There are a few features on the Feed that you're going to implement. You can unc
 
 4. Don't show the "View [x] New Posts" button unless there are new posts to show.
 
-5. When the user clicks the "View [x] New Posts" button, show the new posts and don't render the button. This can get a little tricky, you'll likely need to make multiple state changes. You're goal is to get the list of posts to show exactly what it had before + the new posts. Since your effects are reacting to state changes, they will refetch, make sure you refetch with the right arguments to get what you want.
+5. When the user clicks the "View [x] New Posts" button, show the new posts and don't render the button. This can get a little tricky, you'll likely need to make multiple state changes. You're goal is to get the list of posts to show exactly what it had before + the new posts. Since your effects are reacting to state changes, they will re-fetch, make sure you re-fetch with the right arguments to get what you want.
 
 6. Extra Credit: When the user leaves and returns to the Feed, can you figure out how to render the page in the state that they left it to avoid flicker and enhance usability?
 
