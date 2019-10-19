@@ -141,7 +141,7 @@ useEffect(() => {
 - `useReducer` Format: `const [state, dispatch] = useReducer(reducerFunction, initialState)`.
 - `useReducer` is the reducer pattern for local state. It's an alternative to using `useState`. `useReducer` can be good for complex local state.
 - Context is a way to pass data around our app without having to do prop drilling.
-- Context gives us a `<Provider />` component which broadcasts data to all the sub-nodes and then a hook called `useContext` is used to consume that data. There could be many nodes between the provider and the consumer components and none of these will be aware or involved with passing data down (as would happen with prop drilling). A good mental model is that the provider passes data over many of it's children down to a lower level child component. Then the child component consuming the context could communicate back up to the provider via callbacks.
+- Context gives us a `<Provider />` component which broadcasts data to all the sub-nodes and then a hook called `useContext` is used to consume that data. There could be many nodes between the provider and the consumer components and none of these will be aware or involved with passing data down (as would happen with prop drilling). A good mental model is that the provider passes data over many of its children down to a lower level child component. Then the child component consuming the context could communicate back up to the provider via callbacks.
 - In Lesson 8, the authentication information is available though a subscription. But instead of creating multiple subscriptions all over our app to know about the login status, we subscribe once and then pass that information to the provider which in turn makes the information available to any component in our app that wants to be a consumer of that information.
 
 ## Lesson 12: Optimization
@@ -152,7 +152,7 @@ useEffect(() => {
   - Or we can itemize which props changing or not changing should cause the re-render by adding a `componentShouldUpdate` lifecycle method.
 - For hooks (on function based components), we can achieve the same thing as a Pure Component by doing: `React.memo(() => {})` where the function passed in _is_ the component.
 - While `React.memo()` is for optimizing the component from having too many re-renders, `useMemo` is a hook for memorizing the return of a long-running function call, so don't confuse these two. If we have a function call that's slow and it's being ran with each re-render (and if it's a pure function), then it might make sense to memoize it using `useMemo()`
-- While `useMemo()` memoizes a value from a function call, `useCallback` memoizes a function itself. This is useful when we don't want a function to be re-created on each re-render which would create a new identity in memory.
+- While `useMemo()` memoizes a value from a function call, `useCallback()` memoizes a function itself. This is useful when we don't want a function to be re-created on each re-render which would create a new identity in memory.
 
 - Docs on `React.pureComponent`: https://reactjs.org/docs/react-api.html#reactpurecomponent
 - Docs on `React.memo`: https://reactjs.org/docs/react-api.html#reactmemo
