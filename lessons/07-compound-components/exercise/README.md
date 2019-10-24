@@ -40,7 +40,7 @@ We want this:
 </DateFields>
 ```
 
-1. Change `SignupForm.js` to render the the new `DateFields` API with compound components as shown above.
+1. Change `SignupForm.js` to render the new `DateFields` API with compound components as shown above.
 
 2. Edit `DateFields.js` to stop rendering the individual components in `DateFields`, but instead just rendering `props.children`.
 
