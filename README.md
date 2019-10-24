@@ -40,6 +40,8 @@ Which exercise?
 Choose one from list [1...9, a, b, c, 0]:
 ```
 
+**Note:** Currently, some aspects of the app aren't working with Node 12. We are looking into fixing the issue, but until then, use `nvm use 10` (or whatever Node version manager you use) to fix errors you might encounter when installing/running the application!
+
 ## Offline Mode
 
 If you're having Internet problems and that's preventing you from logging into the app (because it uses Google Firebase), you can switch to "offline mode" which will use a local "fake" version of firebase. Just go to `/modules/app/utils.js` and change this line:
