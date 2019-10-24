@@ -157,7 +157,7 @@ export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
 // want, but with data loading we aren't "synchronizing" doesn't really feel
 // like what we're doing--even though it is.
 //
-// We can use [], which will only load hte first time, but
+// We can use [], which will only load the first time, but
 // if the uid ever changes, and we're still rendered, we would be showing the
 // wrong avatar.
 //
