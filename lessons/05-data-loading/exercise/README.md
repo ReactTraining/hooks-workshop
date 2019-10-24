@@ -36,5 +36,5 @@ The reason we want both states is so that we can render a "loading" indicator (o
 Once that's working, refactor to a custom hook called `useAuth` that looks something like this when you use it.
 
 ```
-const { auth, authAttemped } = useAuth()
+const { auth, authAttempted } = useAuth()
 ```

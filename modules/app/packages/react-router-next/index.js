@@ -249,7 +249,7 @@ const isRouteType = element =>
   element.type === DefaultRoute ||
   element.type === Redirect
 
-// Converts React elements into objects (interally called "routes") and deals
+// Converts React elements into objects (internally called "routes") and deals
 // with relative paths by recursing through the children.
 //
 // This got a little harder to understand w/ the <Route><Comp/></Route> API,

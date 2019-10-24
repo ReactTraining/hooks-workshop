@@ -22,7 +22,7 @@ export async function preloadPosts(uid) {
 }
 
 /******************************************************************************/
-// Let's add the ability to stop listening so we dont' flicker that 30 seconds
+// Let's add the ability to stop listening so we don't flicker that 30 seconds
 // before animating it.
 
 // const cache = {}

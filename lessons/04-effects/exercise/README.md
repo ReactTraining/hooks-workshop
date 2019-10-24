@@ -16,7 +16,7 @@ There are a few helper functions to work with localStorage that we've added:
 - in the effect, save the message into local storage
 - click on a calendar button and type in a message
 - reload the page w/o submitting, then click the same calendar button as before.
-  - the value is not prepopulated, why not?
+  - the value is not pre-populated, why not?
 - get the value from local storage and set it as your initial state for `message`.
 - reload the page and click the button again
   - alright!

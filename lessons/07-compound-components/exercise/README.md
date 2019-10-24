@@ -1,6 +1,6 @@
 # Compound Components
 
-We want to give rendering control to the owner of `<Datefields/>`. Maybe we're in the United Kingdom and we need to put the day, not the month, first. And what if we wanted to add additionally props to the `<select>` elements, like aria-labels, or classNames?
+We want to give rendering control to the owner of `<Datefields/>`. Maybe we're in the United Kingdom and we need to put the day, not the month, first. And what if we wanted to add additional props to the `<select>` elements, like aria-labels, or classNames?
 
 We can either make a bunch of weird props:
 
