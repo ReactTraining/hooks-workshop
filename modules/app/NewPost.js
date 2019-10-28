@@ -37,13 +37,17 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
 
   const submit = form => {
     setSaving(true)
+    // Sometimes form.elements[3] is the "+" icon instead of the input, 
+    // depending on the context in which NewPost is rendered.
+    const minutesVal = form.elements[3].value ? form.elements[3].value : form.elements[2].value
+
     // eslint-disable-next-line
     createPost({
       message: messageRef.current.value,
       // We specifically want to avoid refs for Minutes because it would
       // require ref forwarding and not all Minutes components (lectures)
       // will use ref forwarding (because they don't need it)
-      minutes: Math.max(parseInt(form.elements[3].value, 10) || 1, 1),
+      minutes: Math.max(parseInt(minutesVal, 10) || 1, 1),
       date: formatDate(date, DATE_FORMAT),
       uid: auth.uid
     }).then(post => {
