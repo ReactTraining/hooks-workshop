@@ -1,6 +1,6 @@
 # Student Learning Notes
 
-The workshop has lectures followed by exercises. The Exercises are your chance to write code so we hope you're able to sit back and enjoy the lectures without feeling like you have to code-along at our fast pace. You're encouraged to take notes, but we don't want that to get in the way of listening to the lecture. So we made you notes for you. This is your repo so feel free to make edits.
+The workshop has lectures followed by exercises. The Exercises are your chance to write code, so we hope you're able to sit back and enjoy the lectures without feeling like you have to code-along at our fast pace. You're encouraged to take notes, but we don't want that to get in the way of listening to the lecture. So we made notes for you. This is your repo so feel free to make edits.
 
 ---
 
@@ -8,13 +8,14 @@ The workshop has lectures followed by exercises. The Exercises are your chance t
 
 - We like React because it's Composable and Declarative
   - Composable: You can build small re-usable parts which can be used to build bigger, more complex things
-  - Declarative: We write in a style where we say "what" we want. In other words `<Tabs>` is declarative because we said we want tabs but we didn't have to program "how" they work. Whoever did program the internals of <Tabs> programmed "how" they work. All declarative code that we write has imperative code somewhere else that someone else wrote.
+  - Declarative: We write in a style where we say "what" we want. In other words `<Tabs>` is declarative because we said we want tabs, but we didn't have to program "how" they work. Whoever did program the internals of <Tabs> programmed "how" they work. All declarative code that we write has imperative code somewhere else that someone else wrote.
 - JSX is a syntax for easily creating nested elements. Babel is a Webpack plugin that converts each JSX "tag" into `React.createElement`
 - The return value of a component (JSX turned into `React.createElement`) is like an "instruction manual" for how to create DOM.
 - In a typical React application, `ReactDOM.render()` is only used once. As React changes our JSX responses from our components, React will also take care of updating the DOM to reflect those JSX changes.
 - A function that returns JSX is a "component" in React. There are also older ways of creating components with classes. Function-based and class-based components can intermingle in the same app.
 
 Docs: https://reactjs.org/docs/introducing-jsx.html
+
 JSX Confusing Parts: https://reacttraining.com/blog/jsx-the-confusing-parts/
 
 ---
@@ -53,7 +54,7 @@ Docs: https://reactjs.org/docs/hooks-state.html
 ## Lesson 4: Effects
 
 - `useEffect` Format: `useEffect(callbackFunction, [dependencyArray])`
-- `useEffect` is used for side effects. Typically this means we want to do something outside of our component like a network request or perhaps with cookies/localstorage and we want to do that side effect any time state changes.
+- `useEffect` is used for side effects. Typically this means we want to do something outside of our component, like a network request or perhaps with cookies/localstorage, and we want to do that side effect any time state changes.
 - The effect callback runs when the component first mounts and then anytime the values in the dependency array change. Having an empty dependency array is a way to ensure the effect only runs once.
 - However, be careful, any variables that your effect uses (depends on) need to be stated in your dependency array. With the older mental model of time and `componentDidMount`, we thought in terms of "this just needs to happen once when we mount". But now with `useEffect` we need to think in terms of "anytime state changes, what do I need to do". Therefore you'll probably need to put values in your dependency array often.
 
@@ -75,7 +76,7 @@ useEffect(fn, [some, state]) // runs when some state changes
 - Network requests and subscriptions are side effects and need to go in `useEffect`.
 - Avoid infinite loops: If an effect has no dependency array and also sets state, this will cause an infinite loop. Imagine that the component mounts which calls the effect. Then state is changed which leads to a re-render which means the effect will be called again because there was no dependency array telling react not to run the effect again. Then since the effect runs again and sets state, this creates an infinite loop.
 - In the callback for the effect, you can either return no value or return a function. If a function is returned, it's said to be the "cleanup function". This function is called when the component unmounts or when the dependency array changes.
-- When setting state asynchronously in an effect, there's always a chance the component will become unmounted the dependency array might change before the set state is called. For both cases, we need to use a cleanup function to ensure we're not setting state on the unmounted component or setting state that was based on the previous values of the dependency array. This is how we might prevent this problem with a `isCurrent` variable:
+- When setting state asynchronously in an effect, there's always a chance the component will become unmounted or the dependency array might change before the set state is called. For both cases, we need to use a cleanup function to ensure we're not setting state on the unmounted component or setting state that was based on the previous values of the dependency array. This is how we might prevent this problem with a `isCurrent` variable:
 
 ```js
 useEffect(() => {
@@ -120,7 +121,7 @@ useEffect(() => {
 - A component can be a "child component" in respect to its parent, but could also be a parent component because it further has child components.
 - This relationship between components builds a tree structure that will probably resemble the DOM tree structure that React is building for you.
 - Data flows down: React's data model is said to be "uni-directional", meaning data flows from parent components down through the tree to child components. However, if a prop is passed down from parent to child and the prop is a callback function, then we might say that child components can communicate back up to their parents by calling the function.
-- This makes passing data back and fourth through parent/child hierarchies pretty easy. However when components need to communicate with other components far away in this tree structure, the conventional solution has been to "lift state". In other words, if two components need to communicate we need to put state in one of their common ancestor (parent) components. Then one of the child components can communicate to the parent (through callback function props), which might lead to a state change and then the parent component can propagate that change down the tree to the other child component(s).
+- This makes passing data back and forth through parent/child hierarchies pretty easy. However, when components need to communicate with other components far away in this tree structure, the conventional solution has been to "lift state". In other words, if two components need to communicate we need to put state in one of their common ancestor (parent) components. Then one of the child components can communicate to the parent (through callback function props), which might lead to a state change and then the parent component can propagate that change down the tree to the other child component(s).
 - Context is another React feature that is an alternative way to pass information around our React tree structure that doesn't involve deep prop drilling.
 
 - Docs on "Lifting State": https://reactjs.org/docs/lifting-state-up.html
