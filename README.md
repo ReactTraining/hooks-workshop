@@ -13,7 +13,7 @@ $ npm install
 $ npm start
 ```
 
-You'll be prompted with the exercise you'd like to run, hit "0" to view the full app we'll be working in, then, open a web browser to [http://localhost:3000](http://localhost:3000).
+You'll be prompted with the exercise you'd like to run:
 
 ```
 $ npm start
@@ -40,7 +40,7 @@ Which exercise?
 Choose one from list [1...9, a, b, c, 0]:
 ```
 
-**Note:** Currently, some aspects of the app aren't working with Node 12. We are looking into fixing the issue, but until then, use `nvm use 10` (or whatever Node version manager you use) to fix errors you might encounter when installing/running the application!
+Choose option "0" to run the full app, then open a web browser to [http://localhost:3000](http://localhost:3000) to play around with it.
 
 ## Offline Mode
 
