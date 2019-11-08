@@ -16,3 +16,10 @@ export default () => (
     <App />
   </AppStateProvider>
 )
+
+/////
+
+// function SideBar() {
+//   const { authAttempted, auth } = useAuth()
+
+// }

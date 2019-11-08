@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import VisuallyHidden from "@reach/visually-hidden"
 import { FaSignInAlt } from "react-icons/fa"
 import TabsButton from "app/TabsButton"
@@ -8,13 +8,15 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false)
   const handleShowPassword = () => setShowPassword(!showPassword)
 
+  const emailRef = useRef()
+  const passwordRef = useRef()
+
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const handleSubmit = event => {
     event.preventDefault()
     setLoading(true)
-    const [emailNode, passwordNode] = event.target.elements
-    login(emailNode.value, passwordNode.value).catch(error => {
+    login(emailRef.current.value, passwordRef.current.value).catch(error => {
       console.log(error.message)
       setLoading(false)
       setError(error)
@@ -39,6 +41,7 @@ export default function LoginForm() {
         id="login:email"
         className="inputField"
         placeholder="you@example.com"
+        ref={emailRef}
       />
 
       <VisuallyHidden>
@@ -49,6 +52,7 @@ export default function LoginForm() {
         type={showPassword ? "text" : "password"}
         className="inputField"
         placeholder="Password"
+        ref={passwordRef}
       />
 
       <div>

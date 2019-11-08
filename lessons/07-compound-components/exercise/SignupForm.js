@@ -58,12 +58,17 @@ export default function SignupForm() {
         <TextInput id="password" label="Password" />
         <p>
           <span>Start:</span>{" "}
-          <DateFields
-            value={startDate}
-            onChange={setStartDate}
-            start={2018}
-            end={2019}
-          />
+          <DateFields value={startDate} onChange={setStartDate}>
+            <div>
+              <YearField start={2018} end={2019} />
+            </div>
+            <div>
+              <DayField />
+            </div>
+            <div>
+              <MonthField />
+            </div>
+          </DateFields>
         </p>
         <TabsButton>
           <FaDumbbell />

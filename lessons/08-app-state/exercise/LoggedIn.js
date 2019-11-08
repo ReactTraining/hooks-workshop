@@ -10,7 +10,12 @@ import User from "app/User"
 import NotFound from "app/NotFound"
 
 export default function LoggedIn() {
+  const [auth, dispatch] = useAppState()
   const user = null
+
+  // side effect, to go and get the user, based on auth.uid
+  // once I have the user, might as well save that to the
+  // app context, so everyone has it
 
   return user ? (
     <Fragment>
@@ -42,7 +47,9 @@ export default function LoggedIn() {
         </Router>
       </div>
     </Fragment>
-  ) : <div>No user! Go fix it :D</div>
+  ) : (
+    <div>No user! Go fix it :D</div>
+  )
 }
 
 const hasValidDateParam = ({ params }) => {
