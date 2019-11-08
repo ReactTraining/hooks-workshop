@@ -15,19 +15,19 @@ import { useAppState } from "app/app-state"
 //      now
 //
 
-export default function useAuth() {
-  const [authAttempted, setAuthAttempted] = useState(false)
-  const [auth, setAuth] = useState(null)
+// export default function useAuth() {
+//   const [authAttempted, setAuthAttempted] = useState(false)
+//   const [auth, setAuth] = useState(null)
 
-  useEffect(() => {
-    return onAuthStateChanged(auth => {
-      setAuthAttempted(true)
-      setAuth(auth)
-    })
-  }, [])
+//   useEffect(() => {
+//     return onAuthStateChanged(auth => {
+//       setAuthAttempted(true)
+//       setAuth(auth)
+//     })
+//   }, [])
 
-  return { auth, authAttempted }
-}
+//   return { auth, authAttempted }
+// }
 
 /******************************************************************************/
 // 2. A really simple solution is to maintain a little cache, especially since
@@ -62,19 +62,19 @@ export default function useAuth() {
 
 /******************************************************************************/
 // 5. Let's forgo our own little cache here, and use our app state reducer.
-// export default function useAuth() {
-//   const [{ authAttempted, auth }, dispatch] = useAppState()
+export default function useAuth() {
+  const [{ authAttempted, auth }, dispatch] = useAppState()
 
-//   useEffect(() => {
-//     if (!authAttempted) {
-//       return onAuthStateChanged(auth => {
-//         dispatch({
-//           type: "AUTH_CHANGE",
-//           auth: auth
-//         })
-//       })
-//     }
-//   }, [authAttempted, dispatch])
+  useEffect(() => {
+    if (!authAttempted) {
+      return onAuthStateChanged(auth => {
+        dispatch({
+          type: "AUTH_CHANGE",
+          auth: auth
+        })
+      })
+    }
+  }, [authAttempted, dispatch])
 
-//   return { auth, authAttempted }
-// }
+  return { auth, authAttempted }
+}

@@ -3,6 +3,50 @@ import "app/index.css"
 import "./styles.css"
 import React from "react"
 import ReactDOM from "react-dom"
+import { FaPlus } from "react-icons/fa"
+
+// const reactElement = <div>Heyooooooo</div>
+
+// const reactElement = React.createElement("button", null, <FaPlus />, "Add one")
+class MyClassyButton extends React.Component {
+  render() {
+    return (
+      <button className={this.props.className}>{this.props.children}</button>
+    )
+  }
+}
+
+function handleClick(event) {
+  alert("You clicked me!")
+}
+
+function MyButton(props) {
+  return (
+    <button
+      className={props.className}
+      onClick={props.onTap}
+      onPointerDown={event => {
+        props.onTap(event)
+      }}
+    >
+      {props.children}
+    </button>
+  )
+}
+
+const domElement = document.getElementById("root")
+
+ReactDOM.render(
+  <MyButton
+    className="button"
+    onTap={event => {
+      alert("Custom click")
+    }}
+  >
+    Click me
+  </MyButton>,
+  domElement
+)
 
 /**********************************************************/
 // We like React because:

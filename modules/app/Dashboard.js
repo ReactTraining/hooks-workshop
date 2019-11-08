@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useCallback } from "react"
+import React, { Fragment, useState, useCallback, useMemo } from "react"
 import { Link, useLocation, useParams } from "app/packages/react-router-next"
 import { useTransition, animated } from "react-spring"
 import { FaChevronDown, FaChevronUp, FaPlus } from "react-icons/fa"
@@ -61,7 +61,9 @@ function Calendar({ user, posts, modalIsOpen }) {
   const isOwner = auth.uid === user.uid
   const numWeeks = 5
 
-  const weeks = calculateWeeks(posts, startDate, numWeeks)
+  const weeks = useMemo(() => {
+    return calculateWeeks(posts, startDate, numWeeks)
+  }, [posts, startDate, numWeeks])
 
   const [prevStart, setPrevStart] = useState(startDate)
   const [transitionDirection, setTransitionDirection] = useState()

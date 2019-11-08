@@ -5,6 +5,12 @@ const appStateReducer = (state, action) => {
     case "AUTH_CHANGE": {
       return { ...state, auth: action.auth, authAttempted: true }
     }
+    case "USER_SUCCESS": {
+      return {
+        ...state,
+        user: action.user
+      }
+    }
     default:
       return state
   }

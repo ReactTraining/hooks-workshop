@@ -2,6 +2,8 @@ import React, { Fragment, useContext, createContext } from "react"
 
 import { daysInMonth } from "app/utils"
 
+const DateContext = createContext()
+
 export default function DateFields({
   children,
   defaultValue,
@@ -12,16 +14,25 @@ export default function DateFields({
 }) {
   const date = controlledValue || defaultValue
   return (
-    <Fragment>
-      <MonthField date={date} onChange={onChange} />/
+    <DateContext.Provider
+      value={{
+        date,
+        onDateChange: onChange,
+        start,
+        end
+      }}
+    >
+      {children}
+      {/* <MonthField date={date} onChange={onChange} />/
       <DayField date={date} onChange={onChange} />/
-      <YearField date={date} onChange={onChange} start={start} end={end} />
-    </Fragment>
+      <YearField date={date} onChange={onChange} start={start} end={end} /> */}
+    </DateContext.Provider>
   )
 }
 
 export function DayField(props) {
-  const { date, onChange } = props
+  const { date, onDateChange } = useContext(DateContext)
+
   const month = date.getMonth()
   const year = date.getFullYear()
   const days = Array.from({ length: daysInMonth(month, year) })
@@ -29,7 +40,7 @@ export function DayField(props) {
   const handleChange = event => {
     const newDate = new Date(date.getTime())
     newDate.setDate(parseInt(event.target.value))
-    onChange(newDate)
+    onDateChange(newDate)
   }
 
   return (
@@ -45,12 +56,12 @@ export function DayField(props) {
 }
 
 export function MonthField(props) {
-  const { date, onChange } = props
+  const { date, onDateChange } = useContext(DateContext)
   const month = date.getMonth()
   const handleChange = event => {
     const newDate = new Date(date.getTime())
     newDate.setMonth(parseInt(event.target.value))
-    onChange(newDate)
+    onDateChange(newDate)
   }
 
   return (
@@ -72,7 +83,8 @@ export function MonthField(props) {
 }
 
 export function YearField(props) {
-  const { date, onChange, start, end } = props
+  const { start, end } = props
+  const { date, onDateChange } = useContext(DateContext)
   const difference = end - start + 1
   const years = Array.from({ length: difference }).map(
     (_, index) => index + start
@@ -80,7 +92,7 @@ export function YearField(props) {
   const handleChange = event => {
     const newDate = new Date(date.getTime())
     newDate.setYear(parseInt(event.target.value), 1)
-    onChange(newDate)
+    onDateChange(newDate)
   }
 
   return (

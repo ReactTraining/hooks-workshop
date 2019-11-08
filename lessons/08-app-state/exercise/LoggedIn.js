@@ -9,8 +9,27 @@ import TopBar from "app/TopBar"
 import User from "app/User"
 import NotFound from "app/NotFound"
 
+// https://codesandbox.io/s/laughing-shamir-ouuu2
+
 export default function LoggedIn() {
-  const user = null
+  const [state, dispatch] = useAppState()
+  const { user, auth } = state
+
+  useEffect(() => {
+    if (!user) {
+      let canceled = false
+      fetchUser(auth.uid).then(data => {
+        if (!canceled) {
+          dispatch({
+            type: "USER_SUCCESS",
+            user: data
+          })
+        }
+      })
+
+      return () => void (canceled = true)
+    }
+  }, [user, auth.uid, dispatch])
 
   return user ? (
     <Fragment>
@@ -42,7 +61,9 @@ export default function LoggedIn() {
         </Router>
       </div>
     </Fragment>
-  ) : <div>No user! Go fix it :D</div>
+  ) : (
+    <div>No user! Go fix it :D</div>
+  )
 }
 
 const hasValidDateParam = ({ params }) => {

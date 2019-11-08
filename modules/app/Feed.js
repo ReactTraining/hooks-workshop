@@ -1,4 +1,4 @@
-import React, { useRef, useReducer, useEffect } from "react"
+import React, { useRef, useReducer, useEffect, useCallback } from "react"
 import FeedPost from "app/FeedPost"
 import { loadFeedPosts, subscribeToNewFeedPosts } from "app/utils"
 
@@ -21,7 +21,6 @@ export default function Feed() {
             ...state,
             createdBefore: Date.now(),
             limit: state.limit + state.newPosts.length,
-            posts: state.newPosts.concat(state.posts),
             newPosts: []
           }
         case "VIEW_MORE":
@@ -79,6 +78,10 @@ export default function Feed() {
 
   const hasNewPosts = newPosts.length > 0
 
+  const handleFeedPostHover = useCallback(() => {
+    console.log("hovered!")
+  }, [])
+
   return posts ? (
     <div className="Feed">
       {hasNewPosts && (
@@ -93,7 +96,7 @@ export default function Feed() {
       )}
 
       {posts.map(post => (
-        <FeedPost key={post.id} post={post} />
+        <FeedPost key={post.id} post={post} onHover={handleFeedPostHover} />
       ))}
 
       {!viewedAll && posts && (

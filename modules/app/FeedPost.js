@@ -6,12 +6,20 @@ import { format as formatDate, distanceInWordsToNow } from "date-fns"
 
 const stopPropagation = event => event.stopPropagation()
 
-export default function FeedPost({ post }) {
+function postsEqual(prevProps, nextProps) {
+  return (
+    JSON.stringify(prevProps.post) === JSON.stringify(nextProps.post) &&
+    prevProps.onHover === nextProps.onHover
+  )
+}
+
+const FeedPost = React.memo(({ post, onHover }) => {
+  console.log(`Rerendering: ${post.uid}`)
   const user = useDocWithCache(`users/${post.uid}`)
   const ariaLink = useAriaLink(`/${post.uid}/${post.date}`)
 
   return user ? (
-    <div className="FeedPost" {...ariaLink}>
+    <div className="FeedPost" {...ariaLink} onMouseOver={onHover}>
       <Avatar uid={post.uid} size={100} />
       <div className="FeedPost_about">
         <div className="FeedPost_minutes">{post.minutes} Minutes</div>
@@ -36,7 +44,7 @@ export default function FeedPost({ post }) {
   ) : (
     <div className="FeedPostShimmer" />
   )
-}
+}, postsEqual)
 
 function useAriaLink(href) {
   const { navigate } = useLocation()
@@ -65,3 +73,5 @@ function useAriaLink(href) {
 
   return { role, onKeyDown, onKeyUp, tabIndex, onClick }
 }
+
+export default FeedPost

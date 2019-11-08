@@ -268,7 +268,7 @@ export function tween(duration, callback) {
   return () => cancelAnimationFrame(frame)
 }
 
-function limitCalls(fn, limit = 20) {
+function limitCalls(fn, limit = 200) {
   let calls = 0
   return (...args) => {
     calls++

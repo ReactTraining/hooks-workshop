@@ -1,16 +1,37 @@
 import "./styles.css"
 import React, { useState } from "react"
+import ReactDOM from "react-dom"
 import { FaMinus, FaPlus } from "react-icons/fa"
 
 /**********************************************************/
 // We can render with values put into variables:
+const ERROR = {
+  message: "Please do not go back in time"
+}
 
 export default function Minutes() {
-  const minutes = 5
+  const [minutes, setMinutes] = useState(5)
+  const [minutes2] = useState(5)
+  const [minutes3] = useState(5)
+  const [minutes4] = useState(5)
+
+  const [error, setError] = useState({ message: null })
+
   return (
     <div className="Minutes">
+      {error.message && <span style={{ color: "red" }}>{error.message}</span>}
       <div>
-        <button type="button" className="icon_button Minutes_button">
+        <button
+          type="button"
+          className="icon_button Minutes_button"
+          onClick={() => {
+            if (minutes <= 0) {
+              setError(ERROR)
+            } else {
+              setMinutes(minutes - 1)
+            }
+          }}
+        >
           <FaMinus />
         </button>
       </div>
@@ -18,7 +39,13 @@ export default function Minutes() {
         {minutes} Minutes
       </div>
       <div>
-        <button type="button" className="icon_button Minutes_button">
+        <button
+          type="button"
+          className="icon_button Minutes_button"
+          onClick={() => {
+            setMinutes(minutes + 1)
+          }}
+        >
           <FaPlus />
         </button>
       </div>
@@ -236,4 +263,3 @@ export default function Minutes() {
 //     </div>
 //   )
 // }
-
