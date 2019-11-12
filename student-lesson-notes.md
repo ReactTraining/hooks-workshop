@@ -1,4 +1,4 @@
-# Student Learning Notes
+# Kristin's Learning Notes
 
 The workshop has lectures followed by exercises. The Exercises are your chance to write code, so we hope you're able to sit back and enjoy the lectures without feeling like you have to code-along at our fast pace. You're encouraged to take notes, but we don't want that to get in the way of listening to the lecture. So we made notes for you. This is your repo so feel free to make edits.
 
