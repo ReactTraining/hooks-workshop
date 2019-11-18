@@ -1,16 +1,32 @@
-import "./styles.css"
-import React, { useState } from "react"
-import { FaMinus, FaPlus } from "react-icons/fa"
+import './styles.css'
+import React, { useState } from 'react'
+import { FaMinus, FaPlus } from 'react-icons/fa'
 
 /**********************************************************/
 // We can render with values put into variables:
 
 export default function Minutes() {
-  const minutes = 5
+  const [minutes, updateMinutes] = useState(5)
+  const [error, setError] = useState(null)
+
+  console.log('rerender!', Date.now())
+
   return (
     <div className="Minutes">
+      {error && <strong style={{ color: 'red' }}>{error.message}</strong>}
       <div>
-        <button type="button" className="icon_button Minutes_button">
+        <button
+          type="button"
+          className="icon_button Minutes_button"
+          onClick={() => {
+            if (minutes <= 0) {
+              console.log('Setting error')
+              setError('You cannot have a negative workout!')
+            } else {
+              updateMinutes(minutes - 1)
+            }
+          }}
+        >
           <FaMinus />
         </button>
       </div>
@@ -18,7 +34,16 @@ export default function Minutes() {
         {minutes} Minutes
       </div>
       <div>
-        <button type="button" className="icon_button Minutes_button">
+        <button
+          type="button"
+          className="icon_button Minutes_button"
+          onClick={() => {
+            if (error) {
+              setError(null)
+            }
+            updateMinutes(minutes + 1)
+          }}
+        >
           <FaPlus />
         </button>
       </div>
@@ -236,4 +261,3 @@ export default function Minutes() {
 //     </div>
 //   )
 // }
-
