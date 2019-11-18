@@ -1,58 +1,58 @@
-import React, { useState, useRef, useEffect } from "react"
-import { FaDumbbell } from "react-icons/fa"
+import React, { useState, useRef, useEffect } from 'react'
+import { FaDumbbell } from 'react-icons/fa'
 
-import { useAppState } from "app/app-state"
-import Avatar from "app/Avatar"
-import Minutes from "app/Minutes"
-import RecentPostsDropdown from "app/RecentPostsDropdown"
+import { useAppState } from 'app/app-state'
+import Avatar from 'app/Avatar'
+import Minutes from 'app/Minutes'
+import RecentPostsDropdown from 'app/RecentPostsDropdown'
 
-const errorClass = "NewPost_error"
+const errorClass = 'NewPost_error'
 const MAX_MESSAGE_LENGTH = 200
 
 /******************************************************************************/
 // Consider the message length counter. Every time we type, we set state, and
 // then React updates the DOM for us.
 
-export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
-  const [{ auth }] = useAppState()
-  const [message, setMessage] = useState("Ran around the lake.")
-  const messageTooLong = message.length > MAX_MESSAGE_LENGTH
+// export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
+//   const [{ auth }] = useAppState()
+//   const [message, setMessage] = useState("Ran around the lake.")
+//   const messageTooLong = message.length > MAX_MESSAGE_LENGTH
 
-  function handleMessageChange(event) {
-    setMessage(event.target.value)
-  }
+//   function handleMessageChange(event) {
+//     setMessage(event.target.value)
+//   }
 
-  return (
-    <div className={"NewPost" + (messageTooLong ? ` ${errorClass}` : "")}>
-      {showAvatar && <Avatar uid={auth.uid} size={70} />}
-      <form className="NewPost_form">
-        <textarea
-          className="NewPost_input"
-          placeholder="Tell us about your workout!"
-          value={message}
-          onChange={handleMessageChange}
-        />
-        <div className="NewPost_char_count">
-          <span>{message.length}</span>/{MAX_MESSAGE_LENGTH}
-        </div>
-        <RecentPostsDropdown
-          uid={auth.uid}
-          onSelect={message => {
-            setMessage(message)
-          }}
-        />
-        <div className="NewPost_buttons">
-          <Minutes date={date} />
-          <div>
-            <button type="submit" className="icon_button cta">
-              <FaDumbbell /> <span>Post</span>
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-  )
-}
+//   return (
+//     <div className={"NewPost" + (messageTooLong ? ` ${errorClass}` : "")}>
+//       {showAvatar && <Avatar uid={auth.uid} size={70} />}
+//       <form className="NewPost_form">
+//         <textarea
+//           className="NewPost_input"
+//           placeholder="Tell us about your workout!"
+//           value={message}
+//           onChange={handleMessageChange}
+//         />
+//         <div className="NewPost_char_count">
+//           <span>{message.length}</span>/{MAX_MESSAGE_LENGTH}
+//         </div>
+//         <RecentPostsDropdown
+//           uid={auth.uid}
+//           onSelect={message => {
+//             setMessage(message)
+//           }}
+//         />
+//         <div className="NewPost_buttons">
+//           <Minutes date={date} />
+//           <div>
+//             <button type="submit" className="icon_button cta">
+//               <FaDumbbell /> <span>Post</span>
+//             </button>
+//           </div>
+//         </div>
+//       </form>
+//     </div>
+//   )
+// }
 
 /******************************************************************************/
 // What if we wanted to be weird and *we* wanted to update the DOM manually? We
@@ -64,7 +64,7 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
 
 // export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
 //   const [{ auth }] = useAppState()
-//   const [message, setMessage] = useState("Ran around the lake.")
+//   const [message, setMessage] = useState('Ran around the lake.')
 //   const messageTooLong = message.length > MAX_MESSAGE_LENGTH
 //   const messageLengthRef = useRef()
 
@@ -77,7 +77,7 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
 //   }
 
 //   return (
-//     <div className={"NewPost" + (messageTooLong ? ` ${errorClass}` : "")}>
+//     <div className={'NewPost' + (messageTooLong ? ` ${errorClass}` : '')}>
 //       {showAvatar && <Avatar uid={auth.uid} size={70} />}
 //       <form className="NewPost_form">
 //         <textarea
@@ -141,7 +141,7 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
 
 // export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
 //   const [{ auth }] = useAppState()
-//   const [message, setMessage] = useState("Ran around the lake.")
+//   const [message, setMessage] = useState('Ran around the lake.')
 //   const messageTooLong = message.length > MAX_MESSAGE_LENGTH
 //   const messageLengthRef = useRef()
 
@@ -156,7 +156,7 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
 //   }, [message])
 
 //   return (
-//     <div className={"NewPost" + (messageTooLong ? ` ${errorClass}` : "")}>
+//     <div className={'NewPost' + (messageTooLong ? ` ${errorClass}` : '')}>
 //       {showAvatar && <Avatar uid={auth.uid} size={70} />}
 //       <form className="NewPost_form">
 //         <textarea
@@ -191,51 +191,59 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
 // A more real-world example is updating the document title. We can easily keep
 // the title in sync with our UI.
 
-// export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
-//   const [{ auth }] = useAppState()
-//   const [message, setMessage] = useState("Ran around the lake.")
-//   const messageTooLong = message.length > MAX_MESSAGE_LENGTH
+function useDocumentTitle(title, message) {
+  useEffect(() => {
+    console.log('I was executed!', Date.now())
+    // manually update the document's title
+    document.title = title
+  }, [message])
+}
 
-//   function handleMessageChange(event) {
-//     setMessage(event.target.value)
-//   }
+export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
+  const [{ auth }] = useAppState()
+  const [message, setMessage] = useState('Ran around the lake.')
+  const [focus, setFocus] = useState(false)
+  const messageTooLong = message.length > MAX_MESSAGE_LENGTH
 
-//   useEffect(() => {
-//     // manually update the document's title
-//     document.title = "New Post" + (message.length ? `: ${message}` : "")
-//   }, [message])
+  function handleMessageChange(event) {
+    setMessage(event.target.value)
+  }
 
-//   return (
-//     <div className={"NewPost" + (messageTooLong ? ` ${errorClass}` : "")}>
-//       {showAvatar && <Avatar uid={auth.uid} size={70} />}
-//       <form className="NewPost_form">
-//         <textarea
-//           className="NewPost_input"
-//           placeholder="Tell us about your workout!"
-//           value={message}
-//           onChange={handleMessageChange}
-//         />
-//         <div className="NewPost_char_count">
-//           <span>{message.length}</span>/{MAX_MESSAGE_LENGTH}
-//         </div>
-//         <RecentPostsDropdown
-//           uid={auth.uid}
-//           onSelect={message => {
-//             setMessage(message)
-//           }}
-//         />
-//         <div className="NewPost_buttons">
-//           <Minutes date={date} />
-//           <div>
-//             <button type="submit" className="icon_button cta">
-//               <FaDumbbell /> <span>Post</span>
-//             </button>
-//           </div>
-//         </div>
-//       </form>
-//     </div>
-//   )
-// }
+  useDocumentTitle('🆕 Post' + (message.length ? `: ${message}` : ''), message)
+
+  return (
+    <div className={'NewPost' + (messageTooLong ? ` ${errorClass}` : '')}>
+      {showAvatar && <Avatar uid={auth.uid} size={70} />}
+      <form className="NewPost_form">
+        <textarea
+          className="NewPost_input"
+          placeholder="Tell us about your workout!"
+          value={message}
+          onChange={handleMessageChange}
+          onFocus={() => setFocus(true)}
+          onBlur={() => setFocus(false)}
+        />
+        <div className="NewPost_char_count">
+          <span>{message.length}</span>/{MAX_MESSAGE_LENGTH}
+        </div>
+        <RecentPostsDropdown
+          uid={auth.uid}
+          onSelect={message => {
+            setMessage(message)
+          }}
+        />
+        <div className="NewPost_buttons">
+          <Minutes date={date} />
+          <div>
+            <button type="submit" className="icon_button cta">
+              <FaDumbbell /> <span>Post</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  )
+}
 
 /******************************************************************************/
 // And don't forget, since hooks are just functions, composing them is just like

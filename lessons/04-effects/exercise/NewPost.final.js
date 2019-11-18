@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useRef } from "react"
-import { FaDumbbell } from "react-icons/fa"
+import React, { useState, useEffect, useRef } from 'react'
+import { FaDumbbell } from 'react-icons/fa'
 
-import { useAppState } from "app/app-state"
-import { formatDate, DATE_FORMAT } from "app/utils"
-import Avatar from "app/Avatar"
-import Minutes from "app/Minutes"
-import RecentPostsDropdown from "app/RecentPostsDropdown"
+import { useAppState } from 'app/app-state'
+import { formatDate, DATE_FORMAT } from 'app/utils'
+import Avatar from 'app/Avatar'
+import Minutes from 'app/Minutes'
+import RecentPostsDropdown from 'app/RecentPostsDropdown'
 
 const MAX_MESSAGE_LENGTH = 200
 
 export default function NewPost({ takeFocus, date, showAvatar }) {
   const [{ auth }] = useAppState()
   const storageKey = makeNewPostKey(date)
-  const [message, setMessage] = useState(getLocalStorageValue(storageKey) || "")
+  const [message, setMessage] = useState(getLocalStorageValue(storageKey) || '')
   const messageTooLong = message.length > MAX_MESSAGE_LENGTH
 
   function handleMessageChange(event) {
@@ -29,10 +29,10 @@ export default function NewPost({ takeFocus, date, showAvatar }) {
   // Automatically focus the <textarea> if it should take focus.
   useEffect(() => {
     if (takeFocus) messageRef.current.focus()
-  }, [takeFocus, message])
+  }, [takeFocus])
 
   return (
-    <div className={"NewPost" + (messageTooLong ? " NewPost_error" : "")}>
+    <div className={'NewPost' + (messageTooLong ? ' NewPost_error' : '')}>
       {showAvatar && <Avatar uid={auth.uid} size={70} />}
       <form className="NewPost_form">
         <textarea
