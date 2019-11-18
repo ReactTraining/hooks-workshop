@@ -19,7 +19,7 @@ You should be able to switch between tabs now, but the signup form doesn't show 
 - Email
 - Password (make as password field)
 
-2. Create a `DateFields` element with three children:
+2. Create a `DateFields` element with a `value={new Date()}` and three children:
 
 - `<MonthField>`
 - `<DayField>`
@@ -27,7 +27,7 @@ You should be able to switch between tabs now, but the signup form doesn't show 
 
 3. Create a submit button
 
-- use classNames "TabsButton icon_button cta" to make
+- use className="TabsButton icon_button cta" to make
   it ~look so nice~.
 - toss the `FaDumbbell` in for some fun
 - Abstract the button into a `TabsButton` component

@@ -1,7 +1,7 @@
-import React, { Fragment } from "react"
-import VisuallyHidden from "@reach/visually-hidden"
-import { FaDumbbell } from "react-icons/fa"
-import { DateFields, MonthField, DayField, YearField } from "app/DateFields"
+import React, { Fragment } from 'react'
+import VisuallyHidden from '@reach/visually-hidden'
+import { FaDumbbell } from 'react-icons/fa'
+import { DateFields, MonthField, DayField, YearField } from 'app/DateFields'
 
 function TabsButton({ children }) {
   return (
@@ -11,7 +11,8 @@ function TabsButton({ children }) {
   )
 }
 
-function TextInput({ id, label, type = "text" }) {
+function TextInput(props) {
+  const { id, label, type = 'text' } = props
   return (
     <Fragment>
       <VisuallyHidden>
@@ -30,10 +31,10 @@ export default function SignupForm() {
       <TextInput id="email" label="Email" />
       <TextInput id="password" label="Password" />
       <p>
-        <span aria-hidden="true">Start:</span>{" "}
+        <span aria-hidden="true">Start:</span>{' '}
         <DateFields value={new Date()}>
-          <MonthField aria-label="Start Month" /> /{" "}
-          <DayField aria-label="Start Day" /> /{" "}
+          <MonthField aria-label="Start Month" /> /{' '}
+          <DayField aria-label="Start Day" /> /{' '}
           <YearField start={2018} end={2019} aria-label="Start year" />
         </DateFields>
       </p>

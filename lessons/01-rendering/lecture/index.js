@@ -1,8 +1,33 @@
-import "app/App.css"
-import "app/index.css"
-import "./styles.css"
-import React from "react"
-import ReactDOM from "react-dom"
+import 'app/App.css'
+import 'app/index.css'
+import './styles.css'
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+const Greeting = props => {
+  return <strong style={{ fontWeight: 'bold' }}>Hello, {props.message}</strong>
+}
+
+const Button = props => {
+  return (
+    <button className="button" onDoubleClick={props.onReallyTap}>
+      {props.children}
+    </button>
+  )
+}
+
+ReactDOM.render(
+  <Button
+    onReallyTap={() => {
+      alert('I am tapped')
+    }}
+  >
+    <Greeting message="Orlando" />
+    <Greeting message="Orlando" />
+    <Greeting message="Orlando" />
+  </Button>,
+  document.getElementById('root')
+)
 
 /**********************************************************/
 // We like React because:
