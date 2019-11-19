@@ -1,16 +1,36 @@
-import React, { useEffect, Fragment } from "react"
-import { Router, Route, DefaultRoute } from "app/packages/react-router-next"
-import { fetchUser, isValidDate } from "app/utils"
-import { useAppState } from "app/app-state"
-import UserDatePosts from "app/UserDatePosts"
-import Feed from "app/Feed"
-import Dashboard from "app/Dashboard"
-import TopBar from "app/TopBar"
-import User from "app/User"
-import NotFound from "app/NotFound"
+import React, { useEffect, Fragment } from 'react'
+import { Router, Route, DefaultRoute } from 'app/packages/react-router-next'
+import { fetchUser, isValidDate } from 'app/utils'
+import { useAppState } from 'app/app-state'
+import UserDatePosts from 'app/UserDatePosts'
+import Feed from 'app/Feed'
+import Dashboard from 'app/Dashboard'
+import TopBar from 'app/TopBar'
+import User from 'app/User'
+import NotFound from 'app/NotFound'
+
+function useAsyncEffect(effectFn, deps) {
+  useEffect(() => {
+    const result = effectFn()
+
+    if (typeof result === 'function') {
+      return result
+    }
+  }, deps)
+}
 
 export default function LoggedIn() {
-  const user = null
+  const [state, dispatch] = useAppState()
+
+  const { user, auth } = state // get the user and dispatch from useAppState
+
+  useAsyncEffect(async () => {
+    const user = await fetchUser(auth.uid)
+    dispatch({
+      type: 'I_GOT_THE_USER',
+      user
+    })
+  }, [auth.uid, dispatch])
 
   return user ? (
     <Fragment>
@@ -42,11 +62,13 @@ export default function LoggedIn() {
         </Router>
       </div>
     </Fragment>
-  ) : <div>No user! Go fix it :D</div>
+  ) : (
+    <div>No user! Go fix it :D</div>
+  )
 }
 
 const hasValidDateParam = ({ params }) => {
-  const [year, month, day] = params.date.split("-")
+  const [year, month, day] = params.date.split('-')
   const isValid = isValidDate(
     parseInt(year, 10),
     parseInt(month, 10) - 1,
