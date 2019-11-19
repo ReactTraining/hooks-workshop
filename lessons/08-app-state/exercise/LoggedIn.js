@@ -1,5 +1,9 @@
 import React, { useEffect, Fragment } from "react"
-import { Router, Route, DefaultRoute } from "app/packages/react-router-next"
+import {
+  Router,
+  Route,
+  DefaultRoute
+} from "app/packages/react-router-next"
 import { fetchUser, isValidDate } from "app/utils"
 import { useAppState } from "app/app-state"
 import UserDatePosts from "app/UserDatePosts"
@@ -22,12 +26,17 @@ export default function LoggedIn() {
           </Route>
           <Route
             path=":uid/:date"
-            matchState={state => state && state.fromCalendar}
+            matchState={state =>
+              state && state.fromCalendar
+            }
             validate={hasValidDateParam}
           >
             <Dashboard />
           </Route>
-          <Route path=":uid/:date" validate={hasValidDateParam}>
+          <Route
+            path=":uid/:date"
+            validate={hasValidDateParam}
+          >
             <UserDatePosts />
           </Route>
           <Route path=":uid">
@@ -42,7 +51,9 @@ export default function LoggedIn() {
         </Router>
       </div>
     </Fragment>
-  ) : <div>No user! Go fix it :D</div>
+  ) : (
+    <div>No user! Go fix it :D</div>
+  )
 }
 
 const hasValidDateParam = ({ params }) => {

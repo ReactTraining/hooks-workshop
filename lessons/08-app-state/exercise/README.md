@@ -11,3 +11,25 @@ Open up `LoggedIn.js` and notice there's a null user object. You can fetch a use
 - Now access the user from `useAppState`
 
 You can review modules/app/app-state.js to see how we created `useAppState`. Remember that `useAppState` this gives you the result of a `useReducer` call.
+
+A typical folder structure might be:
+
+```
+src/
+  sections/
+    globalcontext.js
+    globalreducer.js
+    index.js
+    section1/
+      context.js
+      reducers.js
+      components/
+        someComponentName/
+          index.js
+          something.js
+          hooks.js
+      hooks/
+        sadkjhas
+      utils/
+        something.js
+```
