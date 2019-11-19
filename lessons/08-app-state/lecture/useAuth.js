@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react"
-import { onAuthStateChanged } from "app/utils"
-import { useAppState } from "app/app-state"
+import { useState, useEffect } from 'react'
+import { onAuthStateChanged } from 'app/utils'
+import { useAppState } from 'app/app-state'
 
 /******************************************************************************/
 // 1. What happens if we useAuth in two different places in the app?
@@ -15,19 +15,19 @@ import { useAppState } from "app/app-state"
 //      now
 //
 
-export default function useAuth() {
-  const [authAttempted, setAuthAttempted] = useState(false)
-  const [auth, setAuth] = useState(null)
+// export default function useAuth() {
+//   const [authAttempted, setAuthAttempted] = useState(false)
+//   const [auth, setAuth] = useState(null)
 
-  useEffect(() => {
-    return onAuthStateChanged(auth => {
-      setAuthAttempted(true)
-      setAuth(auth)
-    })
-  }, [])
+//   useEffect(() => {
+//     return onAuthStateChanged(auth => {
+//       setAuthAttempted(true)
+//       setAuth(auth)
+//     })
+//   }, [])
 
-  return { auth, authAttempted }
-}
+//   return { auth, authAttempted }
+// }
 
 /******************************************************************************/
 // 2. A really simple solution is to maintain a little cache, especially since

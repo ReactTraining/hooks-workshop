@@ -6,10 +6,10 @@ We can either make a bunch of weird props:
 
 ```jsx
 <DateFields
-  fieldOrder={["day", "month", "year"]}
+  fieldOrder={['day', 'month', 'year']}
   monthSelectProps={{
-    className: "month-select",
-    "aria-label": "start month"
+    className: 'month-select',
+    'aria-label': 'start month'
   }}
   yikes-no-thanks
 />
