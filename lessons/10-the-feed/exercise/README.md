@@ -2,6 +2,9 @@
 
 There are a few features on the Feed that you're going to implement. You can uncomment out lines 4 and 5 (and comment out line 6) to run the final version to see how it behaves to help you along the way.
 
+npm start
+a
+
 ## Requirements
 
 1. Load the posts with `loadFeedPosts(createdBefore, limit)`. It returns a promise so you can either `await` it or use `then`. `createdBefore` will query for only posts created before the unix timestamp you provide (the thing `Date.now()` returns). `limit` will limit the number of results. You can set the limit to whatever you want, but 3 seems like a good limit for this exercise. When you have your posts, render them each with `<FeedPost/>`.

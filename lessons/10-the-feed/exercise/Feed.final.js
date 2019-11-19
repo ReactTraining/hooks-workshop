@@ -1,6 +1,9 @@
 import React, { useRef, useReducer, useEffect } from "react"
 import FeedPost from "app/FeedPost"
-import { loadFeedPosts, subscribeToNewFeedPosts } from "app/utils"
+import {
+  loadFeedPosts,
+  subscribeToNewFeedPosts
+} from "app/utils"
 
 const PER_PAGE = 3
 
@@ -39,7 +42,13 @@ export default function Feed() {
     }
   )
 
-  const { createdBefore, viewedAll, limit, posts, newPosts } = state
+  const {
+    createdBefore,
+    viewedAll,
+    limit,
+    posts,
+    newPosts
+  } = state
 
   // helps us know when we've viewed all
   const lastPostIdRef = useRef()
@@ -55,7 +64,7 @@ export default function Feed() {
         dispatch({ type: "LOAD_POSTS", posts })
       }
     })
-    return () => current = false
+    return () => (current = false)
   }, [createdBefore, limit])
 
   useEffect(() => {
@@ -65,12 +74,16 @@ export default function Feed() {
   }, [createdBefore])
 
   useEffect(() => {
-    if (posts && posts[posts.length - 1].id === lastPostIdRef.current) {
+    if (
+      posts &&
+      posts[posts.length - 1].id === lastPostIdRef.current
+    ) {
       dispatch({ type: "VIEWED_ALL" })
     }
   }, [posts])
 
-  const handleViewNewPosts = () => dispatch({ type: "VIEW_NEW_POSTS" })
+  const handleViewNewPosts = () =>
+    dispatch({ type: "VIEW_NEW_POSTS" })
 
   const handleViewMore = () => {
     lastPostIdRef.current = posts[posts.length - 1].id

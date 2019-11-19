@@ -13,6 +13,12 @@ const appStateReducer = (state, action) => {
         authAttempted: true
       }
     }
+    case "LOAD_USER": {
+      return {
+        ...state,
+        user: action.user
+      }
+    }
     default:
       return state
   }

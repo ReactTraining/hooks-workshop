@@ -1,7 +1,21 @@
-import React, { Fragment, useState, useCallback } from "react"
-import { Link, useLocation, useParams } from "app/packages/react-router-next"
+import React, {
+  Fragment,
+  useState,
+  useMemo,
+  useCallback,
+  memo
+} from "react"
+import {
+  Link,
+  useLocation,
+  useParams
+} from "app/packages/react-router-next"
 import { useTransition, animated } from "react-spring"
-import { FaChevronDown, FaChevronUp, FaPlus } from "react-icons/fa"
+import {
+  FaChevronDown,
+  FaChevronUp,
+  FaPlus
+} from "react-icons/fa"
 import {
   format as formatDate,
   subDays,
@@ -11,11 +25,41 @@ import {
   isFuture
 } from "date-fns"
 
+// reacttraining.com
+// cassidy@reacttraining.com
+
+// @cassidoo
+
+// React Dev Tools
+// react-spring.io
+
+// Tweet @ReactTraining please!
+// @ryanflorence
+
+// I AM REACT
+
+// const el = Dashboard()
+
+// renderReactElementToDOM(el, rootElement)
+
+// const newEl = Dashboard()
+// const oldEl = el
+
+// if (compare(oldEl.props, newEl.props)) {
+//   const diff = compare(newEl, oldEl)
+// }
+
+// commit(diff)
+
 import AnimatedDialog from "app/AnimatedDialog"
 import Posts from "app/Posts"
 import usePosts from "app/usePosts"
 import Meta from "app/Meta"
-import { DATE_FORMAT, calculateWeeks, calculateTotalMinutes } from "app/utils"
+import {
+  DATE_FORMAT,
+  calculateWeeks,
+  calculateTotalMinutes
+} from "app/utils"
 import { useAppState } from "app/app-state"
 import NewPost from "app/NewPost"
 import AnimatedText from "app/AnimatedText"
@@ -23,19 +67,27 @@ import AnimatedText from "app/AnimatedText"
 export default function Dashboard() {
   const [{ user }] = useAppState()
   const { location, navigate } = useLocation()
-  const showDayInModal = location.state && location.state.fromCalendar
+  const showDayInModal =
+    location.state && location.state.fromCalendar
   const params = useParams()
   const posts = usePosts(user.uid)
 
   return (
     <Fragment>
-      <AnimatedDialog isOpen={showDayInModal} onDismiss={() => navigate(-1)}>
+      <AnimatedDialog
+        isOpen={showDayInModal}
+        onDismiss={() => navigate(-1)}
+      >
         <Posts params={params} />
       </AnimatedDialog>
       {posts ? (
         <div className="UserCalendar">
           <Meta user={user} />
-          <Calendar user={user} posts={posts} modalIsOpen={showDayInModal} />
+          <Calendar
+            user={user}
+            posts={posts}
+            modalIsOpen={showDayInModal}
+          />
         </div>
       ) : null}
     </Fragment>
@@ -61,12 +113,19 @@ function Calendar({ user, posts, modalIsOpen }) {
   const isOwner = auth.uid === user.uid
   const numWeeks = 5
 
-  const weeks = calculateWeeks(posts, startDate, numWeeks)
+  const weeks = useMemo(() => {
+    return calculateWeeks(posts, startDate, numWeeks)
+  }, [posts, startDate, numWeeks])
 
   const [prevStart, setPrevStart] = useState(startDate)
-  const [transitionDirection, setTransitionDirection] = useState()
+  const [
+    transitionDirection,
+    setTransitionDirection
+  ] = useState()
   if (prevStart !== startDate) {
-    setTransitionDirection(startDate < prevStart ? "earlier" : "later")
+    setTransitionDirection(
+      startDate < prevStart ? "earlier" : "later"
+    )
     setPrevStart(startDate)
   }
 
@@ -82,11 +141,15 @@ function Calendar({ user, posts, modalIsOpen }) {
   )
 
   const handleNav = (addOrSubDays, direction) => {
-    const date = formatDate(addOrSubDays(startDate, 7 * numWeeks), DATE_FORMAT)
+    const date = formatDate(
+      addOrSubDays(startDate, 7 * numWeeks),
+      DATE_FORMAT
+    )
     navigate(".", { state: { startDate: date, direction } })
   }
 
-  const handleEarlierClick = () => handleNav(subDays, "earlier")
+  const handleEarlierClick = () =>
+    handleNav(subDays, "earlier")
   const handleLaterClick = () => handleNav(addDays, "later")
 
   const closeDialog = () => setNewPostDate(null)
@@ -104,53 +167,76 @@ function Calendar({ user, posts, modalIsOpen }) {
 
   return (
     <Fragment>
-      <AnimatedDialog isOpen={!!newPostDate} onDismiss={closeDialog}>
-        <NewPost date={newPostDate} onSuccess={handleNewPostSuccess} />
+      <AnimatedDialog
+        isOpen={!!newPostDate}
+        onDismiss={closeDialog}
+      >
+        <NewPost
+          date={newPostDate}
+          onSuccess={handleNewPostSuccess}
+        />
       </AnimatedDialog>
       <div className="Calendar">
         <Weekdays />
         <div className="Calendar_animation_overflow">
-          {transitions.map(({ item, props: { y }, key }, index) => {
-            if (!item) return null
-            let transform = "translate3d(0px, 0%, 0px)"
-            if (transitionDirection === "earlier") {
-              transform = y.interpolate(y => `translate3d(0px, ${y}%, 0px)`)
-            } else if (transitionDirection === "later") {
-              transform = y.interpolate(y => `translate3d(0px, ${-y}%, 0px)`)
+          {transitions.map(
+            ({ item, props: { y }, key }, index) => {
+              if (!item) return null
+              let transform = "translate3d(0px, 0%, 0px)"
+              if (transitionDirection === "earlier") {
+                transform = y.interpolate(
+                  y => `translate3d(0px, ${y}%, 0px)`
+                )
+              } else if (transitionDirection === "later") {
+                transform = y.interpolate(
+                  y => `translate3d(0px, ${-y}%, 0px)`
+                )
+              }
+              return (
+                <animated.div
+                  key={key}
+                  className="Calendar_animation_wrapper"
+                  style={{ transform, zIndex: index }}
+                >
+                  {item.weeks.map((week, weekIndex) => (
+                    <div
+                      key={weekIndex}
+                      className="Calendar_week"
+                    >
+                      {week.map((day, dayIndex) => {
+                        const showMonth =
+                          weekIndex + dayIndex === 0 ||
+                          isFirstDayOfMonth(day.date)
+                        return (
+                          <Day
+                            modalIsOpen={modalIsOpen}
+                            user={user}
+                            key={dayIndex}
+                            showMonth={showMonth}
+                            day={day}
+                            isOwner={isOwner}
+                            onNewPost={() =>
+                              setNewPostDate(day.date)
+                            }
+                            hasNewPost={
+                              dayWithNewPost ===
+                              formatDate(
+                                day.date,
+                                DATE_FORMAT
+                              )
+                            }
+                            onAnimatedTextRest={
+                              handleAnimationRest
+                            }
+                          />
+                        )
+                      })}
+                    </div>
+                  ))}
+                </animated.div>
+              )
             }
-            return (
-              <animated.div
-                key={key}
-                className="Calendar_animation_wrapper"
-                style={{ transform, zIndex: index }}
-              >
-                {item.weeks.map((week, weekIndex) => (
-                  <div key={weekIndex} className="Calendar_week">
-                    {week.map((day, dayIndex) => {
-                      const showMonth =
-                        weekIndex + dayIndex === 0 ||
-                        isFirstDayOfMonth(day.date)
-                      return (
-                        <Day
-                          modalIsOpen={modalIsOpen}
-                          user={user}
-                          key={dayIndex}
-                          showMonth={showMonth}
-                          day={day}
-                          isOwner={isOwner}
-                          onNewPost={() => setNewPostDate(day.date)}
-                          hasNewPost={
-                            dayWithNewPost === formatDate(day.date, DATE_FORMAT)
-                          }
-                          onAnimatedTextRest={handleAnimationRest}
-                        />
-                      )
-                    })}
-                  </div>
-                ))}
-              </animated.div>
-            )
-          })}
+          )}
         </div>
         <CalendarNav
           showLater={showLater}
@@ -165,11 +251,17 @@ function Calendar({ user, posts, modalIsOpen }) {
 function CalendarNav({ onEarlier, onLater, showLater }) {
   return (
     <div className="Calendar_nav">
-      <button className="Calendar_earlier icon_button" onClick={onEarlier}>
+      <button
+        className="Calendar_earlier icon_button"
+        onClick={onEarlier}
+      >
         <FaChevronUp /> <span>Earlier</span>
       </button>
       {showLater && (
-        <button className="Calendar_later icon_button" onClick={onLater}>
+        <button
+          className="Calendar_later icon_button"
+          onClick={onLater}
+        >
           <FaChevronDown /> <span>Later</span>
         </button>
       )}
@@ -218,15 +310,22 @@ function Day({
     >
       <div className="Day_date">
         {showMonth && (
-          <div className="Day_month">{formatDate(day.date, "MMM")}</div>
+          <div className="Day_month">
+            {formatDate(day.date, "MMM")}
+          </div>
         )}
-        <div className="Day_number">{formatDate(day.date, "DD")}</div>
+        <div className="Day_number">
+          {formatDate(day.date, "DD")}
+        </div>
       </div>
       <div className="Day_minutes">
         {totalMinutes ? (
           <Link
             className="Day_link"
-            href={`/${user.uid}/${formatDate(day.date, DATE_FORMAT)}`}
+            href={`/${user.uid}/${formatDate(
+              day.date,
+              DATE_FORMAT
+            )}`}
             state={{
               fromCalendar: true,
               ...location.state
@@ -239,13 +338,19 @@ function Day({
                 onRest={onAnimatedTextRest}
               />
             ) : (
-              <span children={totalMinutes} className="Calendar_minutes_text" />
+              <span
+                children={totalMinutes}
+                className="Calendar_minutes_text"
+              />
             )}
           </Link>
         ) : dayIsFuture ? (
           <span className="Calendar_future" />
         ) : isOwner ? (
-          <button onClick={onNewPost} className="Calendar_add_post_button">
+          <button
+            onClick={onNewPost}
+            className="Calendar_add_post_button"
+          >
             <FaPlus />
           </button>
         ) : null}

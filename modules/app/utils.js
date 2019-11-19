@@ -52,7 +52,9 @@ export async function signup({
   startDate
 }) {
   try {
-    const { user } = await auth().createUserWithEmailAndPassword(
+    const {
+      user
+    } = await auth().createUserWithEmailAndPassword(
       email,
       password
     )
@@ -69,9 +71,11 @@ export async function signup({
   }
 }
 
-export const fetchUser = limitCalls(async function fetchUser(uid) {
-  return fetchDoc(`users/${uid}`)
-})
+export const fetchUser = limitCalls(
+  async function fetchUser(uid) {
+    return fetchDoc(`users/${uid}`)
+  }
+)
 
 export const fetchDoc = limitCalls(function fetchDoc(path) {
   return db
@@ -80,20 +84,21 @@ export const fetchDoc = limitCalls(function fetchDoc(path) {
     .then(doc => doc.data())
 })
 
-export const subscribeToPosts = limitCalls(function subscribeToPosts(
-  uid,
-  callback
-) {
-  let collection = db
-    .collection("posts")
-    .orderBy("createdAt")
-    .where("uid", "==", uid)
-  return collection.onSnapshot(snapshot =>
-    callback(getDocsFromSnapshot(snapshot))
-  )
-})
+export const subscribeToPosts = limitCalls(
+  function subscribeToPosts(uid, callback) {
+    let collection = db
+      .collection("posts")
+      .orderBy("createdAt")
+      .where("uid", "==", uid)
+    return collection.onSnapshot(snapshot =>
+      callback(getDocsFromSnapshot(snapshot))
+    )
+  }
+)
 
-export const fetchPosts = limitCalls(function fetchPosts(uid) {
+export const fetchPosts = limitCalls(function fetchPosts(
+  uid
+) {
   return db
     .collection("posts")
     .orderBy("createdAt")
@@ -123,31 +128,34 @@ export const getPosts = limitCalls(function getPosts(uid) {
     .then(getDocsFromSnapshot)
 })
 
-export const loadFeedPosts = limitCalls(function loadFeedPosts(
-  createdAtMax,
-  limit
-) {
-  return db
-    .collection("posts")
-    .orderBy("createdAt", "desc")
-    .where("createdAt", "<", createdAtMax)
-    .limit(limit)
-    .get()
-    .then(getDocsFromSnapshot)
-})
+export const loadFeedPosts = limitCalls(
+  function loadFeedPosts(createdAtMax, limit) {
+    return db
+      .collection("posts")
+      .orderBy("createdAt", "desc")
+      .where("createdAt", "<", createdAtMax)
+      .limit(limit)
+      .get()
+      .then(getDocsFromSnapshot)
+  }
+)
 
-export const subscribeToFeedPosts = limitCalls(function subscribeToFeedPosts(
-  createdAtMax,
-  limit,
-  callback
-) {
-  return db
-    .collection("posts")
-    .orderBy("createdAt", "desc")
-    .where("createdAt", "<", createdAtMax)
-    .limit(limit)
-    .onSnapshot(snapshot => callback(getDocsFromSnapshot(snapshot)))
-})
+export const subscribeToFeedPosts = limitCalls(
+  function subscribeToFeedPosts(
+    createdAtMax,
+    limit,
+    callback
+  ) {
+    return db
+      .collection("posts")
+      .orderBy("createdAt", "desc")
+      .where("createdAt", "<", createdAtMax)
+      .limit(limit)
+      .onSnapshot(snapshot =>
+        callback(getDocsFromSnapshot(snapshot))
+      )
+  }
+)
 
 export const subscribeToNewFeedPosts = limitCalls(
   function subscribeToNewFeedPosts(createdAtMin, callback) {
@@ -168,7 +176,9 @@ export { formatDate }
 export function daysInMonth(m, y) {
   switch (m) {
     case 1:
-      return (y % 4 === 0 && y % 100) || y % 400 === 0 ? 29 : 28
+      return (y % 4 === 0 && y % 100) || y % 400 === 0
+        ? 29
+        : 28
     case 8:
     case 3:
     case 5:
@@ -180,11 +190,19 @@ export function daysInMonth(m, y) {
 }
 
 export function isValidDate(year, month, day) {
-  return month >= 0 && month < 12 && day > 0 && day <= daysInMonth(month, year)
+  return (
+    month >= 0 &&
+    month < 12 &&
+    day > 0 &&
+    day <= daysInMonth(month, year)
+  )
 }
 
 export function calculateTotalMinutes(posts) {
-  return posts.reduce((total, post) => post.minutes + total, 0)
+  return posts.reduce(
+    (total, post) => post.minutes + total,
+    0
+  )
 }
 
 export function calculateMakeup(total, expected, goal) {
@@ -214,20 +232,24 @@ export function calculateWeeks(posts, startDate, numWeeks) {
     postsByDay[post.date].push(post)
   })
 
-  const startDay = startOfWeek(subDays(startDate, (numWeeks - 1) * 7))
+  const startDay = startOfWeek(
+    subDays(startDate, (numWeeks - 1) * 7)
+  )
   let weekCursor = -1
-  Array.from({ length: numWeeks * 7 }).forEach((_, index) => {
-    const date = addDays(startDay, index)
-    const dayKey = formatDate(date, DATE_FORMAT)
-    const posts = postsByDay[dayKey] || []
-    const dayta /*get it?!*/ = { date, posts }
-    if (index % 7) {
-      weeks[weekCursor].push(dayta)
-    } else {
-      weeks.push([dayta])
-      weekCursor++
+  Array.from({ length: numWeeks * 7 }).forEach(
+    (_, index) => {
+      const date = addDays(startDay, index)
+      const dayKey = formatDate(date, DATE_FORMAT)
+      const posts = postsByDay[dayKey] || []
+      const dayta /*get it?!*/ = { date, posts }
+      if (index % 7) {
+        weeks[weekCursor].push(dayta)
+      } else {
+        weeks.push([dayta])
+        weekCursor++
+      }
     }
-  })
+  )
 
   return weeks
 }
@@ -274,9 +296,7 @@ function limitCalls(fn, limit = 20) {
     calls++
     if (calls > limit) {
       throw new Error(
-        `EASY THERE: You've called "${
-          fn.name
-        }" too many times too quickly, did you forget the second argument to useEffect? Also, this is a message from Ryan and Michael, not React.`
+        `EASY THERE: You've called "${fn.name}" too many times too quickly, did you forget the second argument to useEffect? Also, this is a message from Ryan and Michael, not React.`
       )
     } else {
       setTimeout(() => (calls = 0), 3000)

@@ -12,7 +12,9 @@ Open up `LoggedIn.js` and notice there's a null user object. You can fetch a use
 
 You can review modules/app/app-state.js to see how we created `useAppState`. Remember that `useAppState` this gives you the result of a `useReducer` call.
 
-A typical folder structure might be:
+## --- not relevant to the activity ---
+
+A typical folder structure for your future apps might be:
 
 ```
 src/
@@ -32,4 +34,39 @@ src/
         sadkjhas
       utils/
         something.js
+```
+
+---- Cart thing
+
+```js
+function Cart() {
+  const [state, dispatch] = useAppState() // this gives us whatever was in the app state
+  const { someStateWeNeed } = state
+
+  const [localState, localDispatch] = useReducer(
+    (state, action) => {
+      if (action.type === "CHANGE") {
+        return { ...state, localStateThing: "something" }
+      }
+    },
+    {
+      localStateThing: null
+    }
+  )
+
+  return (
+    <div>
+      <button
+        onClick={() => {
+          dispatch({ type: "CHANGE" })
+        }}
+      >
+        {" "}
+        click me{" "}
+      </button>
+      {someStateWeNeed} global
+      {localStateThing} local
+    </div>
+  )
+}
 ```
