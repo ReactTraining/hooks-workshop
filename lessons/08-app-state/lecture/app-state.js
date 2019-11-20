@@ -8,5 +8,6 @@ export function AppStateProvider({ reducer, initialState = {}, children }) {
 }
 
 export function useAppState() {
+  // [state, dispatch]
   return useContext(Context)
 }
