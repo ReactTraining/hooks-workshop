@@ -26,7 +26,7 @@ Your task is to use context to give rendering control back to the consumer. So i
   value={...}
   start={...}
   end={...}
-  onSelect={...}
+  onChange={...}
 />
 ```
 
