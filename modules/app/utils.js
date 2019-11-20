@@ -1,4 +1,4 @@
-import { db, auth, mode } from "app/db.real.js"
+import { db, auth, mode } from 'app/db.real.js'
 
 import {
   differenceInDays,
@@ -6,7 +6,7 @@ import {
   subDays,
   addDays,
   format as formatDate
-} from "date-fns"
+} from 'date-fns'
 
 // data model is:
 //
@@ -30,7 +30,7 @@ import {
 export { auth, db, mode }
 
 export const WORKOUT_DAYS_PER_YEAR = 260
-export const DATE_FORMAT = "YYYY-MM-DD"
+export const DATE_FORMAT = 'YYYY-MM-DD'
 
 export function login(email, password) {
   return auth().signInWithEmailAndPassword(email, password)
@@ -47,8 +47,8 @@ export function onAuthStateChanged(callback) {
 export async function signup({
   email,
   password,
-  displayName = "No Name",
-  photoURL = "https://placekitten.com/200/200",
+  displayName = 'No Name',
+  photoURL = 'https://placekitten.com/200/200',
   startDate
 }) {
   try {
@@ -85,9 +85,9 @@ export const subscribeToPosts = limitCalls(function subscribeToPosts(
   callback
 ) {
   let collection = db
-    .collection("posts")
-    .orderBy("createdAt")
-    .where("uid", "==", uid)
+    .collection('posts')
+    .orderBy('createdAt')
+    .where('uid', '==', uid)
   return collection.onSnapshot(snapshot =>
     callback(getDocsFromSnapshot(snapshot))
   )
@@ -95,16 +95,16 @@ export const subscribeToPosts = limitCalls(function subscribeToPosts(
 
 export const fetchPosts = limitCalls(function fetchPosts(uid) {
   return db
-    .collection("posts")
-    .orderBy("createdAt")
-    .where("uid", "==", uid)
+    .collection('posts')
+    .orderBy('createdAt')
+    .where('uid', '==', uid)
     .get()
     .then(getDocsFromSnapshot)
 })
 
 export async function createPost(post) {
   return db
-    .collection("posts")
+    .collection('posts')
     .add({ createdAt: Date.now(), ...post })
     .then(ref => ref.get())
     .then(doc => ({ ...doc.data(), id: doc.id }))
@@ -116,9 +116,9 @@ export function deletePost(id) {
 
 export const getPosts = limitCalls(function getPosts(uid) {
   return db
-    .collection("posts")
-    .orderBy("createdAt")
-    .where("uid", "==", uid)
+    .collection('posts')
+    .orderBy('createdAt')
+    .where('uid', '==', uid)
     .get()
     .then(getDocsFromSnapshot)
 })
@@ -128,9 +128,9 @@ export const loadFeedPosts = limitCalls(function loadFeedPosts(
   limit
 ) {
   return db
-    .collection("posts")
-    .orderBy("createdAt", "desc")
-    .where("createdAt", "<", createdAtMax)
+    .collection('posts')
+    .orderBy('createdAt', 'desc')
+    .where('createdAt', '<', createdAtMax)
     .limit(limit)
     .get()
     .then(getDocsFromSnapshot)
@@ -142,9 +142,9 @@ export const subscribeToFeedPosts = limitCalls(function subscribeToFeedPosts(
   callback
 ) {
   return db
-    .collection("posts")
-    .orderBy("createdAt", "desc")
-    .where("createdAt", "<", createdAtMax)
+    .collection('posts')
+    .orderBy('createdAt', 'desc')
+    .where('createdAt', '<', createdAtMax)
     .limit(limit)
     .onSnapshot(snapshot => callback(getDocsFromSnapshot(snapshot)))
 })
@@ -152,9 +152,9 @@ export const subscribeToFeedPosts = limitCalls(function subscribeToFeedPosts(
 export const subscribeToNewFeedPosts = limitCalls(
   function subscribeToNewFeedPosts(createdAtMin, callback) {
     return db
-      .collection("posts")
-      .orderBy("createdAt", "desc")
-      .where("createdAt", ">=", createdAtMin)
+      .collection('posts')
+      .orderBy('createdAt', 'desc')
+      .where('createdAt', '>=', createdAtMin)
       .onSnapshot(snapshot => {
         callback(getDocsFromSnapshot(snapshot))
       })
@@ -274,9 +274,7 @@ function limitCalls(fn, limit = 20) {
     calls++
     if (calls > limit) {
       throw new Error(
-        `EASY THERE: You've called "${
-          fn.name
-        }" too many times too quickly, did you forget the second argument to useEffect? Also, this is a message from Ryan and Michael, not React.`
+        `EASY THERE: You've called "${fn.name}" too many times too quickly, did you forget the second argument to useEffect? Also, this is a message from Ryan and Michael, not React.`
       )
     } else {
       setTimeout(() => (calls = 0), 3000)

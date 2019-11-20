@@ -10,6 +10,11 @@ The workshop has lectures followed by exercises. The Exercises are your chance t
 - https://codesandbox.io/s/determined-napier-kn8xm
 - https://codesandbox.io/s/nostalgic-wozniak-q1dcj (Context)
 - https://codesandbox.io/s/infallible-shadow-u2cqm (useReducer + useEffect)
+- https://codesandbox.io/s/infallible-payne-kj3vz (Context + RxJS)
+
+# Reading
+
+- https://dev.to/davidkpiano/no-disabling-a-button-is-not-app-logic-598i
 
 ---
 

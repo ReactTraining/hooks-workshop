@@ -1,6 +1,12 @@
-import React, { useRef, useReducer, useEffect } from "react"
-import FeedPost from "app/FeedPost"
-import { loadFeedPosts, subscribeToNewFeedPosts } from "app/utils"
+import React, {
+  useRef,
+  useReducer,
+  useEffect,
+  useMemo,
+  useCallback
+} from 'react'
+import FeedPost from 'app/FeedPost'
+import { loadFeedPosts, subscribeToNewFeedPosts } from 'app/utils'
 
 const PER_PAGE = 3
 
@@ -10,13 +16,13 @@ export default function Feed() {
   const [state, dispatch] = useReducer(
     (state, action) => {
       switch (action.type) {
-        case "LOAD_POSTS":
+        case 'LOAD_POSTS':
           return { ...state, posts: action.posts }
-        case "LOAD_NEW_POSTS":
+        case 'LOAD_NEW_POSTS':
           return { ...state, newPosts: action.posts }
-        case "VIEWED_ALL":
+        case 'VIEWED_ALL':
           return { ...state, viewedAll: true }
-        case "VIEW_NEW_POSTS":
+        case 'VIEW_NEW_POSTS':
           return {
             ...state,
             createdBefore: Date.now(),
@@ -24,7 +30,7 @@ export default function Feed() {
             posts: state.newPosts.concat(state.posts),
             newPosts: []
           }
-        case "VIEW_MORE":
+        case 'VIEW_MORE':
           return { ...state, limit: state.limit + PER_PAGE }
         default: {
         }
@@ -52,7 +58,7 @@ export default function Feed() {
     let current = true
     loadFeedPosts(createdBefore, limit).then(posts => {
       if (current) {
-        dispatch({ type: "LOAD_POSTS", posts })
+        dispatch({ type: 'LOAD_POSTS', posts })
       }
     })
     return () => (current = false)
@@ -60,24 +66,30 @@ export default function Feed() {
 
   useEffect(() => {
     return subscribeToNewFeedPosts(createdBefore, posts => {
-      dispatch({ type: "LOAD_NEW_POSTS", posts })
+      dispatch({ type: 'LOAD_NEW_POSTS', posts })
     })
   }, [createdBefore])
 
   useEffect(() => {
     if (posts && posts[posts.length - 1].id === lastPostIdRef.current) {
-      dispatch({ type: "VIEWED_ALL" })
+      dispatch({ type: 'VIEWED_ALL' })
     }
   }, [posts])
 
-  const handleViewNewPosts = () => dispatch({ type: "VIEW_NEW_POSTS" })
+  const handleViewNewPosts = () => dispatch({ type: 'VIEW_NEW_POSTS' })
 
   const handleViewMore = () => {
     lastPostIdRef.current = posts[posts.length - 1].id
-    dispatch({ type: "VIEW_MORE" })
+    dispatch({ type: 'VIEW_MORE' })
   }
 
   const hasNewPosts = newPosts.length > 0
+
+  const handlePostClick = useCallback(post => {
+    alert(post.message)
+  }, [])
+
+  // const handlePostClick = post => alert(post.message)
 
   return posts ? (
     <div className="Feed">
@@ -93,7 +105,7 @@ export default function Feed() {
       )}
 
       {posts.map(post => (
-        <FeedPost key={post.id} post={post} />
+        <FeedPost key={post.id} post={post} onClick={handlePostClick} />
       ))}
 
       {!viewedAll && posts && (
