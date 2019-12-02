@@ -1,3 +1,7 @@
+html {
+    margin-left: calc(100vw - 100%)
+}
+
 :root {
   --gray: hsl(197, 10%, 45%);
   --middle-gray: hsl(240, 6%, 92%);
