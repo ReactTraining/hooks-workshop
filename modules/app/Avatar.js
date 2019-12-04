@@ -22,6 +22,8 @@ export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
   const minutes = calculateTotalMinutes(posts)
   const expectedMinutes = calculateExpectedMinutes(user)
 
+  console.log(minutes, expectedMinutes)
+
   const stroke = size / 10
 
   const progress = (minutes / goal) * 100

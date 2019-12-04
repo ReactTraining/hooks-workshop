@@ -51,6 +51,8 @@ export default function Minutes({ date }) {
     <div className="Minutes">
       <div>
         <button
+          id="subtract-button"
+          data-testid="subtract-button"
           type="button"
           className="icon_button Minutes_button"
           onClick={subtract}
@@ -62,12 +64,15 @@ export default function Minutes({ date }) {
         className="Minutes_input"
         value={minutes}
         id="minutes"
+        data-testid="minutes"
         onChange={handleInputChange}
         onBlur={handleInputBlur}
         onKeyDown={handleInputKeyDown}
       />
       <div>
         <button
+          id="add-button"
+          data-testid="add-button"
           type="button"
           className="icon_button Minutes_button"
           onClick={add}
