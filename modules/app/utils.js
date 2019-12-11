@@ -274,9 +274,7 @@ function limitCalls(fn, limit = 20) {
     calls++
     if (calls > limit) {
       throw new Error(
-        `EASY THERE: You've called "${
-          fn.name
-        }" too many times too quickly, did you forget the second argument to useEffect? Also, this is a message from Ryan and Michael, not React.`
+        `EASY THERE: You've called "${fn.name}" too many times too quickly, did you forget the second argument to useEffect? Also, this is a message from React Training, not React.`
       )
     } else {
       setTimeout(() => (calls = 0), 3000)
