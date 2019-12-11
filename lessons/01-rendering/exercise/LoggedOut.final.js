@@ -10,15 +10,15 @@ export default function LoggedOut() {
       <About />
       <Tabs>
         <TabList>
-          <Tab>Sign Up</Tab>
           <Tab>Login</Tab>
+          <Tab>Sign Up</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
-            <SignupForm />
+            <LoginForm />
           </TabPanel>
           <TabPanel>
-            <LoginForm />
+            <SignupForm />
           </TabPanel>
         </TabPanels>
       </Tabs>
