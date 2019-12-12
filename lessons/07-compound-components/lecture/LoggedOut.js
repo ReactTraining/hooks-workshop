@@ -9,62 +9,134 @@ import LoginForm from "app/LoginForm"
 import SignupForm from "app/SignupForm"
 import About from "app/About"
 
-// We're going to be doing lecture 7 next!
-// npm start lecture
-// 7
-// LoggedOut.js in 07-compound-components
+const TabsContext = createContext()
 
-function Tabs({
-  data,
-  tabPosition = "top",
-  disabled = []
-}) {
+function Tabs({ children }) {
   const [activeIndex, setActiveIndex] = useState(0)
 
-  const tabs = (
-    <div data-reach-tab-list>
-      {data.map((tab, index) => {
-        const isActive = index === activeIndex
-        const isDisabled = disabled.includes(index)
+  return (
+    <TabsContext.Provider
+      value={{ activeIndex, setActiveIndex }}
+    >
+      <div data-reach-tabs>{children}</div>
+    </TabsContext.Provider>
+  )
+}
 
+const TabListContext = createContext()
+
+function TabList({ children }) {
+  return (
+    <div data-reach-tab-list>
+      {children.map((child, index) => {
         return (
-          <div
-            data-reach-tab
-            key={index}
-            className={
-              isDisabled
-                ? "disabled"
-                : isActive
-                ? "active"
-                : ""
-            }
-            onClick={() => {
-              if (!isDisabled) setActiveIndex(index)
-            }}
+          <TabListContext.Provider
+            key={"TabList_" + index}
+            value={{ index }}
           >
-            {tab.label}
-          </div>
+            {child}
+          </TabListContext.Provider>
         )
       })}
     </div>
   )
+}
 
-  const panels = (
-    <div data-reach-tab-panels>
-      {data[activeIndex].content}
-    </div>
+function Tab({ children, disabled }) {
+  const { index } = useContext(TabListContext)
+  const { activeIndex, setActiveIndex } = useContext(
+    TabsContext
   )
+  const isActive = index === activeIndex
 
   return (
-    <div data-reach-tabs>
-      {tabPosition === "bottom"
-        ? [panels, tabs]
-        : [tabs, panels]}
+    <div
+      data-reach-tab
+      className={
+        disabled ? "disabled" : isActive ? "active" : ""
+      }
+      onClick={() => {
+        if (!disabled) setActiveIndex(index)
+      }}
+    >
+      {children}
     </div>
   )
 }
 
+function TabPanels({ children }) {
+  const { activeIndex } = useContext(TabsContext)
+  return (
+    <div data-reach-tab-panels>{children[activeIndex]}</div>
+  )
+}
+
+function TabPanel({ children }) {
+  return <div data-reach-tab-panel>{children}</div>
+}
+
+function DataTabs({
+  data,
+  tabPosition = "top",
+  disabled = []
+}) {
+  const tabs = (
+    <TabList>
+      {data.map((item, index) => {
+        return (
+          <Tab
+            key={"Tab_" + index}
+            disabled={disabled.includes(index)}
+          >
+            {item.label}
+          </Tab>
+        )
+      })}
+    </TabList>
+  )
+
+  const panels = (
+    <TabPanels>
+      {data.map((item, index) => {
+        return (
+          <TabPanel key={"TabPanel_" + index}>
+            {item.content}
+          </TabPanel>
+        )
+      })}
+    </TabPanels>
+  )
+
+  return (
+    <Tabs>
+      {tabPosition === "bottom"
+        ? [panels, tabs]
+        : [tabs, panels]}
+    </Tabs>
+  )
+}
+
 export default function LoggedOut() {
+  // return (
+  //   <div className="LoggedOut">
+  //     <About />
+  //     <Tabs>
+  //       <TabList>
+  //         <Tab>Login</Tab>
+  //         <Tab>Signup</Tab>
+  //       </TabList>
+  //       <TabPanels>
+  //         <TabPanel>
+  //           <LoginForm />
+  //         </TabPanel>
+  //         <TabPanel>
+  //           <SignupForm />
+  //         </TabPanel>
+  //       </TabPanels>
+  //     </Tabs>
+  //   </div>
+  // )
+
   const tabData = [
     {
       label: "Login",
@@ -79,9 +151,9 @@ export default function LoggedOut() {
   return (
     <div className="LoggedOut">
       <About />
-      <Tabs
+      <DataTabs
         data={tabData}
-        tabPosition="bottom"
+        tabPosition="top"
         disabled={[1]}
       />
     </div>
