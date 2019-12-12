@@ -4,7 +4,11 @@ import { FaDumbbell } from "react-icons/fa"
 
 import { signup } from "app/utils"
 import TabsButton from "app/TabsButton"
-import DateFields, { MonthField, DayField, YearField } from "app/DateFields"
+import DateFields, {
+  MonthField,
+  DayField,
+  YearField
+} from "app/DateFields"
 
 function TextInput({ id, label, type = "text" }) {
   return (
@@ -12,7 +16,12 @@ function TextInput({ id, label, type = "text" }) {
       <VisuallyHidden>
         <label htmlFor={id}>{label}</label>
       </VisuallyHidden>
-      <input id={id} placeholder={label} type={type} required />
+      <input
+        id={id}
+        placeholder={label}
+        type={type}
+        required
+      />
     </Fragment>
   )
 }
@@ -20,12 +29,19 @@ function TextInput({ id, label, type = "text" }) {
 export default function SignupForm() {
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [startDate, setStartDate] = useState(new Date("March 1, 2019"))
+  const [startDate, setStartDate] = useState(
+    new Date("March 1, 2019")
+  )
 
   const handleSignup = async event => {
     event.preventDefault()
     setLoading(true)
-    const [displayName, photoURL, email, password] = event.target.elements
+    const [
+      displayName,
+      photoURL,
+      email,
+      password
+    ] = event.target.elements
     try {
       await signup({
         displayName: displayName.value,
@@ -61,9 +77,14 @@ export default function SignupForm() {
           <DateFields
             value={startDate}
             onChange={setStartDate}
-            start={2018}
-            end={2019}
-          />
+          >
+            <DayField /> - <MonthField /> -{" "}
+            <YearField
+              start={2018}
+              end={2019}
+              aria-label="year-field"
+            />
+          </DateFields>
         </p>
         <TabsButton>
           <FaDumbbell />

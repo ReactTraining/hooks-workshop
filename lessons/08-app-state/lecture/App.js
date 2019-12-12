@@ -8,11 +8,18 @@ import useAuth from "app/useAuth"
 function App() {
   const { authAttempted, auth } = useAuth()
   if (!authAttempted) return null
-  return <div className="Layout">{auth ? <LoggedIn /> : <LoggedOut />}</div>
+  return (
+    <div className="Layout">
+      {auth ? <LoggedIn /> : <LoggedOut />}
+    </div>
+  )
 }
 
 export default () => (
-  <AppStateProvider reducer={appReducer} initialState={initialState}>
+  <AppStateProvider
+    reducer={appReducer}
+    initialState={initialState}
+  >
     <App />
   </AppStateProvider>
 )

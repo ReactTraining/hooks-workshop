@@ -1,6 +1,6 @@
 # Compound Components
 
-We want to give rendering control to the owner of `<Datefields/>`. Maybe we're in the United Kingdom and we need to put the day, not the month, first. And what if we wanted to add additional props to the `<select>` elements, like aria-labels, or classNames?
+We want to give rendering control to the owner of `<DateFields/>`. Maybe we're in the United Kingdom and we need to put the day, not the month, first. And what if we wanted to add additional props to the `<select>` elements, like aria-labels, or classNames?
 
 We can either make a bunch of weird props:
 
@@ -36,7 +36,11 @@ We want this:
 <DateFields value={startDate} onChange={setStartDate}>
   <MonthField aria-label="Start Month" />
   <DayField aria-label="Start Day" />
-  <YearField start={2018} end={2019} aria-label="Start year" />
+  <YearField
+    start={2018}
+    end={2019}
+    aria-label="Start year"
+  />
 </DateFields>
 ```
 
