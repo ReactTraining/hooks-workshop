@@ -36,6 +36,33 @@ import {
 } from "app/utils"
 import { useAppState } from "app/app-state"
 import NewPost from "app/NewPost"
+// import useTween from "app/useTween"
+import { playNotes } from "app/playSound"
+
+// 3 types of animations
+// Interpolating values
+// Exit/Entering
+// Transitioning
+
+// 2 ways to implement
+// Physics based
+// Time based
+
+function useTween(endValue) {
+  const [value, setValue] = useState(0)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (value < endValue) setValue(value + 1)
+    }, 150)
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [value, endValue])
+
+  return value
+}
 
 function Day({
   user,
@@ -49,8 +76,12 @@ function Day({
 }) {
   const dayIsFuture = isFuture(day.date)
   const totalMinutes = calculateTotalMinutes(day.posts)
-  // const animateMinutes = hasNewPost && !modalIsOpen
+  const animateMinutes = hasNewPost && !modalIsOpen
   const { location } = useLocation()
+
+  const tweeningMinutes = useTween(totalMinutes)
+
+  // useEffect(playNotes, [tweeningMinutes])
 
   return (
     <div
@@ -81,10 +112,16 @@ function Day({
               ...location.state
             }}
           >
-            <span
-              children={totalMinutes}
-              className="Calendar_minutes_text"
-            />
+            {animateMinutes ? (
+              <span className="Calendar_minutes_text">
+                {tweeningMinutes}
+              </span>
+            ) : (
+              <span
+                children={totalMinutes}
+                className="Calendar_minutes_text"
+              />
+            )}
           </Link>
         ) : dayIsFuture ? (
           <span className="Calendar_future" />

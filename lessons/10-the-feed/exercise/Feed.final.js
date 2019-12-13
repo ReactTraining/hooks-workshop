@@ -1,9 +1,14 @@
 import React, { useRef, useReducer, useEffect } from "react"
 import FeedPost from "app/FeedPost"
-import { loadFeedPosts, subscribeToNewFeedPosts } from "app/utils"
+import {
+  loadFeedPosts,
+  subscribeToNewFeedPosts
+} from "app/utils"
 
 const PER_PAGE = 3
 
+// For local caching stuff
+// If you wanted this at a global level, use local storage
 let feedState = null
 
 export default function Feed() {
@@ -11,8 +16,10 @@ export default function Feed() {
     (state, action) => {
       switch (action.type) {
         case "LOAD_POSTS":
+          // This is like the setPosts thing
           return { ...state, posts: action.posts }
         case "LOAD_NEW_POSTS":
+          // This is like the setNewPosts thing
           return { ...state, newPosts: action.posts }
         case "VIEWED_ALL":
           return { ...state, viewedAll: true }
@@ -39,13 +46,21 @@ export default function Feed() {
     }
   )
 
-  const { createdBefore, viewedAll, limit, posts, newPosts } = state
+  const {
+    createdBefore,
+    viewedAll,
+    limit,
+    posts,
+    newPosts
+  } = state
 
   // helps us know when we've viewed all
   const lastPostIdRef = useRef()
 
   useEffect(() => {
     feedState = state
+    // this stores things in React's cache
+    // because feedState was initialized outside of the component
   })
 
   useEffect(() => {
@@ -55,7 +70,7 @@ export default function Feed() {
         dispatch({ type: "LOAD_POSTS", posts })
       }
     })
-    return () => current = false
+    return () => (current = false)
   }, [createdBefore, limit])
 
   useEffect(() => {
@@ -65,12 +80,17 @@ export default function Feed() {
   }, [createdBefore])
 
   useEffect(() => {
-    if (posts && posts[posts.length - 1].id === lastPostIdRef.current) {
+    if (
+      posts &&
+      posts[posts.length - 1].id === lastPostIdRef.current
+    ) {
       dispatch({ type: "VIEWED_ALL" })
     }
   }, [posts])
 
-  const handleViewNewPosts = () => dispatch({ type: "VIEW_NEW_POSTS" })
+  // Helper functions
+  const handleViewNewPosts = () =>
+    dispatch({ type: "VIEW_NEW_POSTS" })
 
   const handleViewMore = () => {
     lastPostIdRef.current = posts[posts.length - 1].id
@@ -100,7 +120,9 @@ export default function Feed() {
         <div className="Feed_button_wrapper">
           <button
             className="Feed_new_posts_button icon_button"
-            onClick={handleViewMore}
+            onClick={
+              handleViewMore
+            } /* this is a helper function that sets state */
           >
             View More
           </button>

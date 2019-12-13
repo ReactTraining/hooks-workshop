@@ -28,14 +28,20 @@ function Feed() {
 
   useEffect(
     () => subscribeToNewFeedPosts(time, setNewPosts),
-    [time]
+    [time] // is state, uses state, changes state
   )
 
   return (
     <div className="Feed">
       {newPosts.length > 0 && (
         <div className="Feed_button_wrapper">
-          <button className="Feed_new_posts_button icon_button">
+          <button
+            className="Feed_new_posts_button icon_button"
+            onClick={() => {
+              setTime(Date.now())
+              setLimit(limit + newPosts.length)
+            }}
+          >
             View {newPosts.length} New Posts
           </button>
         </div>
