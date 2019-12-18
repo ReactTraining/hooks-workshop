@@ -2,26 +2,28 @@ import React, { Fragment, useContext, createContext } from "react"
 
 import { daysInMonth } from "app/utils"
 
+const Context = React.createContext()
+
 export default function DateFields({
   children,
   defaultValue,
-  start,
-  end,
   value: controlledValue,
   onChange
 }) {
   const date = controlledValue || defaultValue
   return (
-    <Fragment>
-      <MonthField date={date} onChange={onChange} />/
-      <DayField date={date} onChange={onChange} />/
-      <YearField date={date} onChange={onChange} start={start} end={end} />
-    </Fragment>
+    <Context.Provider
+      value={{
+        date,
+        onChange
+      }}
+      children={children}
+    />
   )
 }
 
-export function DayField(props) {
-  const { date, onChange } = props
+export function DayField() {
+  const { date, onChange } = useContext(Context)
   const month = date.getMonth()
   const year = date.getFullYear()
   const days = Array.from({ length: daysInMonth(month, year) })
@@ -44,8 +46,8 @@ export function DayField(props) {
   )
 }
 
-export function MonthField(props) {
-  const { date, onChange } = props
+export function MonthField() {
+  const { date, onChange } = useContext(Context)
   const month = date.getMonth()
   const handleChange = event => {
     const newDate = new Date(date.getTime())
@@ -72,7 +74,8 @@ export function MonthField(props) {
 }
 
 export function YearField(props) {
-  const { date, onChange, start, end } = props
+  const { start, end } = props
+  const { date, onChange } = useContext(Context)
   const difference = end - start + 1
   const years = Array.from({ length: difference }).map(
     (_, index) => index + start

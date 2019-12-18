@@ -5,13 +5,7 @@ We're going to be working in `App.js` to set up the login flow. The UI will rend
 This app does client-side authentication with an auth listener called `onAuthStateChanged(auth => {})`. Whenever the user logs in, or out, this listener will callback with the auth state, including when its first created.
 
 ```jsx
-onAuthStateChanged(auth => {
-  if (auth) {
-    // logged in
-  } else {
-    // logged out
-  }
-})
+onAuthStateChanged(auth => {})
 ```
 
 `onAuthStateChanged` returns an unsubscribe function to stop listening to auth state changes.
