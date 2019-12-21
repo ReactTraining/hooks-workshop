@@ -14,6 +14,11 @@
   --green: hsl(170, 90%, 44%);
 }
 
+html {
+    width: 100vw;
+    overflow-x: hidden;
+}
+
 body {
   color: var(--gray);
 }
