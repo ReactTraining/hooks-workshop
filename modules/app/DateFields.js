@@ -6,8 +6,6 @@ const Context = createContext()
 export function DateFields({
   children,
   defaultValue,
-  start,
-  end,
   value: controlledValue,
   onChange
 }) {
