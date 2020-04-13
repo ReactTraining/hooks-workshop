@@ -2,7 +2,8 @@ import React, { useState } from "react"
 import { format as formatDate } from "date-fns"
 import { FaMinus, FaPlus } from "react-icons/fa"
 
-export default function Minutes({ date }) {
+const Minutes = React.forwardRef((props, ref) => {
+  const {date = null} = props;
   const [minutes, setMinutes] = useState(30)
 
   const subtract = () => {
@@ -62,6 +63,7 @@ export default function Minutes({ date }) {
         className="Minutes_input"
         value={minutes}
         id="minutes"
+        ref={ref}
         onChange={handleInputChange}
         onBlur={handleInputBlur}
         onKeyDown={handleInputKeyDown}
@@ -80,4 +82,6 @@ export default function Minutes({ date }) {
       </label>
     </div>
   )
-}
+});
+
+export default Minutes;
